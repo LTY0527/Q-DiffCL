@@ -18,7 +18,12 @@ quality:
   q_min: 0.1
   q_max: 0.9
   q0: {formula: exp(-masked_mae/scale), scale_estimator: median}
-  q1: {formula: robust_sigmoid(relative_gain), eps: 1.0e-12}
+  q1:
+    formula: robust_sigmoid(relative_gain)
+    eps: 1.0e-12
+    fit_split: train
+    fitted_median: -0.09261561057421151
+    fitted_iqr: 0.12769842140219517
   q2: {formula: q_min+(q_rel-q_min)*semantic_score, semantic_floor: 0.1}
 audit_gate:
   minimum_bias_gap_reduction: 0.3
@@ -26,3 +31,5 @@ audit_gate:
   maximum_q_min_fraction: 0.2
 output_dir: outputs/quality_definition_audit
 retest_output_dir: outputs/quality_definition_retest
+audit_result: QUALITY_DEFINITION_AUDIT_NO_GO
+training_retest_allowed: false
