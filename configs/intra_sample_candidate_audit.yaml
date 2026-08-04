@@ -16,6 +16,12 @@ output_dir: outputs/intra_sample_candidates/audit
 manifest: outputs/intra_sample_candidates/audit/candidates_manifest.json
 tracked_manifest: configs/intra_sample_candidate_audit_manifest.json
 audit_result: outputs/intra_sample_candidates/audit/rankability_result.json
+measured_status: INTRA_SAMPLE_CANDIDATE_RANKING_NO_GO
+best_no_reference_score: h1_center
+downstream_retest_allowed: false
+measured_oracle_improvement_vs_random: 0.03818653961897868
+measured_h1_spearman: 0.3509765625
+measured_h1_top1: 0.359375
 gate:
   oracle_random_mae_improvement: 0.05
   minimum_spearman: 0.2

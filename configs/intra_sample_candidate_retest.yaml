@@ -21,3 +21,5 @@ candidate_dir: outputs/intra_sample_candidates/full
 candidate_manifest: outputs/intra_sample_candidates/full/candidates_manifest.json
 tracked_manifest: configs/intra_sample_candidate_retest_manifest.json
 output_dir: outputs/intra_sample_candidate_retest
+audit_status: INTRA_SAMPLE_CANDIDATE_RANKING_NO_GO
+training_skipped: true
