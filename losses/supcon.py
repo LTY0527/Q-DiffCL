@@ -4,18 +4,37 @@ import torch
 import torch.nn.functional as F
 
 
+def normalized_positive_weights(
+    positive_mask: torch.Tensor, candidate_weights: torch.Tensor, dtype: torch.dtype | None = None,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """Normalize positive weights to mean one per valid anchor.
+
+    This is equivalent to dividing each anchor's weighted positive sum by its
+    positive-weight sum, so the overall SupCon scale does not follow mean(q).
+    """
+    target_dtype = dtype or candidate_weights.dtype
+    weights = candidate_weights.to(device=positive_mask.device, dtype=target_dtype)
+    if not torch.isfinite(weights).all(): raise ValueError("positive weights must be finite")
+    raw = positive_mask.to(target_dtype) * weights[None, :]
+    positive_count = positive_mask.sum(dim=1)
+    raw_mass = raw.sum(dim=1)
+    valid = (positive_count > 0) & (raw_mass > 0)
+    raw_mean = raw_mass / positive_count.clamp_min(1).to(target_dtype)
+    normalized = torch.where(valid[:, None], raw / raw_mean.clamp_min(1e-12)[:, None], torch.zeros_like(raw))
+    return normalized, valid
+
+
 def _weighted_positive_mean(
     log_probability: torch.Tensor,
     positive_mask: torch.Tensor,
     candidate_weights: torch.Tensor,
 ) -> tuple[torch.Tensor, torch.Tensor]:
     """Return per-anchor positive means and the anchors that have positive mass."""
-    if not torch.isfinite(candidate_weights).all():
-        raise ValueError("positive weights must be finite")
-    positive_weights = positive_mask.to(log_probability.dtype) * candidate_weights[None, :]
-    positive_mass = positive_weights.sum(dim=1)
-    valid = positive_mass > 0
-    means = (log_probability * positive_weights).sum(dim=1) / positive_mass.clamp_min(1e-12)
+    positive_weights, valid = normalized_positive_weights(
+        positive_mask, candidate_weights, log_probability.dtype,
+    )
+    positive_count = positive_mask.sum(dim=1).to(log_probability.dtype)
+    means = (log_probability * positive_weights).sum(dim=1) / positive_count.clamp_min(1)
     return means, valid
 
 

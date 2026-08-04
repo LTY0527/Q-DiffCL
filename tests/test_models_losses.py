@@ -4,7 +4,7 @@ torch = pytest.importorskip("torch")
 
 from losses import (joint_ce_supcon, quality_weighted_supervised_contrastive_loss,
                     supervised_contrastive_loss)
-from losses.supcon import _weighted_positive_mean
+from losses.supcon import _weighted_positive_mean, normalized_positive_weights
 from models import CNN1DClassifier, TCNClassifier
 
 
@@ -72,3 +72,20 @@ def test_nonfinite_quality_is_rejected():
             torch.randn(4, 5), torch.tensor([0, 0, 1, 1]),
             torch.tensor([1.0, float("nan"), 1.0, 1.0]), 0.1,
         )
+
+
+def test_constant_positive_weights_preserve_hard_loss_scale():
+    torch.manual_seed(19)
+    features = torch.randn(10, 7)
+    labels = torch.tensor([0, 0, 0, 1, 1, 0, 0, 0, 1, 1])
+    hard = supervised_contrastive_loss(features, labels, 0.1)
+    weighted = quality_weighted_supervised_contrastive_loss(features, labels, torch.full((10,), 0.2), 0.1)
+    assert torch.allclose(hard, weighted, atol=1e-7, rtol=1e-6)
+
+
+def test_normalized_positive_weights_have_mean_one_per_anchor():
+    labels = torch.tensor([0, 0, 0, 1, 1])
+    positive = labels[:, None].eq(labels[None, :]) & ~torch.eye(5, dtype=torch.bool)
+    normalized, valid = normalized_positive_weights(positive, torch.tensor([1.0, 0.2, 0.8, 0.1, 0.9]))
+    means = normalized.sum(1)[valid] / positive.sum(1)[valid]
+    assert torch.allclose(means, torch.ones_like(means))

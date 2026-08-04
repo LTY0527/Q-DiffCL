@@ -1,0 +1,27 @@
+mode: quality_definition_audit
+markers: [QUALITY_DEFINITION_AUDIT, SINGLE_SEED, FIXED_DIFFUSION_VIEW, NOT_FOR_PAPER_CLAIMS]
+random_seed: 7
+device: cuda
+batch_size: 128
+temperature: 0.1
+learning_rate: 0.001
+epochs: 8
+early_stopping_patience: 8
+probe_epochs: 8
+probe_early_stopping_patience: 8
+model: {name: tcn, hidden_channels: 32, projection_dim: 32, levels: 3}
+fixed_views:
+  manifest: outputs/fixed_diffusion_views/views_manifest.json
+  checkpoint: outputs/diffusion_debug/small_subset/best_diffusion.pt
+teacher_checkpoint: outputs/rapid_idea_validation/G1_0.pt
+quality:
+  q_min: 0.1
+  q_max: 0.9
+  q0: {formula: exp(-masked_mae/scale), scale_estimator: median}
+  q1: {formula: robust_sigmoid(relative_gain), eps: 1.0e-12}
+  q2: {formula: q_min+(q_rel-q_min)*semantic_score, semantic_floor: 0.1}
+audit_gate:
+  minimum_bias_gap_reduction: 0.3
+  semantic_correlation_tolerance: 0.05
+  maximum_q_min_fraction: 0.2
+output_dir: outputs/quality_definition_audit
