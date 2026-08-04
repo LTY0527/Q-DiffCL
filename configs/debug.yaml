@@ -1,0 +1,36 @@
+mode: debug
+markers: [DEBUG, SYNTHETIC, NOT FOR SCIENTIFIC COMPARISON]
+dataset:
+  name: tep
+  version: null
+  source: null
+  run_id_column: null
+  sample_column: null
+  fault_id_column: null
+  operating_mode_column: null
+fault_boundary:
+  training: {last_normal_sample: 23, first_faulty_sample: 24}
+  testing: {last_normal_sample: 23, first_faulty_sample: 24}
+task: binary_fault_detection
+split: {train: 0.6, validation: 0.2, test: 0.2}
+transition_policy: exclude_transition
+fault_ratio_threshold: 0.5
+window_length: 12
+stride: 6
+scaler: standard
+input_layout: BCL
+model: {name: tcn, hidden_channels: 8, projection_dim: 8, levels: 2}
+optimizer: adam
+learning_rate: 0.001
+batch_size: 8
+epochs: 1
+random_seed: 7
+degradation: mcar_missing
+degradation_severity: 0.1
+degradation_space: normalized_space
+loss: ce
+supcon_weight: 0.1
+temperature: 0.1
+output_dir: outputs/debug
+device: cpu
+num_workers: 0

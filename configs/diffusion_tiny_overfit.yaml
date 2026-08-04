@@ -1,0 +1,48 @@
+mode: diffusion_debug
+markers: [DIFFUSION_DEBUG, SINGLE_SEED, NOT_FOR_PAPER_CLAIMS]
+stage: tiny_overfit
+task: binary_fault_detection
+dataset:
+  name: tep
+  version: rieth_2017
+  source: harvard_dataverse
+  doi: 10.7910/DVN/6C3JR1
+  root: E:/Datasets/TEP_Rieth2017/raw
+  run_id_column: simulationRun
+  sample_column: sample
+  fault_id_column: faultNumber
+fault_boundary:
+  training: {last_normal_sample: 20, first_faulty_sample: 21}
+  testing: {last_normal_sample: 160, first_faulty_sample: 161}
+split: {strategy: stratified_by_faultNumber, train: 0.8, validation: 0.2, seed: 7, official_testing_is_final_test: true}
+subset:
+  training: {normal: 10, fault: 2}
+  testing: {normal: 1, fault: 1}
+transition_policy: exclude_transition
+fault_ratio_threshold: 0.5
+window_length: 64
+stride: 16
+scaler: standard
+input_layout: BCL
+random_seed: 7
+degradation: mcar_missing
+degradation_severity: 0.3
+degradation_space: normalized_space
+batch_size: 64
+device: cuda
+num_workers: 0
+model: {name: tcn, hidden_channels: 32, projection_dim: 32, levels: 3}
+learning_rate: 0.001
+output_dir: outputs/diffusion_debug/tiny_overfit_v2
+diffusion:
+  steps: 50
+  hidden_channels: 128
+  residual_blocks: 4
+  epochs: 300
+  early_stopping_patience: null
+  learning_rate: 0.001
+  lambda_rec: 1.0
+  loader_repeats_per_epoch: 4
+  clip_x0_to_train_range: true
+  max_windows: 128
+  evaluation_interval: 50
