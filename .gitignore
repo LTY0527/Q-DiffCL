@@ -18,6 +18,7 @@ data/synthetic/**
 outputs/**
 !outputs/README.md
 outputs/fixed_diffusion_views/*.npz
+outputs/intra_sample_candidates/**/*.npz
 *.pt
 *.pth
 *.ckpt

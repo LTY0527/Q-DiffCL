@@ -1,0 +1,23 @@
+mode: intra_sample_candidate_retest
+markers: [INTRA_SAMPLE_CANDIDATE_AUDIT, SINGLE_SEED, FIXED_CHECKPOINT, NOT_FOR_PAPER_CLAIMS]
+random_seed: 7
+device: cuda
+batch_size: 128
+k_candidates: 3
+temperature: 0.1
+learning_rate: 0.001
+epochs: 8
+early_stopping_patience: 8
+probe_epochs: 8
+probe_early_stopping_patience: 8
+model: {name: tcn, hidden_channels: 32, projection_dim: 32, levels: 3}
+fixed_views:
+  manifest: outputs/fixed_diffusion_views/views_manifest.json
+checkpoint: outputs/diffusion_debug/small_subset/best_diffusion.pt
+teacher_checkpoint: outputs/rapid_idea_validation/G1_0.pt
+diffusion: {steps: 50, hidden_channels: 128, residual_blocks: 4}
+audit_result: outputs/intra_sample_candidates/audit/rankability_result.json
+candidate_dir: outputs/intra_sample_candidates/full
+candidate_manifest: outputs/intra_sample_candidates/full/candidates_manifest.json
+tracked_manifest: configs/intra_sample_candidate_retest_manifest.json
+output_dir: outputs/intra_sample_candidate_retest
