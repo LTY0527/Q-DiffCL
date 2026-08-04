@@ -17,6 +17,7 @@ data/synthetic/**
 !data/**/README.md
 outputs/**
 !outputs/README.md
+outputs/fixed_diffusion_views/*.npz
 *.pt
 *.pth
 *.ckpt

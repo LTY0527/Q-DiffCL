@@ -1,0 +1,54 @@
+mode: diffusion_quality_retest
+markers: [IDEA_RETEST, SINGLE_SEED, FIXED_DIFFUSION_VIEW, NOT_FOR_PAPER_CLAIMS]
+task: binary_fault_detection
+dataset:
+  name: tep
+  version: rieth_2017
+  source: harvard_dataverse
+  doi: 10.7910/DVN/6C3JR1
+  root: E:/Datasets/TEP_Rieth2017/raw
+  run_id_column: simulationRun
+  sample_column: sample
+  fault_id_column: faultNumber
+fault_boundary:
+  training: {last_normal_sample: 20, first_faulty_sample: 21}
+  testing: {last_normal_sample: 160, first_faulty_sample: 161}
+split: {strategy: stratified_by_faultNumber, train: 0.8, validation: 0.2, seed: 7, official_testing_is_final_test: true}
+subset:
+  training: {normal: 160, fault: 8}
+  testing: {normal: 40, fault: 2}
+transition_policy: exclude_transition
+fault_ratio_threshold: 0.5
+window_length: 64
+stride: 16
+scaler: standard
+input_layout: BCL
+random_seed: 7
+degradation: mcar_missing
+degradation_severity: 0.3
+degradation_space: normalized_space
+device: cuda
+num_workers: 0
+batch_size: 128
+model: {name: tcn, hidden_channels: 32, projection_dim: 32, levels: 3}
+optimizer: adam
+learning_rate: 0.001
+epochs: 8
+early_stopping_patience: 8
+temperature: 0.1
+probe_epochs: 8
+probe_early_stopping_patience: 8
+quality: {formula: exp(-masked_mae/scale), scale_estimator: median, q_min: 0.1}
+fixed_views:
+  output_dir: outputs/fixed_diffusion_views
+  manifest: outputs/fixed_diffusion_views/views_manifest.json
+  tracked_manifest: configs/fixed_diffusion_views_manifest.json
+  checkpoint: outputs/diffusion_debug/small_subset/best_diffusion.pt
+  source_manifest: outputs/rapid_idea_validation/split_manifest.json
+  source_result: outputs/diffusion_debug/small_subset/result.json
+  sampling_seed_offset: 3000
+  diffusion_steps: 50
+  hidden_channels: 128
+  residual_blocks: 4
+teacher_checkpoint: outputs/rapid_idea_validation/G1_0.pt
+output_dir: outputs/diffusion_quality_retest

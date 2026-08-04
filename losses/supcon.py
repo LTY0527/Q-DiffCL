@@ -4,6 +4,21 @@ import torch
 import torch.nn.functional as F
 
 
+def _weighted_positive_mean(
+    log_probability: torch.Tensor,
+    positive_mask: torch.Tensor,
+    candidate_weights: torch.Tensor,
+) -> tuple[torch.Tensor, torch.Tensor]:
+    """Return per-anchor positive means and the anchors that have positive mass."""
+    if not torch.isfinite(candidate_weights).all():
+        raise ValueError("positive weights must be finite")
+    positive_weights = positive_mask.to(log_probability.dtype) * candidate_weights[None, :]
+    positive_mass = positive_weights.sum(dim=1)
+    valid = positive_mass > 0
+    means = (log_probability * positive_weights).sum(dim=1) / positive_mass.clamp_min(1e-12)
+    return means, valid
+
+
 def supervised_contrastive_loss(features: torch.Tensor, labels: torch.Tensor, temperature: float = 0.1) -> torch.Tensor:
     return quality_weighted_supervised_contrastive_loss(features, labels, None, temperature)
 
@@ -25,18 +40,15 @@ def quality_weighted_supervised_contrastive_loss(
     stable = logits - logits.masked_fill(~denominator_mask, float("-inf")).max(dim=1, keepdim=True).values
     log_denominator = torch.logsumexp(stable.masked_fill(~denominator_mask, float("-inf")), dim=1)
     log_probability = stable - log_denominator[:, None]
-    if anchor_weights is None:
-        positive_weights = positive.to(features.dtype)
-    else:
-        weights = anchor_weights.reshape(-1).to(features.device, features.dtype).clamp(0, 1)
+    weights = torch.ones(count, device=features.device, dtype=features.dtype)
+    if anchor_weights is not None:
+        weights = anchor_weights.reshape(-1).to(features.device, features.dtype)
         if len(weights) != len(log_probability): raise ValueError("anchor_weights must match flattened features")
-        positive_weights = positive.to(features.dtype) * weights[None, :]
-    positive_count = positive_weights.sum(dim=1)
-    valid = positive_count > 0
+        weights = weights.clamp(0, 1)
+    positive_mean, valid = _weighted_positive_mean(log_probability, positive, weights)
     if not valid.any():
         return features.sum() * 0.0
-    losses = -((log_probability * positive_weights).sum(dim=1) / positive_count.clamp_min(1e-12))
-    loss = losses[valid].mean()
+    loss = -positive_mean[valid].mean()
     if not torch.isfinite(loss): raise FloatingPointError("non-finite SupCon loss")
     return loss
 
