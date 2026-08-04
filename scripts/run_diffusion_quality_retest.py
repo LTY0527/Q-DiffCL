@@ -70,7 +70,7 @@ def _batches(order: np.ndarray, batch_size: int):
 def _contrastive_loss(model: torch.nn.Module, bundle: dict[str, np.ndarray], quality: np.ndarray,
                       order: np.ndarray, config: dict[str, Any], device: str,
                       optimizer: torch.optim.Optimizer | None) -> tuple[float, dict[str, float]]:
-    training = optimizer is not None; model.train(training); losses = []; valid_anchors = []
+    training = optimizer is not None; model.train(training); losses = []; valid_anchors = []; gradient_norms = []
     context = torch.enable_grad() if training else torch.no_grad()
     with context:
         for indices in _batches(order, int(config["batch_size"])):
@@ -83,13 +83,17 @@ def _contrastive_loss(model: torch.nn.Module, bundle: dict[str, np.ndarray], qua
             pair_labels = torch.cat([labels, labels], 0)
             candidate_weights = torch.cat([torch.ones_like(q), q], 0)
             loss = quality_weighted_supervised_contrastive_loss(features, pair_labels, candidate_weights, float(config["temperature"]))
-            if optimizer is not None: loss.backward(); optimizer.step()
+            if optimizer is not None:
+                loss.backward()
+                gradient_norms.append(float(sum(parameter.grad.detach().square().sum() for parameter in model.parameters() if parameter.grad is not None).sqrt()))
+                optimizer.step()
             losses.append(float(loss.detach()))
             counts = torch.bincount(pair_labels)
             valid_anchors.append(float(sum(int(count) for count in counts if count > 1)))
     return float(np.mean(losses)), {
         "mean_q": float(np.mean(quality[order])), "min_q": float(np.min(quality[order])),
         "max_q": float(np.max(quality[order])), "mean_valid_anchors": float(np.mean(valid_anchors)),
+        "mean_gradient_norm": float(np.mean(gradient_norms)) if gradient_norms else 0.0,
     }
 
 

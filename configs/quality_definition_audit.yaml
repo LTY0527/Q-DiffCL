@@ -25,3 +25,4 @@ audit_gate:
   semantic_correlation_tolerance: 0.05
   maximum_q_min_fraction: 0.2
 output_dir: outputs/quality_definition_audit
+retest_output_dir: outputs/quality_definition_retest
