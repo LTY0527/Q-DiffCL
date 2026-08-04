@@ -38,7 +38,12 @@ early_stopping_patience: 8
 temperature: 0.1
 probe_epochs: 8
 probe_early_stopping_patience: 8
-quality: {formula: exp(-masked_mae/scale), scale_estimator: median, q_min: 0.1}
+quality:
+  formula: exp(-masked_mae/scale)
+  scale_estimator: median
+  fitted_scale: 0.34479567992607674
+  scale_fit_split: train
+  q_min: 0.1
 fixed_views:
   output_dir: outputs/fixed_diffusion_views
   manifest: outputs/fixed_diffusion_views/views_manifest.json
