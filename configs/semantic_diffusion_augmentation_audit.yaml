@@ -1,0 +1,30 @@
+mode: semantic_diffusion_augmentation_audit
+markers: [SEMANTIC_DIFFUSION_AUGMENTATION, SINGLE_SEED, SUBSET_DATA, NOT_FOR_PAPER_CLAIMS]
+random_seed: 7
+device: cuda
+batch_size: 128
+fixed_views: {manifest: outputs/fixed_diffusion_views/views_manifest.json}
+audit_subset_manifest: configs/intra_sample_candidate_audit_manifest.json
+teacher_checkpoint: outputs/rapid_idea_validation/G1_0.pt
+teacher_model: {name: tcn, hidden_channels: 32, projection_dim: 32, levels: 3}
+generator:
+  hidden_channels: 64
+  semantic_dimension: 32
+  residual_blocks: 3
+  diffusion_steps: 50
+  train_max_timestep: 15
+  epochs: 6
+  learning_rate: 0.001
+  lambda_prob: 0.1
+  lambda_feat: 0.1
+  t_aug: [5, 10, 15]
+  audit_repeats: 3
+traditional_augmentation: {jitter_std: 0.02, scaling_std: 0.05}
+gate:
+  teacher_consistency: 0.9
+  feature_cosine: 0.9
+  minimum_normalized_l1: 0.01
+  maximum_normalized_l1: 1.0
+  minimum_fault_consistency_gain: 0.01
+output_dir: outputs/semantic_diffusion_augmentation/audit
+result_path: outputs/semantic_diffusion_augmentation/audit/result.json
