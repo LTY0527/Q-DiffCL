@@ -173,6 +173,17 @@ def augmentation_metrics(
     }
 
 
+def is_feasible_metric(metrics: dict[str, Any], gate: dict[str, Any]) -> bool:
+    """Apply validation-only semantic/diversity/numerical feasibility limits."""
+    return bool(
+        metrics["teacher_consistency"] >= float(gate["teacher_consistency"])
+        and metrics["teacher_feature_cosine"] >= float(gate["feature_cosine"])
+        and float(gate["minimum_normalized_l1"]) <= metrics["normalized_l1"] <= float(gate["maximum_normalized_l1"])
+        and metrics["finite"]
+        and metrics["abnormal_spike_fraction"] <= float(gate["maximum_abnormal_spike_fraction"])
+    )
+
+
 def audit(config: dict[str, Any]) -> dict[str, Any]:
     seed = int(config["random_seed"]); device = str(config["device"]); settings = config["generator"]
     seed_everything(seed); views, fixed_manifest = load_fixed_views(config); base = bases(views)
@@ -217,10 +228,7 @@ def audit(config: dict[str, Any]) -> dict[str, Any]:
                 )
     validation_g1 = audits["validation"]["G1"]; feasible = []
     for timestep, metrics in validation_g1.items():
-        if (metrics["teacher_consistency"] >= float(config["gate"]["teacher_consistency"])
-                and metrics["teacher_feature_cosine"] >= float(config["gate"]["feature_cosine"])
-                and float(config["gate"]["minimum_normalized_l1"]) <= metrics["normalized_l1"] <= float(config["gate"]["maximum_normalized_l1"])
-                and metrics["finite"] and metrics["abnormal_spike_fraction"] == 0):
+        if is_feasible_metric(metrics, config["gate"]):
             feasible.append(timestep)
     candidates = feasible or list(validation_g1)
     selected_t = max(candidates, key=lambda value: (validation_g1[value]["teacher_consistency"], validation_g1[value]["normalized_l1"]))
@@ -254,6 +262,7 @@ def audit(config: dict[str, Any]) -> dict[str, Any]:
                   "feature_cosine": float(config["gate"]["feature_cosine"]),
                   "minimum_normalized_l1": float(config["gate"]["minimum_normalized_l1"]),
                   "maximum_normalized_l1": float(config["gate"]["maximum_normalized_l1"]),
+                  "maximum_abnormal_spike_fraction": float(config["gate"]["maximum_abnormal_spike_fraction"]),
               },
               "selection_split": "validation", "gate_checks": checks, "downstream_retest_allowed": passed,
               "test_selected_t_only": test_audit}

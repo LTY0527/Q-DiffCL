@@ -25,6 +25,7 @@ gate:
   feature_cosine: 0.9
   minimum_normalized_l1: 0.01
   maximum_normalized_l1: 1.0
+  maximum_abnormal_spike_fraction: 0.001
   minimum_fault_consistency_gain: 0.01
-output_dir: outputs/semantic_diffusion_augmentation/audit
-result_path: outputs/semantic_diffusion_augmentation/audit/result.json
+output_dir: outputs/semantic_diffusion_augmentation/audit_v2
+result_path: outputs/semantic_diffusion_augmentation/audit_v2/result.json

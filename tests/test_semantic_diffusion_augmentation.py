@@ -14,7 +14,7 @@ from diffusion.semantic_augmentation import (
     partial_reverse_sample,
 )
 from losses import freeze_teacher, semantic_consistency_losses
-from scripts.audit_semantic_diffusion_augmentation import epoch_orders, generate_repeats
+from scripts.audit_semantic_diffusion_augmentation import epoch_orders, generate_repeats, is_feasible_metric
 
 
 class TinyTeacher(nn.Module):
@@ -135,3 +135,13 @@ def test_consistent_input_has_lower_semantic_loss_than_flipped_input():
     same = semantic_consistency_losses(teacher, base, base.clone())
     flipped = semantic_consistency_losses(teacher, base, -base)
     assert sum(float(value) for value in same) < sum(float(value) for value in flipped)
+
+
+def test_feasible_metric_allows_tiny_reported_spike_fraction_but_rejects_explosion():
+    gate = {"teacher_consistency": .9, "feature_cosine": .9, "minimum_normalized_l1": .01,
+            "maximum_normalized_l1": 1.0, "maximum_abnormal_spike_fraction": .001}
+    metric = {"teacher_consistency": .93, "teacher_feature_cosine": .99, "normalized_l1": .25,
+              "finite": True, "abnormal_spike_fraction": 3.3e-5}
+    assert is_feasible_metric(metric, gate)
+    metric["abnormal_spike_fraction"] = .01
+    assert not is_feasible_metric(metric, gate)

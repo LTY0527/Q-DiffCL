@@ -1,3 +1,4 @@
+import gc
 from pathlib import Path
 
 import numpy as np
@@ -69,4 +70,6 @@ def test_real_rieth_rdata_protocol():
             uid = make_run_uid(source_split, int(fault_id), int(simulation_run))
             assert uid not in all_run_uids
             all_run_uids.add(uid)
+        del numeric, per_run, frame, objects
+        gc.collect()
     assert len(all_run_uids) == 21_000

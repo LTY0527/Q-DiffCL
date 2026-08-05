@@ -17,6 +17,7 @@ from diffusion import DiffusionSchedule
 from diffusion.semantic_augmentation import SemanticPartialDiffusion1D
 from metrics import representation_diagnostics, select_binary_threshold
 from scripts.audit_semantic_diffusion_augmentation import (
+    augmentation_metrics,
     bases,
     generate_repeats,
     teacher_arrays,
@@ -31,6 +32,7 @@ from scripts.run_diffusion_quality_retest import (
     epoch_orders,
     load_fixed_views,
 )
+from diffusion.fixed_views import sha256_strings
 from trainers import build_model
 from utils import environment_metadata, seed_everything, write_json
 
@@ -158,8 +160,9 @@ def _fit_method(
     validation_probability, _ = _probabilities(model, base["validation"], int(config["batch_size"]), device)
     threshold = select_binary_threshold(views["validation"]["labels"], validation_probability[:, 1])
     probability, test_embedding = _probabilities(model, base["test"], int(config["batch_size"]), device)
+    _, augmented_embedding = _probabilities(model, augmented["test"], int(config["batch_size"]), device)
     score = probability[:, 1]
-    diagnostics = representation_diagnostics(test_embedding, test_embedding, views["test"]["labels"])
+    diagnostics = representation_diagnostics(test_embedding, augmented_embedding, views["test"]["labels"])
     return {
         "metrics": _metrics(views["test"]["labels"], score, threshold),
         "representation": {key: diagnostics[key] for key in ("fisher_ratio", "class_center_shift", "effective_rank")},
@@ -206,7 +209,7 @@ def run(config: dict[str, Any]) -> dict[str, Any]:
     t_aug = int(audit["selected_t_aug"])
     clip_min, clip_max = base["train"].min((0, 2)), base["train"].max((0, 2))
     augmented: dict[str, dict[str, np.ndarray]] = {name: {} for name in METHODS}
-    for split in ("train", "validation"):
+    for split in ("train", "validation", "test"):
         augmented[METHODS[0]][split] = traditional_augmentation(
             base[split], views[split]["window_id"], config["traditional_augmentation"], seed)
         for method, generator_name in ((METHODS[1], "G0"), (METHODS[2], "G1")):
@@ -217,6 +220,8 @@ def run(config: dict[str, Any]) -> dict[str, Any]:
 
     pretrain_orders = epoch_orders(len(base["train"]), int(config["epochs"]), seed + 10_000)
     probe_orders = epoch_orders(len(base["train"]), int(config["probe_epochs"]), seed + 20_000)
+    pretrain_order_hash = sha256_strings([",".join(map(str, order.tolist())) for order in pretrain_orders])
+    probe_order_hash = sha256_strings([",".join(map(str, order.tolist())) for order in probe_orders])
     seed_everything(seed)
     template = build_model(config["model"], base["train"].shape[1], 2)
     initial_state = copy.deepcopy(template.state_dict())
@@ -227,7 +232,7 @@ def run(config: dict[str, Any]) -> dict[str, Any]:
     if b2_has_positive_signal(results[METHODS[1]], results[METHODS[2]]):
         b3_views: dict[str, np.ndarray] = {}
         gate_diagnostics: dict[str, Any] = {}
-        for split in ("train", "validation"):
+        for split in ("train", "validation", "test"):
             second = generate_repeats(
                 generators["G1"], base[split], views[split]["observation"], semantic[split], schedule,
                 t_aug, 1, int(config["batch_size"]), device, seed + 500_000, clip_min, clip_max,
@@ -236,12 +241,20 @@ def run(config: dict[str, Any]) -> dict[str, Any]:
                 base[split], augmented[METHODS[2]][split], second, augmented[METHODS[0]][split],
                 teacher, int(config["batch_size"]), device, config["semantic_gate"],
             )
+        augmented["B3 语义有效性门控"] = b3_views
         results["B3 语义有效性门控"] = _fit_method(
-            "B3 语义有效性门控", b3_views, base, views, initial_state,
+            "B3 语义有效性门控", augmented["B3 语义有效性门控"], base, views, initial_state,
             pretrain_orders, probe_orders, config, device,
         )
         results["B3 语义有效性门控"]["gate_diagnostics"] = gate_diagnostics
         b3_status = {"status": "RUN", "gate_diagnostics": gate_diagnostics}
+
+    test_probability, test_feature = teacher_arrays(teacher, base["test"], int(config["batch_size"]), device)
+    for name, value in results.items():
+        value["augmentation_audit"] = augmentation_metrics(
+            base["test"], augmented[name]["test"][None], views["test"]["labels"], views["test"]["run_uid"],
+            test_probability, test_feature, teacher, int(config["batch_size"]), device,
+        )
 
     b0, b1, b2 = (results[name] for name in METHODS)
     checks = {
@@ -261,6 +274,8 @@ def run(config: dict[str, Any]) -> dict[str, Any]:
         "selected_t_aug": t_aug, "selection_split": "validation", "results": results,
         "b3": b3_status, "gate_checks": checks,
         "fairness": {"same_split_seed_initialization_batch_order_optimizer_lr_epochs_temperature_projection_probe_threshold_test": True,
+                     "initialization_sha256": _state_hash(initial_state),
+                     "pretrain_batch_order_sha256": pretrain_order_hash, "probe_batch_order_sha256": probe_order_hash,
                      "sample_total_weight": 1.0, "only_variable": "positive augmentation view source"},
         "total_seconds": time.perf_counter() - started,
     }
