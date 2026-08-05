@@ -1,0 +1,46 @@
+mode: semantic_diffusion_3seed_validation
+markers: [SEMANTIC_DIFFUSION_3SEED_VALIDATION, FIXED_CONFIG, SUBSET_DATA, NOT_FOR_PAPER_FINAL_CLAIMS]
+seeds: [7, 42, 2026]
+device: cuda
+deterministic_algorithms: true
+cublas_workspace_config: ":4096:8"
+batch_size: 128
+temperature: 0.1
+learning_rate: 0.001
+epochs: 8
+early_stopping_patience: 8
+probe_epochs: 8
+probe_early_stopping_patience: 8
+fixed_views: {manifest: outputs/fixed_diffusion_views/views_manifest.json}
+teacher_checkpoint: outputs/rapid_idea_validation/G1_0.pt
+teacher_model: {name: tcn, hidden_channels: 32, projection_dim: 32, levels: 3}
+model: {name: tcn, hidden_channels: 32, projection_dim: 32, levels: 3}
+generator:
+  hidden_channels: 64
+  semantic_dimension: 32
+  residual_blocks: 3
+  diffusion_steps: 50
+  train_max_timestep: 15
+  epochs: 6
+  learning_rate: 0.001
+  lambda_prob: 0.1
+  lambda_feat: 0.1
+t_aug: 5
+traditional_augmentation: {jitter_std: 0.02, scaling_std: 0.05}
+data_protocol:
+  task: binary_fault_detection
+  degradation: mcar_missing
+  mask_ratio: 0.3
+  window_length: 64
+  stride: 16
+  scaler: standard
+  split_seed: 7
+  transition_policy: exclude_transition
+run_methods: [B0, B1, B2]
+run_b3: false
+stability_gate:
+  maximum_mean_recall_drop: 0.01
+  maximum_mean_auprc_drop: 0.005
+  catastrophic_far_increase: 0.05
+  catastrophic_recall_drop: 0.05
+output_dir: outputs/semantic_diffusion_3seed

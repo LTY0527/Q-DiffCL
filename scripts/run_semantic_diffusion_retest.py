@@ -136,7 +136,7 @@ def _fit_method(
     name: str, augmented: dict[str, np.ndarray], base: dict[str, np.ndarray],
     views: dict[str, dict[str, np.ndarray]], initial_state: dict[str, torch.Tensor],
     pretrain_orders: list[np.ndarray], probe_orders: list[np.ndarray],
-    config: dict[str, Any], device: str,
+    config: dict[str, Any], device: str, checkpoint_path: Path | None = None,
 ) -> dict[str, Any]:
     seed = int(config["random_seed"])
     seed_everything(seed)
@@ -163,6 +163,11 @@ def _fit_method(
     _, augmented_embedding = _probabilities(model, augmented["test"], int(config["batch_size"]), device)
     score = probability[:, 1]
     diagnostics = representation_diagnostics(test_embedding, augmented_embedding, views["test"]["labels"])
+    if checkpoint_path is not None:
+        if checkpoint_path.exists():
+            raise FileExistsError(f"refusing to overwrite classifier checkpoint: {checkpoint_path}")
+        checkpoint_path.parent.mkdir(parents=True, exist_ok=True)
+        torch.save(model.state_dict(), checkpoint_path)
     return {
         "metrics": _metrics(views["test"]["labels"], score, threshold),
         "representation": {key: diagnostics[key] for key in ("fisher_ratio", "class_center_shift", "effective_rank")},
@@ -172,6 +177,8 @@ def _fit_method(
         "sample_total_weight": 1.0,
         "pretrain_history": pretrain,
         "probe_history": probe,
+        "best_pretrain_epoch": int(min(pretrain, key=lambda row: row["validation_supcon_loss"])["epoch"]),
+        "best_probe_epoch": int(max(probe, key=lambda row: row["validation_macro_f1"])["epoch"]),
         "training_seconds": time.perf_counter() - started,
         "peak_gpu_mib": torch.cuda.max_memory_allocated() / 1024 ** 2 if torch.cuda.is_available() else 0.0,
         "method": name,
