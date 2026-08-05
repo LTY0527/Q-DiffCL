@@ -248,6 +248,13 @@ def audit(config: dict[str, Any]) -> dict[str, Any]:
               "same_training_noise": True, "same_audit_sampling_noise": True,
               "semantic_injection": "observation mask at input; teacher embedding projected into every residual block",
               "training": training, "audits": audits, "selected_t_aug": int(selected_t), "feasible_timesteps": list(map(int, feasible)),
+              "generator_checkpoints": {name: str(output / f"{name.lower()}_semantic_partial_diffusion.pt") for name in models},
+              "semantic_gate_thresholds": {
+                  "teacher_consistency": float(config["gate"]["teacher_consistency"]),
+                  "feature_cosine": float(config["gate"]["feature_cosine"]),
+                  "minimum_normalized_l1": float(config["gate"]["minimum_normalized_l1"]),
+                  "maximum_normalized_l1": float(config["gate"]["maximum_normalized_l1"]),
+              },
               "selection_split": "validation", "gate_checks": checks, "downstream_retest_allowed": passed,
               "test_selected_t_only": test_audit}
     write_json(Path(config["result_path"]), result); return result
