@@ -44,7 +44,7 @@ class RecordingZeroModel(nn.Module):
         super().__init__()
         self.timesteps: list[int] = []
 
-    def forward(self, noisy, observation, timesteps, semantic):
+    def forward(self, noisy, base, observation, timesteps, semantic):
         self.timesteps.append(int(timesteps[0]))
         return torch.zeros_like(noisy)
 
@@ -73,11 +73,11 @@ def test_semantic_embedding_changes_output_and_enters_every_residual_block():
     calls = [0] * len(model.blocks)
     hooks = []
     for index, block in enumerate(model.blocks):
-        hooks.append(block.semantic_projection.register_forward_hook(
+        hooks.append(block.condition_projection.register_forward_hook(
             lambda _module, _inputs, _output, index=index: calls.__setitem__(index, calls[index] + 1)
         ))
-    first = model(noisy, observation, timesteps, torch.zeros(3, 8))
-    second = model(noisy, observation, timesteps, torch.ones(3, 8))
+    first = model(noisy, noisy, observation, timesteps, torch.zeros(3, 8))
+    second = model(noisy, noisy, observation, timesteps, torch.ones(3, 8))
     for hook in hooks:
         hook.remove()
     assert calls == [2, 2, 2]
