@@ -31,6 +31,7 @@ from scripts.run_diffusion_quality_retest import (
     _state_hash,
     epoch_orders,
     load_fixed_views,
+    best_probe_record,
 )
 from diffusion.fixed_views import sha256_strings
 from trainers import build_model
@@ -178,7 +179,8 @@ def _fit_method(
         "pretrain_history": pretrain,
         "probe_history": probe,
         "best_pretrain_epoch": int(min(pretrain, key=lambda row: row["validation_supcon_loss"])["epoch"]),
-        "best_probe_epoch": int(max(probe, key=lambda row: row["validation_macro_f1"])["epoch"]),
+        "best_probe_epoch": int(best_probe_record(probe)["epoch"]),
+        "best_probe_validation_threshold": float(best_probe_record(probe)["validation_threshold"]),
         "training_seconds": time.perf_counter() - started,
         "peak_gpu_mib": torch.cuda.max_memory_allocated() / 1024 ** 2 if torch.cuda.is_available() else 0.0,
         "method": name,

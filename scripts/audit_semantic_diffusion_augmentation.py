@@ -98,6 +98,7 @@ def generate_repeats(
     model: SemanticPartialDiffusion1D, base: np.ndarray, observation: np.ndarray,
     semantic: np.ndarray, schedule: DiffusionSchedule, t_aug: int, repeats: int,
     batch_size: int, device: str, seed: int, clip_min: np.ndarray, clip_max: np.ndarray,
+    alpha: float = 1.0,
 ) -> np.ndarray:
     result = np.empty((repeats, *base.shape), dtype=np.float32)
     minimum = torch.from_numpy(clip_min).float().to(device)[None, :, None]
@@ -110,7 +111,7 @@ def generate_repeats(
             result[repeat, start:stop] = partial_reverse_sample(
                 model, schedule, torch.from_numpy(base[start:stop]).to(device),
                 torch.from_numpy(observation[start:stop]).to(device),
-                torch.from_numpy(semantic[start:stop]).to(device), t_aug, generator, minimum, maximum,
+                torch.from_numpy(semantic[start:stop]).to(device), t_aug, generator, minimum, maximum, alpha,
             ).cpu().numpy()
     return result
 

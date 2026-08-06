@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import torch
+import numpy as np
 from torch import nn
 
 from diffusion.semantic_augmentation import (
@@ -9,6 +10,14 @@ from diffusion.semantic_augmentation import (
     sample_training_timesteps,
 )
 from losses import balanced_semantic_consistency_loss, freeze_teacher
+from scripts.run_diffusion_quality_retest import best_probe_record
+from scripts.run_semantic_generator_stability_fix import (
+    diversity_penalty,
+    generator_score,
+    select_best_candidate,
+    update_ema,
+)
+from scripts.run_semantic_generator_downstream_retest import generator_allows_downstream
 
 
 class BoundaryTeacher(nn.Module):
@@ -86,3 +95,36 @@ def test_single_class_batch_is_finite_teacher_frozen_and_generator_gets_gradient
     assert result["fault_count"] == 0 and result["normal_count"] == 3
     assert generated.grad is not None and torch.isfinite(generated.grad).all()
     assert all(parameter.grad is None and not parameter.requires_grad for parameter in teacher.parameters())
+
+
+def test_generator_score_and_best_checkpoint_use_validation_only_formula():
+    config = {"validation": {"normalized_l1_minimum": .1, "normalized_l1_maximum": .2,
+                             "score_weights": {"balanced_flip_rate": 1., "probability_distance": 1., "diversity_penalty": 1.}}}
+    assert diversity_penalty(.05, .1, .2) == .05
+    good = {"normal_to_fault_flip": .1, "fault_to_normal_flip": .1, "teacher_probability_kl": .02, "normalized_l1": .15}
+    bad = dict(good, normal_to_fault_flip=.3, normalized_l1=.3)
+    records = [{"epoch": 0, "variant": "raw", "score": generator_score(bad, config)},
+               {"epoch": 1, "variant": "ema", "score": generator_score(good, config)}]
+    assert select_best_candidate(records)["epoch"] == 1
+
+
+def test_ema_update_matches_formula():
+    ema = {"weight": torch.tensor([1.0]), "count": torch.tensor(1)}
+    state = {"weight": torch.tensor([3.0]), "count": torch.tensor(2)}
+    update_ema(ema, state, .5)
+    assert torch.equal(ema["weight"], torch.tensor([2.0])) and int(ema["count"]) == 2
+
+
+def test_probe_selection_uses_thresholded_validation_tie_breakers():
+    history = [
+        {"epoch": 0, "validation_macro_f1": .8, "validation_far": .2, "validation_fault_recall": .9, "validation_auprc": .9, "validation_threshold": .4},
+        {"epoch": 1, "validation_macro_f1": .8, "validation_far": .1, "validation_fault_recall": .8, "validation_auprc": .8, "validation_threshold": .6},
+    ]
+    assert best_probe_record(history)["epoch"] == 1
+    assert best_probe_record(history)["validation_threshold"] == .6
+
+
+def test_downstream_gate_defaults_to_skip_and_has_no_test_selection_input():
+    assert not generator_allows_downstream({})
+    assert not generator_allows_downstream({"status": "SEMANTIC_GENERATOR_FIX_NO_GO"})
+    assert generator_allows_downstream({"status": "SEMANTIC_GENERATOR_FIX_READY_FOR_DOWNSTREAM_RETEST"})

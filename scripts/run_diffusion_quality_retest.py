@@ -131,7 +131,7 @@ def _fit_probe(model: torch.nn.Module, train: dict[str, np.ndarray], validation:
     for parameter in model.parameters(): parameter.requires_grad = False
     for parameter in model.classification_head.parameters(): parameter.requires_grad = True
     optimizer = torch.optim.Adam(model.classification_head.parameters(), lr=float(config["learning_rate"]))
-    history = []; best_state = None; best_score = -1.0; stale = 0
+    history = []; best_state = None; best_record = None; stale = 0
     for epoch, order in enumerate(orders):
         model.train(); losses = []
         for indices in _batches(order, int(config["batch_size"])):
@@ -140,16 +140,30 @@ def _fit_probe(model: torch.nn.Module, train: dict[str, np.ndarray], validation:
             optimizer.zero_grad(); loss = F.cross_entropy(model(x)["logits"], y)
             loss.backward(); optimizer.step(); losses.append(float(loss.detach()))
         probability, _ = _probabilities(model, validation["restored"], int(config["batch_size"]), device)
-        prediction = probability[:, 1] >= .5
-        score = float(classification_metrics(validation["labels"], prediction, probability)["macro_f1"])
-        history.append({"epoch": epoch, "loss": float(np.mean(losses)), "validation_macro_f1": score})
-        if score > best_score + 1e-6:
-            best_score, best_state, stale = score, copy.deepcopy(model.state_dict()), 0
+        threshold = select_binary_threshold(validation["labels"], probability[:, 1])
+        metrics = _metrics(validation["labels"], probability[:, 1], threshold)
+        record = {"epoch": epoch, "loss": float(np.mean(losses)), "validation_threshold": threshold,
+                  "validation_macro_f1": metrics["macro_f1"], "validation_far": metrics["far"],
+                  "validation_fault_recall": metrics["fault_recall"], "validation_auprc": metrics["auprc"]}
+        history.append(record)
+        if best_record is None or probe_epoch_rank(record) > probe_epoch_rank(best_record):
+            best_record, best_state, stale = record, copy.deepcopy(model.state_dict()), 0
         else:
             stale += 1
             if stale >= int(config["probe_early_stopping_patience"]): break
     if best_state is not None: model.load_state_dict(best_state)
     return history
+
+
+def probe_epoch_rank(record: dict[str, float]) -> tuple[float, float, float, float]:
+    return (float(record["validation_macro_f1"]), -float(record["validation_far"]),
+            float(record["validation_fault_recall"]), float(record["validation_auprc"]))
+
+
+def best_probe_record(history: list[dict[str, float]]) -> dict[str, float]:
+    if not history:
+        raise ValueError("probe history must not be empty")
+    return max(history, key=probe_epoch_rank)
 
 
 def _state_hash(state: dict[str, torch.Tensor]) -> str:
