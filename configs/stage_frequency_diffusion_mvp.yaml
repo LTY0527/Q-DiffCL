@@ -1,6 +1,8 @@
 mode: stage_frequency_diffusion_mvp
 markers: [STAGE_FREQUENCY_DIFFUSION_MVP, FORWARD_DIFFUSION_ONLY, FIXED_TEP_SUBSET, NOT_FOR_PAPER_CLAIMS]
 device: cuda
+deterministic_algorithms: true
+cublas_workspace_config: ":4096:8"
 fixed_views: {manifest: outputs/fixed_diffusion_views/views_manifest.json}
 output_dir: outputs/stage_frequency_diffusion_mvp
 frequency_audit_result: outputs/stage_frequency_diffusion_mvp/frequency_audit/result.json
@@ -49,6 +51,7 @@ spectral_diffusion:
   noise_budget_matching: alpha_bar_mean
   sampling_seed_offset: 61000
   clip_quantile: 0.999
+  candidate_selection: validation_critical_fisher_plus_early_retention
 training:
   selection_seed: 7
   seeds: [7, 42, 2026]
@@ -70,4 +73,3 @@ mvp_gate:
   strong_macro_f1_gain: 0.005
   strong_far_reduction: 0.01
   strong_early_recall_gain: 0.01
-
