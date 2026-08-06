@@ -1,0 +1,34 @@
+mode: semantic_generator_stability_fix
+markers: [SEMANTIC_GENERATOR_STABILITY_FIX, GENERATOR_FIRST, FIXED_TEP_SUBSET, NOT_FOR_PAPER_CLAIMS]
+seeds: [7, 42, 2026]
+device: cuda
+deterministic_algorithms: true
+cublas_workspace_config: ":4096:8"
+batch_size: 128
+fixed_views: {manifest: outputs/fixed_diffusion_views/views_manifest.json}
+validation_subset_manifest: configs/intra_sample_candidate_audit_manifest.json
+teacher_checkpoint: outputs/rapid_idea_validation/G1_0.pt
+teacher_model: {name: tcn, hidden_channels: 32, projection_dim: 32, levels: 3}
+generator:
+  hidden_channels: 64
+  semantic_dimension: 32
+  residual_blocks: 3
+  diffusion_steps: 50
+  old_train_max_timestep: 15
+  train_timesteps: [3, 4, 5, 6, 7]
+  t_aug: 5
+  learning_rate: 0.001
+  old_epochs: 6
+  max_epochs: 20
+  early_stopping_patience: 4
+  lambda_candidates: [0.03, 0.1]
+  alpha_candidates: [0.4, 0.6]
+  ema: {enabled: true, decay: 0.999}
+validation:
+  sampling_seed_offset: 90000
+  normalized_l1_minimum: 0.10
+  normalized_l1_maximum: 0.20
+  score_weights: {balanced_flip_rate: 1.0, probability_distance: 1.0, diversity_penalty: 1.0}
+diagnosis_output_dir: outputs/semantic_generator_stability_fix/diagnosis_old
+output_dir: outputs/semantic_generator_stability_fix/fixed
+downstream_output_dir: outputs/semantic_generator_stability_fix/downstream
