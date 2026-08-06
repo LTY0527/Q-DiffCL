@@ -1,0 +1,39 @@
+mode: teacher_semantic_loss_audit
+markers: [TEACHER_AND_SEMANTIC_LOSS_AUDIT, GENERATOR_ONLY, THREE_SEEDS, NOT_FOR_PAPER_CLAIMS]
+device: cuda
+seed: 20260806
+batch_size: 256
+fixed_views: {manifest: outputs/fixed_diffusion_views/views_manifest.json}
+teacher_checkpoint: outputs/rapid_idea_validation/G1_0.pt
+teacher_model: {name: tcn, hidden_channels: 32, projection_dim: 32, levels: 3}
+output_dir: outputs/teacher_semantic_loss_audit
+teacher_result: outputs/teacher_semantic_loss_audit/teacher_reliability/result.json
+teacher_report: docs/teacher_reliability_audit.md
+semantic_report: docs/semantic_loss_ablation_report.md
+perturbations:
+  jitter_std: 0.01
+  scaling_std: 0.01
+  masking_ratio: 0.02
+  interpolation_mask_ratio: 0.05
+  interpolation_blend: 0.20
+teacher_gate:
+  minimum_consistency: 0.95
+  maximum_directional_flip: 0.05
+  maximum_direction_gap: 0.03
+  minimum_major_fault_type_count: 16
+  minimum_major_fault_type_consistency: 0.90
+  minimum_macro_f1: 0.80
+  minimum_auprc: 0.85
+  minimum_auroc: 0.85
+  minimum_effective_rank: 2.0
+  minimum_fault_type_recall: 0.50
+  maximum_low_fault_type_fraction: 0.25
+ablation:
+  seeds: [7, 42, 2026]
+  methods: [S0, S1-js, S2-margin, S3-feature]
+  lambda_sem: 0.1
+  lambda_candidates_if_gradient_mismatch: [0.03, 0.1]
+  alpha: 0.4
+  train_timesteps: [3, 4, 5, 6, 7]
+  t_aug: 5
+
