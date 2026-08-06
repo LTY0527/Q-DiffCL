@@ -1,0 +1,73 @@
+mode: stage_frequency_diffusion_mvp
+markers: [STAGE_FREQUENCY_DIFFUSION_MVP, FORWARD_DIFFUSION_ONLY, FIXED_TEP_SUBSET, NOT_FOR_PAPER_CLAIMS]
+device: cuda
+fixed_views: {manifest: outputs/fixed_diffusion_views/views_manifest.json}
+output_dir: outputs/stage_frequency_diffusion_mvp
+frequency_audit_result: outputs/stage_frequency_diffusion_mvp/frequency_audit/result.json
+frequency_audit_report: docs/frequency_criticality_audit.md
+mvp_report: docs/stage_frequency_diffusion_mvp_report.md
+frequency_figure_dir: docs/assets/stage_frequency_diffusion_mvp
+protocol:
+  task: binary_fault_detection
+  degradation: mcar_missing
+  mask_ratio: 0.3
+  window_length: 64
+  stride: 16
+  transition_policy: exclude_transition
+  split_seed: 7
+  fault_onset: {training: 21, testing: 161}
+stage:
+  early_horizon_windows: 4
+  middle_horizon_windows: 12
+fft:
+  length: 64
+  bins: 33
+  log_amplitude: log1p_abs_rfft
+  preserve_phase: true
+  scaler_fit_split: train
+criticality:
+  critical_ratio: 0.30
+  weight_discriminative: 0.5
+  weight_early: 0.3
+  weight_run_stability: 0.2
+  bootstrap_repeats: 64
+  bootstrap_seed: 17007
+  minimum_bootstrap_overlap: 0.50
+  minimum_fisher_ratio: 1.20
+  minimum_early_ratio: 1.10
+  maximum_energy_composite_overlap: 0.95
+  minimum_validation_direction_agreement: 0.60
+  minimum_nonlow_frequency_fraction: 0.20
+  gate_minimum_passes: 4
+spectral_diffusion:
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical_candidates: [3, 5, 8]
+  preserve_phase: true
+  preserve_dc: true
+  noise_budget_matching: alpha_bar_mean
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+training:
+  selection_seed: 7
+  seeds: [7, 42, 2026]
+  methods: [C0, C1, C2]
+  model: {name: tcn, hidden_channels: 32, projection_dim: 32, levels: 3}
+  batch_size: 128
+  learning_rate: 0.001
+  epochs: 8
+  early_stopping_patience: 8
+  probe_epochs: 8
+  probe_early_stopping_patience: 8
+  temperature: 0.1
+  traditional_augmentation: {jitter_std: 0.03, scaling_std: 0.05}
+detection:
+  sustained_alarm_windows: 3
+mvp_gate:
+  maximum_auprc_drop: 0.005
+  maximum_recall_drop: 0.01
+  strong_macro_f1_gain: 0.005
+  strong_far_reduction: 0.01
+  strong_early_recall_gain: 0.01
+
