@@ -1,0 +1,46 @@
+mode: frequency_selective_far_fix
+markers: [FREQUENCY_SELECTIVE_FAR_FIX, STRUCTURE_PRESERVING_SPECTRAL_NOISE, EXPLORATORY_TEP_SUBSET, NOT_FOR_PAPER_CLAIMS]
+base_config: configs/stage_frequency_diffusion_mvp.yaml
+device: cuda
+deterministic_algorithms: true
+cublas_workspace_config: ":4096:8"
+fixed_views: {manifest: outputs/fixed_diffusion_views/views_manifest.json}
+frequency_audit_result: outputs/stage_frequency_diffusion_mvp/frequency_audit/result.json
+old_mvp_result: outputs/stage_frequency_diffusion_mvp/seed_7/result.json
+output_dir: outputs/frequency_selective_far_fix
+diagnosis_result: outputs/frequency_selective_far_fix/diagnosis/result.json
+diagnosis_report: docs/frequency_selective_far_diagnosis.md
+fix_report: docs/frequency_selective_far_fix_report.md
+diagnosis:
+  seed: 7
+  t_noncritical_candidates: [3, 5, 8]
+  threshold_band_width: 0.05
+  high_correlation_quantile: 0.90
+  minimum_far_reduction_signal: 0.005
+  minimum_structure_drift_ratio: 1.10
+  replay_metric_tolerance: 1.0e-8
+correlated_noise:
+  enabled: true
+  shrinkage_to_diagonal: 0.25
+  eigenvalue_floor: 1.0e-5
+  marginal_variance_matching: true
+channel_budget:
+  maximum_ratio_to_c1: 1.20
+  renormalize_when_exceeded: true
+repair_variants:
+  R0: {noise_structure: iid, t_noncritical: 8}
+  R1: {noise_structure: iid, t_noncritical: 5}
+  R2: {noise_structure: correlated, t_noncritical: 8}
+  R3: {noise_structure: correlated, t_noncritical: 5}
+selection:
+  macro_f1_tolerance: 0.001
+  maximum_far_above_c1: 0.005
+  maximum_auprc_drop: 0.005
+  maximum_recall_drop: 0.01
+seed7_gate:
+  maximum_far_above_c1: 0.005
+  maximum_auprc_drop: 0.005
+  maximum_recall_drop: 0.01
+  minimum_macro_f1_gain_signal: 0.005
+  minimum_far_reduction_vs_c2_signal: 0.01
+
