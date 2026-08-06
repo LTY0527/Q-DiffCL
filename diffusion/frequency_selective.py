@@ -89,7 +89,7 @@ def constrain_channel_budget(variance: torch.Tensor, c1_variance: torch.Tensor,
         raise ValueError("channel budget redistribution exceeds feasible per-bin variance")
     if torch.any(constrained.sum(1) > caps + 1e-6):
         raise RuntimeError("channel noise budget constraint failed")
-    if abs(float(constrained.sum() - target_total)) > 1e-6:
+    if abs(float(constrained.mean() - variance.mean())) > 1e-8:
         raise RuntimeError("channel budget changed the total noise budget")
     return constrained
 

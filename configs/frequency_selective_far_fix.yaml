@@ -43,4 +43,10 @@ seed7_gate:
   maximum_recall_drop: 0.01
   minimum_macro_f1_gain_signal: 0.005
   minimum_far_reduction_vs_c2_signal: 0.01
-
+recorded_result:
+  cause: A. INTENSITY_DOMINANT
+  selected_variant: R1
+  selected_noise_structure: iid
+  selected_t_noncritical: 5
+  status: FREQUENCY_SELECTIVE_STRUCTURE_FIX_SEED7_NO_GO
+  three_seed_run: false

@@ -36,6 +36,17 @@ def test_channel_budget_caps_each_channel_and_preserves_total():
     assert torch.isclose(constrained.sum(), variance.sum(), atol=1e-6)
 
 
+def test_channel_budget_accepts_only_machine_scale_accumulation_error():
+    generator = torch.Generator().manual_seed(4)
+    variance = torch.rand((52, 33), generator=generator) * .03
+    variance[:, 0] = 0
+    reference = torch.full_like(variance, float(variance.mean()))
+    reference[:, 0] = 0
+    reference *= variance.sum() / reference.sum()
+    constrained = constrain_channel_budget(variance, reference, 1.2)
+    assert abs(float(constrained.mean() - variance.mean())) <= 1e-8
+
+
 def test_correlated_noise_is_reproducible_seed_sensitive_finite_and_budgeted():
     rng = np.random.default_rng(2)
     latent = rng.normal(size=(32, 1, 64)).astype(np.float32)

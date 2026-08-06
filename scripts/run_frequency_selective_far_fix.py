@@ -183,6 +183,7 @@ def run(config: dict[str, Any]) -> dict[str, Any]:
               "validation_variants": variants, "seed7": {"C0": old["results"][METHODS[0]], "C1": c1, "C2": c2, "C2-S": c2s},
               "seed7_gate_checks": checks, "seed7_passed": passed, "three_seed_run": False,
               "c2s_test_audit": c2s_audit, "c2_validation_normal_corr_drift": c2_drift,
+              "c2_test_audit": c2_old_audit,
               "c2s_validation_normal_corr_drift": c2s_drift,
               "structure_fit": {"fit_split": structure.fit_split, "shape": list(structure.covariance.shape),
                                 "shrinkage": structure.shrinkage_to_diagonal,
