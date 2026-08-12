@@ -13,3 +13,9 @@ timesteps: [3, 4, 5]
 effect_ratio_threshold: 1.10
 minimum_strong_layers: 2
 high_correlation_quantile: 0.90
+recorded_result:
+  status: STAGE_TIMESTEP_EFFECT_WEAK
+  budget_mvp_allowed: true
+  median_time_ratio: 0.9924073721
+  median_noncritical_frequency_ratio: 1.0187438861
+  median_representation_ratio: 0.9763659826
