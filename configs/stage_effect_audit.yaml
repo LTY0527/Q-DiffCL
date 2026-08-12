@@ -1,0 +1,15 @@
+mode: stage_effect_audit
+markers: [STAGE_EFFECT_AUDIT, STAGE_PERTURBATION_BUDGET_MVP, FIXED_R1_BASELINE, EXPLORATORY_TEP_SUBSET, NOT_FOR_PAPER_FINAL_CLAIMS]
+base_config: configs/stage_frequency_diffusion_mvp.yaml
+c3_config: configs/stage_aware_diffusion_curriculum.yaml
+r1_checkpoint: outputs/stage_aware_diffusion_curriculum/seed_7/R1/model.pt
+fixed_views_manifest: outputs/fixed_diffusion_views/views_manifest.json
+output_dir: outputs/stage_effect_audit
+result: outputs/stage_effect_audit/result.json
+report: docs/stage_effect_audit.md
+device: cuda
+seed: 7
+timesteps: [3, 4, 5]
+effect_ratio_threshold: 1.10
+minimum_strong_layers: 2
+high_correlation_quantile: 0.90
