@@ -1,0 +1,42 @@
+mode: stage_aware_diffusion_curriculum
+markers: [STAGE_AWARE_DIFFUSION_CURRICULUM, INCREMENTAL_C3_VALIDATION, FIXED_R1_BASELINE, EXPLORATORY_TEP_SUBSET, NOT_FOR_PAPER_FINAL_CLAIMS]
+base_config: configs/stage_frequency_diffusion_mvp.yaml
+r1_config: configs/frequency_selective_r1_3seed.yaml
+r1_result: outputs/frequency_selective_r1_3seed/result.json
+fixed_views_manifest: outputs/fixed_diffusion_views/views_manifest.json
+output_dir: outputs/stage_aware_diffusion_curriculum
+report: docs/stage_aware_diffusion_curriculum_report.md
+device: cuda
+seeds: [7, 42, 2026]
+methods: [R1, C3-E, C3-S]
+frozen:
+  t_critical: 1
+  r1_t_noncritical: 5
+  noise_structure: iid
+  preserve_phase: true
+  preserve_dc: true
+  critical_ratio: 0.30
+  weight_discriminative: 0.5
+  weight_early: 0.3
+  weight_run_stability: 0.2
+curriculum:
+  t_start: 2
+  epoch_only_targets: {normal: 5, early: 5, middle: 5, stable: 5}
+  stage_aware_targets: {normal: 5, early: 3, middle: 4, stable: 5}
+diagnosis: {threshold_band_width: 0.05}
+seed7_gate:
+  maximum_macro_f1_drop: 0.002
+  maximum_far_increase: 0.005
+  maximum_recall_drop: 0.01
+  maximum_auprc_drop: 0.005
+  minimum_early_gain: 0.01
+  minimum_delay_reduction_samples: 16
+three_seed_gate:
+  maximum_mean_macro_f1_drop: 0.002
+  maximum_mean_far_increase: 0.005
+  maximum_mean_recall_drop: 0.01
+  maximum_mean_auprc_drop: 0.005
+  catastrophic_macro_f1_drop: 0.02
+  catastrophic_far_increase: 0.03
+  catastrophic_recall_drop: 0.03
+  catastrophic_early_drop: 0.05

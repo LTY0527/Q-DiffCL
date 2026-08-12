@@ -8,3 +8,6 @@ from .frequency_selective import (FrequencyForwardDiffusion,
 __all__ = ["DiffusionSchedule", "ddpm_restore", "FrequencyForwardDiffusion",
            "SpectralStatistics", "fit_spectral_statistics", "spectral_noise_variance",
            "constrain_channel_budget"]
+from .stage_curriculum import StageAwareTimestepScheduler
+
+__all__.append("StageAwareTimestepScheduler")
