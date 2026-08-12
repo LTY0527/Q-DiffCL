@@ -40,3 +40,10 @@ three_seed_gate:
   catastrophic_far_increase: 0.03
   catastrophic_recall_drop: 0.03
   catastrophic_early_drop: 0.05
+recorded_result:
+  seed7_status: STAGE_AWARE_CURRICULUM_SEED7_NO_GO
+  seeds_completed: [7]
+  three_seed_executed: false
+  early_gain_c3s_vs_r1: 0.0
+  delay_reduction_c3s_vs_r1: 0.0
+  next_step: 停止C3，不搜索新target或schedule，不执行C4/C5

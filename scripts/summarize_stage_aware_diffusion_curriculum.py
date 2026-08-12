@@ -83,6 +83,17 @@ def render_report(result, path):
         for name, m in methods.items(): rows.append(f"| {seed} | {name} | {m['macro_f1']:.4f} | {m['auprc']:.4f} | {m['fault_recall']:.4f} | {m['far']:.4f} | {m['early_recall']:.4f} | {m['mean_delay']:.2f} |")
     means=[]
     for name,s in result["summary"].items(): means.append(f"| {name} | {s['macro_f1']['mean']:.4f} ± {s['macro_f1']['std']:.4f} | {s['far']['mean']:.4f} ± {s['far']['std']:.4f} | {s['early_recall']['mean']:.4f} ± {s['early_recall']['std']:.4f} | {s['mean_delay']['mean']:.2f} ± {s['mean_delay']['std']:.2f} |")
+    delta_rows=[]; seed7=result["seed_metrics"]["7"]
+    for comparison,first,second in (("C3-S - R1","C3-S","R1"),("C3-S - C3-E","C3-S","C3-E"),("C3-E - R1","C3-E","R1")):
+        a,b=seed7[first],seed7[second]
+        delta_rows.append(f"| {comparison} | {a['macro_f1']-b['macro_f1']:+.5f} | {a['auprc']-b['auprc']:+.5f} | {a['fault_recall']-b['fault_recall']:+.5f} | {a['far']-b['far']:+.5f} | {a['early_recall']-b['early_recall']:+.5f} | {a['mean_delay']-b['mean_delay']:+.2f} |")
+    strength_rows=[]; diagnostic_rows=[]
+    for name in ("R1","C3-E","C3-S"):
+        method=result["seed_results"]["7"]["methods"][name]; history=method["effective_timestep_history"]
+        for label,audit in (("首 epoch",history[0]),("末 epoch",history[-1])):
+            strength_rows.append(f"| {name} | {label} | {audit['mean_effective_t']:.3f} | {audit['stages']['normal']['effective_t']} / {audit['stages']['early']['effective_t']} / {audit['stages']['middle']['effective_t']} / {audit['stages']['stable']['effective_t']} | {audit['normalized_l1']:.5f} | {audit['stages']['normal']['normalized_l1']:.5f} | {audit['stages']['early']['normalized_l1']:.5f} | {audit['stages']['middle']['normalized_l1']:.5f} | {audit['stages']['stable']['normalized_l1']:.5f} | {audit['critical_frequency_l1']:.5f} | {audit['noncritical_frequency_l1']:.5f} |")
+        profile=method["test"]["score_profile"]; representation=method["test"]["representation"]
+        diagnostic_rows.append(f"| {name} | {profile['normal_to_fault']:.4f} | {profile['fault_to_normal']:.4f} | {representation['fisher_ratio']:.4f} | {representation['effective_rank']:.4f} |")
     report=f"""# 故障阶段感知频率扩散课程增量验证
 
 > **STAGE_AWARE_DIFFUSION_CURRICULUM / INCREMENTAL_C3_VALIDATION / FIXED_R1_BASELINE / EXPLORATORY_TEP_SUBSET / NOT_FOR_PAPER_FINAL_CLAIMS**
@@ -113,10 +124,34 @@ R1 已通过 3-Seed。本轮唯一问题是 training-time stage prior 能否在�
 |---|---|---|---|---|
 {chr(10).join(means)}
 
-Seed 7 Gate：`{result['seed7_gate']}`。3-Seed Gate：`{result['three_seed_gate']}`。C3-S-R1 与 C3-S-C3-E 的逐 Seed 配对差可由上述表直接审计；完整 Middle/Stable、median delay、检测率、missed runs、双向翻转、representation、每 epoch/stage effective t、normalized L1、关键/非关键频带扰动在 outputs 的 metrics.json。
+由于 Seed 7 Gate 未通过，本表只有一个 Seed，标准差记为 0；未将其伪装成 3-Seed 汇总。
+
+## Seed 7 配对增量
+
+`ΔFAR<0`、`ΔDelay<0` 才表示改善。
+
+| 比较 | ΔMacro-F1 | ΔAUPRC | ΔRecall | ΔFAR | ΔEarly | ΔDelay |
+|---|---:|---:|---:|---:|---:|---:|
+{chr(10).join(delta_rows)}
+
+## 课程强度与增强坍缩审计
+
+| 方法 | Epoch | Mean t | normal/early/middle/stable t | Overall L1 | Normal L1 | Early L1 | Middle L1 | Stable L1 | Critical L1 | Noncritical L1 |
+|---|---|---:|---|---:|---:|---:|---:|---:|---:|---:|
+{chr(10).join(strength_rows)}
+
+C3-S 末期 early/middle timestep 确实为 3/4，normal/stable 为 5；其 overall normalized L1 与 R1 接近，因此失败不是由整体 augmentation collapse 造成。完整 8-epoch 轨迹保存在 metrics.json。
+
+## 分数翻转与表示诊断
+
+| 方法 | normal→fault | fault→normal | Representation Fisher | Effective rank |
+|---|---:|---:|---:|---:|
+{chr(10).join(diagnostic_rows)}
+
+Seed 7 Gate：`{result['seed7_gate']}`。3-Seed Gate：`{result['three_seed_gate']}`。C3-S 保持四项核心边界，但 Early Recall/Delay 无实质改善，且不优于 C3-E；C3-E 自身也无工业改善。因此输出 NO-GO 并跳过 3-Seed。完整 Middle/Stable、median delay、检测率和 missed runs 在 outputs 的 metrics.json。
 
 课程审计用于确认 C3-S 不是整体 augmentation collapse；correlation/频带机制不作为选择条件。本阶段只报告 mean、sample std、配对方向，不计算 p-value，不声称统计显著。
 
-当前 TEP test 已经历多轮工程探索，因此本阶段仍不是论文最终无偏评测。若 C3 通过，下一步优先转向第二数据集或新的未触碰评测协议，而不是继续增加 C4/C5；若未通过则停止，不搜索新 target、t_start 或非线性 schedule。
+当前 TEP test 已经历多轮工程探索，因此本阶段仍不是论文最终无偏评测。本轮 C3 未通过，唯一下一步是停止该 Stage-aware 增量，不搜索新 target、t_start 或非线性 schedule，不增加 C4/C5；若未来继续研究，应优先转向第二数据集或新的未触碰评测协议。
 """
     Path(path).write_text(report,encoding="utf-8")
