@@ -36,23 +36,23 @@ def evaluate_gate(seed_metrics: dict[str, dict[str, dict[str, float]]], gate: di
     far_wins = sum(delta["far"] < 0 for delta in deltas.values())
     early_preserved = sum(delta["early_recall"] >= -float(gate["maximum_early_seed_drop"])
                           for delta in deltas.values())
-    catastrophic = {seed: (delta["macro_f1"] < -float(gate["catastrophic_macro_f1_drop"])
+    catastrophic = {seed: bool(delta["macro_f1"] < -float(gate["catastrophic_macro_f1_drop"])
                            or delta["far"] > float(gate["catastrophic_far_increase"])
                            or delta["fault_recall"] < -float(gate["catastrophic_recall_drop"])
                            or delta["early_recall"] < -float(gate["catastrophic_early_recall_drop"]))
                     for seed, delta in deltas.items()}
     checks = {
-        "mean_macro_f1_above_c1": r1_mean["macro_f1"] > c1_mean["macro_f1"],
+        "mean_macro_f1_above_c1": bool(r1_mean["macro_f1"] > c1_mean["macro_f1"]),
         "macro_f1_wins_at_least_2": macro_wins >= int(gate["minimum_macro_f1_wins"]),
-        "mean_far_below_c1": r1_mean["far"] < c1_mean["far"],
+        "mean_far_below_c1": bool(r1_mean["far"] < c1_mean["far"]),
         "far_wins_at_least_2": far_wins >= int(gate["minimum_far_wins"]),
-        "mean_recall_preserved": r1_mean["fault_recall"] >= c1_mean["fault_recall"] - float(gate["maximum_mean_recall_drop"]),
+        "mean_recall_preserved": bool(r1_mean["fault_recall"] >= c1_mean["fault_recall"] - float(gate["maximum_mean_recall_drop"])),
         "no_single_recall_drop_over_limit": all(delta["fault_recall"] >= -float(gate["maximum_single_recall_drop"])
                                                  for delta in deltas.values()),
-        "mean_auprc_preserved": r1_mean["auprc"] >= c1_mean["auprc"] - float(gate["maximum_mean_auprc_drop"]),
-        "mean_early_recall_preserved": r1_mean["early_recall"] >= c1_mean["early_recall"] - float(gate["maximum_mean_early_recall_drop"]),
+        "mean_auprc_preserved": bool(r1_mean["auprc"] >= c1_mean["auprc"] - float(gate["maximum_mean_auprc_drop"])),
+        "mean_early_recall_preserved": bool(r1_mean["early_recall"] >= c1_mean["early_recall"] - float(gate["maximum_mean_early_recall_drop"])),
         "early_preserved_at_least_2": early_preserved >= int(gate["minimum_early_preserved_seeds"]),
-        "mean_delay_within_one_stride": r1_mean["mean_delay"] <= c1_mean["mean_delay"] + float(gate["maximum_mean_delay_increase_samples"]),
+        "mean_delay_within_one_stride": bool(r1_mean["mean_delay"] <= c1_mean["mean_delay"] + float(gate["maximum_mean_delay_increase_samples"])),
         "no_catastrophic_seed": not any(catastrophic.values()),
     }
     all_core = all(checks.values())
@@ -122,6 +122,21 @@ def render_report(result: dict[str, Any], config: dict[str, Any], path: str) -> 
                               f"{r1['mean_delay']-other['mean_delay']:+.2f} |")
     checks = "\n".join(f"- {key}: `{value}`" for key, value in result["gate"]["checks"].items())
     fingerprints = "\n".join(f"- {key}: `{value}`" for key, value in result["fingerprints"].items())
+    diagnostic_rows = []
+    for seed in map(str, config["seeds"]):
+        for method in ("C1", "R1"):
+            record = result["seed_results"][seed]["methods"][method]
+            profile = record["test"]["score_profile"]
+            audit = record["augmentation_audit"]["test"]
+            representation = record["test"]["representation"]
+            diagnostic_rows.append(
+                f"| {seed} | {method} | {profile['normal_to_fault']:.4f} | {profile['fault_to_normal']:.4f} | "
+                f"{profile['normal']['mean']:.4f} | {profile['normal']['p95']:.4f} | {profile['fault']['mean']:.4f} | "
+                f"{audit['correlation_drift']['normal']['corr_drift']:.5f} | "
+                f"{audit['critical_fisher_retention']:.4f} | {audit['time_normalized_l1']:.4f} | "
+                f"{representation['fisher_ratio']:.4f} | {representation['class_center_shift']:.4f} | "
+                f"{representation['effective_rank']:.4f} |"
+            )
     report = f"""# R1 频率选择性扩散 3-Seed 稳定性复核
 
 > **FREQUENCY_SELECTIVE_R1_3SEED_VALIDATION / FIXED_R1_CONFIG / EXPLORATORY_TEP_SUBSET / NOT_FOR_PAPER_FINAL_CLAIMS**
@@ -150,7 +165,15 @@ Seed 7 reused=`{str(result['seed7_reused']).lower()}`；reason={result['seed7_re
 |---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 {chr(10).join(seed_rows)}
 
-每个方法的 Accuracy/AUROC、median delay、validation threshold、normal→fault/fault→normal、normal score mean/P95、fault score mean、representation Fisher/class-center/effective-rank、correlation drift、critical retention、normalized L1、预算、训练历史与 Probe 历史保存在对应 `metrics.json`。correlation drift 与 critical retention 只作机制诊断，不参与本轮 Gate。
+每个方法的 Accuracy/AUROC、median delay、validation threshold、预算、训练历史与 Probe 历史保存在对应 `metrics.json`。
+
+## 诊断指标
+
+| Seed | 方法 | N→F | F→N | Normal mean | Normal P95 | Fault mean | Normal corr drift | Critical retention | Norm. L1 | Repr. Fisher | Center shift | Eff. rank |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+{chr(10).join(diagnostic_rows)}
+
+correlation drift 与 critical retention 仅作机制分析，不参与本轮 Gate。
 
 ## Mean ± sample std（ddof=1）
 

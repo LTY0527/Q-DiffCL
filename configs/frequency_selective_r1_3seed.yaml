@@ -57,3 +57,10 @@ gate:
 diagnosis:
   threshold_band_width: 0.05
   high_correlation_quantile: 0.90
+recorded_result:
+  status: FREQUENCY_SELECTIVE_R1_3SEED_GO
+  seeds_completed: [7, 42, 2026]
+  macro_f1_wins_vs_c1: 2
+  far_wins_vs_c1: 3
+  early_preserved_vs_c1: 3
+  c3_allowed: true

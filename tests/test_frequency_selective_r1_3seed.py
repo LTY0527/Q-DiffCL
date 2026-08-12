@@ -1,4 +1,5 @@
 from copy import deepcopy
+import json
 
 import numpy as np
 import pytest
@@ -81,6 +82,12 @@ def test_recall_early_delay_and_catastrophic_gates():
 def test_sample_std_uses_ddof_one():
     result = mean_sample_std([1, 2, 3])
     assert result == {"mean": 2., "std": 1.}
+
+
+def test_gate_audit_is_standard_json_serializable():
+    seeds = {str(seed): _seed() for seed in (7, 42, 2026)}
+    _, audit = evaluate_gate(seeds, _gate())
+    json.dumps(audit)
 
 
 def test_seed7_reuse_is_explicitly_disabled_without_complete_hash_proof():
