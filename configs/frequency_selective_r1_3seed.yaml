@@ -1,0 +1,59 @@
+mode: frequency_selective_r1_3seed
+markers: [FREQUENCY_SELECTIVE_R1_3SEED_VALIDATION, FIXED_R1_CONFIG, EXPLORATORY_TEP_SUBSET, NOT_FOR_PAPER_FINAL_CLAIMS]
+base_config: configs/stage_frequency_diffusion_mvp.yaml
+far_fix_config: configs/frequency_selective_far_fix.yaml
+fixed_views_manifest: outputs/fixed_diffusion_views/views_manifest.json
+previous_result: outputs/frequency_selective_far_fix/repair/result.json
+output_dir: outputs/frequency_selective_r1_3seed
+report: docs/frequency_selective_r1_3seed_report.md
+device: cuda
+deterministic_algorithms: true
+seeds: [7, 42, 2026]
+methods: [C0, C1, R1]
+seed7_reuse: false
+seed7_reuse_reason: 旧结果缺少完整训练代码指纹、同轮C0/C1/R1公平性元数据和分阶段test诊断，按冻结协议重新运行
+frozen:
+  protocol:
+    task: binary_fault_detection
+    degradation: mcar_missing
+    mask_ratio: 0.30
+    window_length: 64
+    stride: 16
+    transition_policy: exclude_transition
+    split_seed: 7
+    fault_onset: {training: 21, testing: 161}
+  stage: {early_horizon_windows: 4, middle_horizon_windows: 12}
+  criticality:
+    critical_ratio: 0.30
+    weight_discriminative: 0.5
+    weight_early: 0.3
+    weight_run_stability: 0.2
+  spectral_diffusion:
+    diffusion_steps: 50
+    t_uniform: 3
+    t_critical: 1
+    t_noncritical: 5
+    preserve_phase: true
+    preserve_dc: true
+    noise_budget_matching: alpha_bar_mean
+    noise_structure: iid
+  detection: {sustained_alarm_windows: 3}
+gate:
+  minimum_macro_f1_wins: 2
+  minimum_far_wins: 2
+  maximum_mean_recall_drop: 0.01
+  maximum_single_recall_drop: 0.03
+  maximum_mean_auprc_drop: 0.005
+  maximum_mean_early_recall_drop: 0.01
+  minimum_early_preserved_seeds: 2
+  maximum_early_seed_drop: 0.01
+  maximum_mean_delay_increase_samples: 16
+  catastrophic_macro_f1_drop: 0.02
+  catastrophic_far_increase: 0.03
+  catastrophic_recall_drop: 0.03
+  catastrophic_early_recall_drop: 0.05
+  c0_macro_f1_margin: 0.01
+  c0_far_margin: 0.02
+diagnosis:
+  threshold_band_width: 0.05
+  high_correlation_quantile: 0.90
