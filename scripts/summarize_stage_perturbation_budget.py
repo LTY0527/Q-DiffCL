@@ -29,6 +29,12 @@ def render(r,path):
     audits=[]
     for m in ("R1","B3"):
         a=r["seed_results"]["7"]["methods"][m]["effective_timestep_history"][0]; audits.append(f"| {m} | {a['normalized_l1']:.5f} | {a['stages']['normal']['normalized_l1']:.5f} | {a['stages']['early']['normalized_l1']:.5f} | {a['stages']['middle']['normalized_l1']:.5f} | {a['stages']['stable']['normalized_l1']:.5f} | {a['critical_frequency_l1']:.5f} | {a['noncritical_frequency_l1']:.5f} |")
+    delta={k:r["seed_metrics"]["7"]["B3"][k]-r["seed_metrics"]["7"]["R1"][k] for k in r["seed_metrics"]["7"]["R1"]}
+    mechanism=r["seed_results"]["7"].get("budget_mechanism",{})
+    mechanism_rows=[]
+    for m in ("R1","B3"):
+        if m in mechanism:
+            x=mechanism[m]; mechanism_rows.append(f"| {m} | {x['critical_fisher_retention']:.5f} | {x['representation_l2']:.5f} | {x['stage_representation_l2']['normal']:.5f} | {x['stage_representation_l2']['early']:.5f} | {x['stage_representation_l2']['middle']:.5f} | {x['stage_representation_l2']['stable']:.5f} |")
     text=f"""# 故障阶段显式扰动预算 MVP
 
 > **STAGE_EFFECT_AUDIT / STAGE_PERTURBATION_BUDGET_MVP / FIXED_R1_BASELINE / EXPLORATORY_TEP_SUBSET / NOT_FOR_PAPER_FINAL_CLAIMS**
@@ -41,11 +47,19 @@ Stage Effect Audit 为 `STAGE_TIMESTEP_EFFECT_WEAK`，因此执行唯一固定 b
 |---:|---|---:|---:|---:|---:|---:|---:|
 {chr(10).join(rows)}
 
+B3−R1：Macro-F1 `{delta['macro_f1']:+.5f}`，AUPRC `{delta['auprc']:+.5f}`，Recall `{delta['fault_recall']:+.5f}`，FAR `{delta['far']:+.5f}`，Early Recall `{delta['early_recall']:+.5f}`，Delay `{delta['mean_delay']:+.2f}`。`ΔFAR<0`、`ΔDelay<0` 才表示改善。
+
 | 方法 | Overall L1 | Normal | Early | Middle | Stable | Critical L1 | Noncritical L1 |
 |---|---:|---:|---:|---:|---:|---:|---:|
 {chr(10).join(audits)}
 
+## Fisher 与表征距离
+
+| 方法 | Critical Fisher retention | Overall repr L2 | Normal repr L2 | Early repr L2 | Middle repr L2 | Stable repr L2 |
+|---|---:|---:|---:|---:|---:|---:|
+{chr(10).join(mechanism_rows)}
+
 预算顺序有效：`{r['seed7_gate']['budget_order_valid']}`。Seed 7 Gate：`{r['seed7_gate']}`；3-Seed Gate：`{r['three_seed_gate']}`。beta 只缩放训练 R1 residual，不进入 validation threshold、encoder、Probe 或 test 推理。
 
-当前 TEP test 已多轮查看，本结果仍是探索性而非论文最终无偏结论。若 NO-GO，则彻底停止 C3，不搜索新 beta/stage/horizon，不增加 C4/C5；下一步冻结 R1 并转向第二数据集、新未触碰协议、第二种退化与强基线。
+B3 虽提高 Macro-F1 并降低 FAR，但 Early Recall 明显下降且 Delay 恶化，未满足工业收益条件。当前 TEP test 已多轮查看，本结果仍是探索性而非论文最终无偏结论。NO-GO 后彻底停止 C3，不搜索新 beta/stage/horizon，不增加 C4/C5；下一步冻结 R1 并转向第二数据集、新未触碰协议、第二种退化与强基线。
 """; Path(path).write_text(text,encoding="utf8")

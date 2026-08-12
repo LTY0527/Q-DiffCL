@@ -7,12 +7,16 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
+import torch
 import yaml
 
 from diffusion import FIXED_STAGE_BETAS, apply_stage_perturbation_budget
 from frequency import fault_stages
 from scripts.audit_semantic_diffusion_augmentation import bases
 from scripts.run_diffusion_quality_retest import epoch_orders, load_fixed_views
+from scripts.run_diffusion_quality_retest import _probabilities
+from scripts.audit_stage_timestep_effect import _fisher
+from frequency import log_amplitude_phase
 from scripts.run_frequency_selective_r1_3seed import array_sha256, file_sha256, sha256_strings
 from scripts.run_stage_aware_diffusion_curriculum import (
     _fit_method, _strength_audit, training_stage_names,
@@ -42,6 +46,22 @@ def build_budget_views(base_train, candidate, stage_names, betas, epochs, critic
     return {"R1": [candidate] * epochs, "B3": [budget] * epochs}, {"R1": [r1_audit] * epochs, "B3": [budget_audit] * epochs}, valid
 
 
+def budget_mechanism_audit(model_checkpoint, runtime, base_train, candidate, budget, labels,
+                           stage_names, critical_mask, device):
+    payload=torch.load(model_checkpoint,map_location=device,weights_only=False)
+    model=build_model(runtime["model"],base_train.shape[1],2).to(device); model.load_state_dict(payload["model_state_dict"])
+    _,z0=_probabilities(model,base_train,int(runtime["batch_size"]),device)
+    result={}
+    base_log=log_amplitude_phase(base_train)[0]; base_fisher=_fisher(base_log[:,critical_mask],labels)
+    for name,changed in (("R1",candidate),("B3",budget)):
+        _,zt=_probabilities(model,changed,int(runtime["batch_size"]),device)
+        changed_log=log_amplitude_phase(changed)[0]
+        result[name]={"critical_fisher_retention":float(_fisher(changed_log[:,critical_mask],labels)/max(base_fisher,1e-12)),
+                      "representation_l2":float(np.mean(np.linalg.norm(z0-zt,axis=1))),
+                      "stage_representation_l2":{stage:float(np.mean(np.linalg.norm(z0[stage_names==stage]-zt[stage_names==stage],axis=1))) for stage in FIXED_STAGE_BETAS}}
+    return result
+
+
 def run_seed(config, seed, views, base, stages, critical, augmenter, fingerprints):
     output=Path(config["output_dir"])/f"seed_{seed}"; result_path=output/"result.json"
     if result_path.exists(): return json.loads(result_path.read_text(encoding="utf-8"))
@@ -57,7 +77,9 @@ def run_seed(config, seed, views, base, stages, critical, augmenter, fingerprint
             "pretrain_order_sha256":sha256_strings([','.join(map(str,x)) for x in pretrain_orders]),"probe_order_sha256":sha256_strings([','.join(map(str,x)) for x in probe_orders]),
             "same_r1_candidate_noise":True,"beta_only_training_augmentation":True}
     methods={name:_fit_method(name,epoch_views[name],epoch_audits[name],val_aug,test_aug,views,base,stages,initial_state,pretrain_orders,probe_orders,runtime,str(config["device"]),output/name/"model.pt",{**common,"method":name}) for name in METHODS}
-    result={"seed":seed,"methods":methods,"budget_order_valid":budget_valid,"fairness":common,"stage_budget":config["stage_budget"],
+    budget=epoch_views["B3"][0]
+    mechanism=budget_mechanism_audit(output/"R1"/"model.pt",runtime,base["train"],candidate,budget,views["train"]["labels"],stage_names,critical["masks"]["composite"].astype(bool),str(config["device"]))
+    result={"seed":seed,"methods":methods,"budget_order_valid":budget_valid,"budget_mechanism":mechanism,"fairness":common,"stage_budget":config["stage_budget"],
             "stage_not_used_by_encoder_probe_validation_or_test":True}; write_json(result_path,result); return result
 
 

@@ -19,3 +19,7 @@ def test_seed7_and_three_seed_gates_and_catastrophe():
     c=yaml.safe_load(open("configs/stage_perturbation_budget.yaml",encoding="utf8")); m={"R1":metric(),"B3":metric(e=.72)}; assert seed7_gate(m,c["seed7_gate"],True)[0]=="STAGE_PERTURBATION_BUDGET_SEED7_GO"
     sm={str(s):m for s in (7,42,2026)}; assert three_gate(sm,c["three_seed_gate"])[0]=="STAGE_PERTURBATION_BUDGET_3SEED_GO"; sm["42"]={"R1":metric(),"B3":metric(m=.87)}; assert three_gate(sm,c["three_seed_gate"])[0]=="STAGE_PERTURBATION_BUDGET_3SEED_NO_GO"
 def test_sample_std_ddof_one(): assert mean_std([1,2,3])=={"mean":2.,"std":1.}
+def test_beta_budget_order_on_equal_residual_scale():
+    base=np.zeros((3,1,4),np.float32); candidate=np.ones_like(base); stages=np.array(["early","middle","stable"])
+    changed=apply_stage_perturbation_budget(base,candidate,stages,FIXED_STAGE_BETAS)
+    l1=np.abs(changed-base).mean((1,2)); assert l1[0]<l1[1]<l1[2]

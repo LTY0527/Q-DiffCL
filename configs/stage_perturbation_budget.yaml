@@ -26,3 +26,13 @@ three_seed_gate:
   catastrophic_far_increase: 0.03
   catastrophic_recall_drop: 0.03
   catastrophic_early_drop: 0.05
+recorded_result:
+  seed7_status: STAGE_PERTURBATION_BUDGET_SEED7_NO_GO
+  seeds_completed: [7]
+  three_seed_executed: false
+  macro_f1_delta: 0.0012120766
+  far_delta: -0.0089843750
+  early_recall_delta: -0.04375
+  mean_delay_delta: 7.5294117647
+  c3_stopped: true
+  next_step: 冻结R1并转向第二数据集、新未触碰协议、第二种退化与强基线
