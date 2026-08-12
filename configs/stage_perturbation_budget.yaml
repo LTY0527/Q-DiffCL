@@ -1,0 +1,28 @@
+mode: stage_perturbation_budget
+markers: [STAGE_EFFECT_AUDIT, STAGE_PERTURBATION_BUDGET_MVP, FIXED_R1_BASELINE, EXPLORATORY_TEP_SUBSET, NOT_FOR_PAPER_FINAL_CLAIMS]
+base_config: configs/stage_frequency_diffusion_mvp.yaml
+audit_config: configs/stage_effect_audit.yaml
+audit_result: outputs/stage_effect_audit/result.json
+fixed_views_manifest: outputs/fixed_diffusion_views/views_manifest.json
+output_dir: outputs/stage_perturbation_budget
+report: docs/stage_perturbation_budget_report.md
+device: cuda
+seeds: [7, 42, 2026]
+methods: [R1, B3]
+stage_budget: {normal: 1.0, early: 0.6, middle: 0.8, stable: 1.0}
+seed7_gate:
+  maximum_macro_f1_drop: 0.002
+  maximum_far_increase: 0.005
+  maximum_recall_drop: 0.01
+  maximum_auprc_drop: 0.005
+  minimum_early_gain: 0.01
+  minimum_delay_reduction_samples: 16
+three_seed_gate:
+  maximum_mean_macro_f1_drop: 0.002
+  maximum_mean_far_increase: 0.005
+  maximum_mean_recall_drop: 0.01
+  maximum_mean_auprc_drop: 0.005
+  catastrophic_macro_f1_drop: 0.02
+  catastrophic_far_increase: 0.03
+  catastrophic_recall_drop: 0.03
+  catastrophic_early_drop: 0.05

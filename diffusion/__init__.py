@@ -11,3 +11,6 @@ __all__ = ["DiffusionSchedule", "ddpm_restore", "FrequencyForwardDiffusion",
 from .stage_curriculum import StageAwareTimestepScheduler
 
 __all__.append("StageAwareTimestepScheduler")
+from .stage_budget import FIXED_STAGE_BETAS, apply_stage_perturbation_budget
+
+__all__.extend(["FIXED_STAGE_BETAS", "apply_stage_perturbation_budget"])
