@@ -1,0 +1,33 @@
+dataset:
+  name: 3w
+  version: 2.0.0
+  data_root: null  # required CLI: --data-root
+  source: WELL
+  repository_commit: 45c7a9bc713656538e5179c5f2702cbf3beac5f0
+
+protocol:
+  primary_classes: [0, 1, 2, 4, 5, 7, 8, 9]
+  excluded_classes: [3, 6]
+  split_seed: 7
+  split_manifest: configs/3w_primary_well_split.csv
+  transient_offset: 100
+  window_length: 64
+  stride: 32
+  feature_min_train_coverage: 0.05
+  quantile_clip: [0.001, 0.999]
+  statistics_sample_per_instance: 4096
+  append_missing_mask: true
+  train_windows_per_class: 4000
+  validation_windows_per_class: 2000
+
+training:
+  seed: 7
+  batch_size: 256
+  pretrain_epochs: 20
+  probe_epochs: 15
+  learning_rate: 0.001
+  temperature: 0.1
+  model: {name: tcn, hidden_channels: 32, projection_dim: 32, levels: 3}
+  device: auto
+
+output_dir: outputs/3w_clean_baseline_seed7
