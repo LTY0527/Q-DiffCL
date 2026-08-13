@@ -1,0 +1,32 @@
+dataset:
+  name: 3w
+  version: 2.0.0
+  data_root: null  # Required CLI argument: --data-root
+  source: WELL
+  label_columns: [class, state]
+  transient_offset: 100
+
+split:
+  strategy: real_well_grouped
+  ratios: [0.6, 0.2, 0.2]
+  seed: 7
+
+window:
+  length: 64
+  stride: 16
+
+missingness:
+  policy: preserve_native_mask
+  add_simulated_mcar: false
+
+model:
+  name: tcn
+  hidden_channels: 8
+  projection_dim: 8
+  levels: 2
+
+stage0:
+  audit_only: true
+  full_training_allowed: false
+  smoke_instances: 3
+  smoke_windows_per_instance: 2

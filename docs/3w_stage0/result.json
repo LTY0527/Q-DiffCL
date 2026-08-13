@@ -1,0 +1,238 @@
+{
+  "status": "3W_DATA_PROTOCOL_HOLD",
+  "dataset_version": "2.0.0",
+  "dataset_git_commit": "45c7a9bc713656538e5179c5f2702cbf3beac5f0",
+  "transient_offset": 100,
+  "event_metadata": [
+    {
+      "class": 0,
+      "event": "NORMAL",
+      "description": "Normal Operation",
+      "transient_defined": false
+    },
+    {
+      "class": 1,
+      "event": "ABRUPT_INCREASE_OF_BSW",
+      "description": "Abrupt Increase of BSW",
+      "transient_defined": true
+    },
+    {
+      "class": 2,
+      "event": "SPURIOUS_CLOSURE_OF_DHSV",
+      "description": "Spurious Closure of DHSV",
+      "transient_defined": true
+    },
+    {
+      "class": 3,
+      "event": "SEVERE_SLUGGING",
+      "description": "Severe Slugging",
+      "transient_defined": false
+    },
+    {
+      "class": 4,
+      "event": "FLOW_INSTABILITY",
+      "description": "Flow Instability",
+      "transient_defined": false
+    },
+    {
+      "class": 5,
+      "event": "RAPID_PRODUCTIVITY_LOSS",
+      "description": "Rapid Productivity Loss",
+      "transient_defined": true
+    },
+    {
+      "class": 6,
+      "event": "QUICK_RESTRICTION_IN_PCK",
+      "description": "Quick Restriction in PCK",
+      "transient_defined": true
+    },
+    {
+      "class": 7,
+      "event": "SCALING_IN_PCK",
+      "description": "Scaling in PCK",
+      "transient_defined": true
+    },
+    {
+      "class": 8,
+      "event": "HYDRATE_IN_PRODUCTION_LINE",
+      "description": "Hydrate in Production Line",
+      "transient_defined": true
+    },
+    {
+      "class": 9,
+      "event": "HYDRATE_IN_SERVICE_LINE",
+      "description": "Hydrate in Service Line",
+      "transient_defined": true
+    }
+  ],
+  "instances": 2228,
+  "observations": 76587318,
+  "source_instances": {
+    "WELL": 1119,
+    "SIMULATED": 1089,
+    "DRAWN": 20
+  },
+  "real_wells": 40,
+  "features": [
+    "ABER-CKGL",
+    "ABER-CKP",
+    "ESTADO-DHSV",
+    "ESTADO-M1",
+    "ESTADO-M2",
+    "ESTADO-PXO",
+    "ESTADO-SDV-GL",
+    "ESTADO-SDV-P",
+    "ESTADO-W1",
+    "ESTADO-W2",
+    "ESTADO-XO",
+    "P-ANULAR",
+    "P-JUS-BS",
+    "P-JUS-CKGL",
+    "P-JUS-CKP",
+    "P-MON-CKGL",
+    "P-MON-CKP",
+    "P-MON-SDV-P",
+    "P-PDG",
+    "PT-P",
+    "P-TPT",
+    "QBS",
+    "QGL",
+    "T-JUS-CKP",
+    "T-MON-CKP",
+    "T-PDG",
+    "T-TPT"
+  ],
+  "native_missing_rate": 0.6757258621000605,
+  "schema_variants": 1,
+  "mode_sampling_intervals_seconds": {
+    "1.0": 2228
+  },
+  "all_instances_constant_interval": true,
+  "sampling_interval_hard_check": true,
+  "candidate_split": {
+    "train": [
+      "WELL-00001",
+      "WELL-00003",
+      "WELL-00007",
+      "WELL-00008",
+      "WELL-00009",
+      "WELL-00011",
+      "WELL-00012",
+      "WELL-00020",
+      "WELL-00021",
+      "WELL-00024",
+      "WELL-00025",
+      "WELL-00026",
+      "WELL-00027",
+      "WELL-00028",
+      "WELL-00030",
+      "WELL-00032",
+      "WELL-00033",
+      "WELL-00035",
+      "WELL-00037",
+      "WELL-00038",
+      "WELL-00039",
+      "WELL-00040",
+      "WELL-00041",
+      "WELL-00042"
+    ],
+    "validation": [
+      "WELL-00002",
+      "WELL-00004",
+      "WELL-00010",
+      "WELL-00015",
+      "WELL-00019",
+      "WELL-00023",
+      "WELL-00029",
+      "WELL-00034"
+    ],
+    "test": [
+      "WELL-00005",
+      "WELL-00006",
+      "WELL-00013",
+      "WELL-00014",
+      "WELL-00016",
+      "WELL-00022",
+      "WELL-00031",
+      "WELL-00036"
+    ]
+  },
+  "candidate_split_class_coverage": {
+    "train": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9
+    ],
+    "validation": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "test": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      7,
+      8,
+      9
+    ]
+  },
+  "smoke": {
+    "instances": [
+      "WELL-00001_20140124083303",
+      "WELL-00002_20140126180030",
+      "WELL-00006_20170731170930"
+    ],
+    "input_shape": [
+      6,
+      27,
+      64
+    ],
+    "input_dtype": "torch.float32",
+    "mask_shape": [
+      6,
+      27,
+      64
+    ],
+    "mask_dtype": "bool",
+    "raw_last_labels": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "finite_tensor": true,
+    "logits_shape": [
+      6,
+      10
+    ],
+    "native_missing_preserved_in_mask": true
+  },
+  "feasible_three_way_real_classes": [
+    0,
+    1,
+    2,
+    4,
+    5,
+    7,
+    8,
+    9
+  ]
+}
