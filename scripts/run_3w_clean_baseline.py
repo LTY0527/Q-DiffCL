@@ -16,7 +16,7 @@ import torch
 import torch.nn.functional as F
 import yaml
 from sklearn.metrics import (average_precision_score, confusion_matrix, f1_score,
-                             precision_recall_fscore_support, recall_score)
+                             precision_recall_fscore_support, recall_score, roc_auc_score)
 from sklearn.preprocessing import label_binarize
 from torch.utils.data import DataLoader, TensorDataset
 
@@ -257,6 +257,7 @@ def evaluate_stream(model, instances, refs_by_instance, preprocessor, config, de
         "recall_macro": float(recall_score(y, prediction, average="macro", zero_division=0)),
         "fault_recall": float(np.mean(prediction[binary_true] != 0)),
         "auprc_fault_vs_normal": float(average_precision_score(binary_true.astype(int), fault_score)),
+        "auroc_fault_vs_normal": float(roc_auc_score(binary_true.astype(int), fault_score)),
         "auprc_multiclass_macro": float(average_precision_score(label_binarize(y, classes=np.arange(len(PRIMARY_CLASSES))), probability, average="macro")),
         "far": float(np.mean(prediction[y == 0] != 0)), "accuracy": float(np.mean(y == prediction)),
         "early_recall": float(early_correct / early_true) if early_true else None,
@@ -268,7 +269,9 @@ def evaluate_stream(model, instances, refs_by_instance, preprocessor, config, de
             {"target": index, "original_class": original, "precision": float(precision[index]),
              "recall": float(recall[index]), "f1": float(f1[index]), "support": int(support[index])}
             for index, original in enumerate(PRIMARY_CLASSES)
-        ], "windows": len(y), "early_windows": early_true, "evaluated_fault_instances": len(delays) + missed,
+        ], "predicted_class_histogram": {str(original): int(np.sum(prediction == index)) for index, original in enumerate(PRIMARY_CLASSES)},
+        "true_class_histogram": {str(original): int(np.sum(y == index)) for index, original in enumerate(PRIMARY_CLASSES)},
+        "windows": len(y), "early_windows": early_true, "evaluated_fault_instances": len(delays) + missed,
     }
     return metrics, per_instance
 

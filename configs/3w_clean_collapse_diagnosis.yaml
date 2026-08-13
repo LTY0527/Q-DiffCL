@@ -1,0 +1,14 @@
+base_config: configs/3w_clean_baseline.yaml
+base_output: outputs/3w_clean_baseline_seed7
+output_dir: outputs/3w_clean_collapse_diagnosis_seed7
+seed: 7
+probe_epochs: 15
+balanced_supcon_epochs: 20
+balanced_ce_epochs: 15
+learning_rate: 0.001
+temperature: 0.1
+sampler:
+  classes_per_batch: 8
+  samples_per_class: 32
+  batches_per_epoch: 125
+  max_oversampling: 3.0
