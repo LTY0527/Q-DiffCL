@@ -1,0 +1,46 @@
+{
+  "protocol_a_strict_real_only": {
+    "classes": [
+      0,
+      2,
+      4,
+      7,
+      8,
+      9
+    ],
+    "rule": "exclude fault classes with only one training WELL"
+  },
+  "protocol_b_extended_real_only": {
+    "classes": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      7,
+      8,
+      9
+    ],
+    "rule": "retain current classes but mark 1/5 high-variance secondary-grade evidence"
+  },
+  "protocol_c_real_plus_simulated_secondary": {
+    "real_test_only": true,
+    "real_primary_classes": [
+      0,
+      2,
+      4,
+      7,
+      8,
+      9
+    ],
+    "simulated_train_secondary_classes": [
+      1,
+      2,
+      5,
+      8,
+      9
+    ],
+    "drawn_in_primary": false,
+    "leakage_control": "simulated instance identity disjoint; fit preprocessing on real-train unless explicitly reported as domain adaptation"
+  }
+}

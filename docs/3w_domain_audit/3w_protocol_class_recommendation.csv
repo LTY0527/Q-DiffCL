@@ -1,0 +1,9 @@
+﻿class,recommendation,reason,distinct_target_wells,largest_well_window_fraction,effective_well_diversity
+0,KEEP,multiple independent train WELLs and at least six total target-support WELLs,40,0.2510952697555842,8.472929256797732
+1,SECONDARY,only one training WELL despite abundant windows,3,0.68001704303366,1.9391593446071753
+2,KEEP,multiple independent train WELLs and at least six total target-support WELLs,7,0.6285879965207306,2.30593221735342
+4,KEEP,multiple independent train WELLs and at least six total target-support WELLs,7,0.32607363962202673,4.79874975501045
+5,SECONDARY,only one training WELL despite abundant windows,3,0.9205405923511933,1.175419228040921
+7,KEEP,multiple independent train WELLs and at least six total target-support WELLs,6,0.3946065205037225,3.0747059525252163
+8,KEEP,multiple independent train WELLs and at least six total target-support WELLs,9,0.2367726763151462,6.161263490814355
+9,KEEP,multiple independent train WELLs and at least six total target-support WELLs,7,0.4490622655663916,3.118453602479418
