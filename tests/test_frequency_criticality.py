@@ -51,3 +51,19 @@ def test_discriminative_early_and_stability_use_run_aggregates():
     assert result["early"][2, 2] > np.median(result["early"])
     assert result["run_counts"] == {"normal": 2, "fault": 4, "early_fault": 2}
 
+
+def test_r2_multiclass_component_changes_composite_ranking_without_changing_r1():
+    features, bundle, stages = _fixture()
+    # Fault types separate strongly here while their aggregate remains close.
+    features[8:16, 0, 1] += 5
+    features[16:24, 0, 1] -= 5
+    r1 = build_criticality(features, bundle, stages, SETTINGS)
+    r2_settings = {**SETTINGS, "weight_discriminative": .40, "weight_early": .24,
+                   "weight_run_stability": .16, "weight_multiclass": .20}
+    r2 = build_criticality(features, bundle, stages, r2_settings)
+    assert r1["component_weights"]["multiclass"] == 0
+    assert r2["component_weights"] == {"discriminative": .4, "early": .24, "stability": .16, "multiclass": .2}
+    assert r2["multiclass_type_run_counts"] == {0: 2, 1: 2, 2: 2}
+    assert r2["multiclass_fisher"][0, 1] > np.median(r2["multiclass_fisher"])
+    assert r2["composite"][0, 1] > r1["composite"][0, 1]
+    assert np.array_equal(r1["masks"]["composite"], build_criticality(features, bundle, stages, SETTINGS)["masks"]["composite"])

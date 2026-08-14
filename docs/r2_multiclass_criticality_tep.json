@@ -1,0 +1,320 @@
+{
+  "status": "R2_CROSS_DATASET_PARTIAL_GO",
+  "stage": "TEP",
+  "markers": [
+    "R2_CROSS_DATASET_TRANSFER_CHECK",
+    "EXPLORATORY_TEP_SUBSET",
+    "NOT_FOR_PAPER_FINAL_CLAIMS"
+  ],
+  "new_runs": 3,
+  "reused_runs": 6,
+  "criticality_fit_scope": "train-only faultNumber/fault type including normal type 0",
+  "summary": {
+    "C1": {
+      "accuracy": {
+        "mean": 0.8901651651651652,
+        "std": 0.0038376510267663596
+      },
+      "macro_f1": {
+        "mean": 0.8845988968806314,
+        "std": 0.004375097666821295
+      },
+      "auprc": {
+        "mean": 0.9272631630819984,
+        "std": 0.006742831397667433
+      },
+      "auroc": {
+        "mean": 0.911143201462766,
+        "std": 0.00999105723280869
+      },
+      "fault_recall": {
+        "mean": 0.7927304964539007,
+        "std": 0.024026621847788535
+      },
+      "far": {
+        "mean": 0.038281249999999996,
+        "std": 0.016420194966393516
+      },
+      "early_recall": {
+        "mean": 0.7708333333333334,
+        "std": 0.029536347664078758
+      },
+      "middle_recall": {
+        "mean": 0.80625,
+        "std": 0.013621559198564608
+      },
+      "stable_recall": {
+        "mean": 0.7921428571428571,
+        "std": 0.02607876609075523
+      },
+      "mean_delay": {
+        "mean": 117.01008403361345,
+        "std": 12.304005053531125
+      },
+      "median_delay": {
+        "mean": 95.0,
+        "std": 0.0
+      },
+      "detected_run_rate": {
+        "mean": 0.8583333333333334,
+        "std": 0.014433756729740658
+      }
+    },
+    "R1": {
+      "accuracy": {
+        "mean": 0.8920420420420422,
+        "std": 0.004816521000704348
+      },
+      "macro_f1": {
+        "mean": 0.8864798585462689,
+        "std": 0.005507714582808362
+      },
+      "auprc": {
+        "mean": 0.9275484240883153,
+        "std": 0.006983363489281951
+      },
+      "auroc": {
+        "mean": 0.9112195603390957,
+        "std": 0.010025291553425297
+      },
+      "fault_recall": {
+        "mean": 0.7930851063829788,
+        "std": 0.026128881044287566
+      },
+      "far": {
+        "mean": 0.03528645833333333,
+        "std": 0.01692057166418169
+      },
+      "early_recall": {
+        "mean": 0.7729166666666666,
+        "std": 0.0308305178894765
+      },
+      "middle_recall": {
+        "mean": 0.8041666666666667,
+        "std": 0.0157288217401474
+      },
+      "stable_recall": {
+        "mean": 0.7928571428571428,
+        "std": 0.028383309266150725
+      },
+      "mean_delay": {
+        "mean": 117.01008403361345,
+        "std": 12.304005053531125
+      },
+      "median_delay": {
+        "mean": 95.0,
+        "std": 0.0
+      },
+      "detected_run_rate": {
+        "mean": 0.8583333333333334,
+        "std": 0.014433756729740658
+      }
+    },
+    "R2": {
+      "accuracy": {
+        "mean": 0.8921921921921921,
+        "std": 0.004693843553255474
+      },
+      "macro_f1": {
+        "mean": 0.886638220090434,
+        "std": 0.005370457868196403
+      },
+      "auprc": {
+        "mean": 0.9274549130584898,
+        "std": 0.006944000837270886
+      },
+      "auroc": {
+        "mean": 0.9111410197805853,
+        "std": 0.009983231768048037
+      },
+      "fault_recall": {
+        "mean": 0.7932624113475177,
+        "std": 0.02603848818689366
+      },
+      "far": {
+        "mean": 0.03515625,
+        "std": 0.016986574144655393
+      },
+      "early_recall": {
+        "mean": 0.7729166666666666,
+        "std": 0.0308305178894765
+      },
+      "middle_recall": {
+        "mean": 0.8052083333333333,
+        "std": 0.014091405477571524
+      },
+      "stable_recall": {
+        "mean": 0.7928571428571428,
+        "std": 0.02867837128554957
+      },
+      "mean_delay": {
+        "mean": 117.01008403361345,
+        "std": 12.304005053531125
+      },
+      "median_delay": {
+        "mean": 95.0,
+        "std": 0.0
+      },
+      "detected_run_rate": {
+        "mean": 0.8583333333333334,
+        "std": 0.014433756729740658
+      }
+    },
+    "R2-C1": {
+      "by_seed": {
+        "7": {
+          "macro_f1": 0.0024993081342801204,
+          "auprc": 7.739821913599343e-06,
+          "fault_recall": -0.004787234042553212,
+          "far": -0.008203124999999999,
+          "early_recall": 0.0,
+          "mean_delay": 0.0
+        },
+        "42": {
+          "macro_f1": 0.0033933224808293527,
+          "auprc": 0.0006143319927351953,
+          "fault_recall": 0.006382978723404209,
+          "far": -0.0007812499999999972,
+          "early_recall": 0.006249999999999978,
+          "mean_delay": 0.0
+        },
+        "2026": {
+          "macro_f1": 0.00022533901429822034,
+          "auprc": -4.682188517435293e-05,
+          "fault_recall": 0.0,
+          "far": -0.0003906250000000021,
+          "early_recall": 0.0,
+          "mean_delay": 0.0
+        }
+      },
+      "mean": {
+        "macro_f1": 0.0020393232098025646,
+        "auprc": 0.0001917499764914806,
+        "fault_recall": 0.000531914893616999,
+        "far": -0.0031249999999999993,
+        "early_recall": 0.002083333333333326,
+        "mean_delay": 0.0
+      },
+      "std": {
+        "macro_f1": 0.0016333154652771827,
+        "auprc": 0.0003669821730132681,
+        "fault_recall": 0.005604071145134421,
+        "far": 0.004402120183431502,
+        "early_recall": 0.0036084391824351483,
+        "mean_delay": 0.0
+      },
+      "wins": {
+        "macro_f1": 3,
+        "auprc": 2,
+        "fault_recall": 1,
+        "far": 0,
+        "early_recall": 1,
+        "mean_delay": 0
+      }
+    },
+    "R2-R1": {
+      "by_seed": {
+        "7": {
+          "macro_f1": -2.2706411140993588e-05,
+          "auprc": -0.0002026363709354273,
+          "fault_recall": -0.0005319148936170359,
+          "far": -0.0003906249999999986,
+          "early_recall": 0.0,
+          "mean_delay": 0.0
+        },
+        "42": {
+          "macro_f1": 0.0002451647797359069,
+          "auprc": -2.9660323037195013e-05,
+          "fault_recall": 0.0005319148936169249,
+          "far": 0.0,
+          "early_recall": 0.0,
+          "mean_delay": 0.0
+        },
+        "2026": {
+          "macro_f1": 0.00025262626390021303,
+          "auprc": -4.823639550355363e-05,
+          "fault_recall": 0.0005319148936170359,
+          "far": 0.0,
+          "early_recall": 0.0,
+          "mean_delay": 0.0
+        }
+      },
+      "mean": {
+        "macro_f1": 0.0001583615441650421,
+        "auprc": -9.351102982539199e-05,
+        "fault_recall": 0.00017730496453897496,
+        "far": -0.00013020833333333287,
+        "early_recall": 0.0,
+        "mean_delay": 0.0
+      },
+      "std": {
+        "macro_f1": 0.0001568538229228569,
+        "auprc": 9.496063748393344e-05,
+        "fault_recall": 0.0006142024140315016,
+        "far": 0.00022552744890219677,
+        "early_recall": 0.0,
+        "mean_delay": 0.0
+      },
+      "wins": {
+        "macro_f1": 2,
+        "auprc": 0,
+        "fault_recall": 2,
+        "far": 0,
+        "early_recall": 0,
+        "mean_delay": 0
+      }
+    }
+  },
+  "mask_audit": {
+    "r1_mask_sha256": "d2e1879bc012ac1326ea8c721461d31641105af2c4fe0c89eacdebac413b9395",
+    "r2_mask_sha256": "950c150264351b50646d3155c6c7c16068e581ea39c2cefb62d087b3faca2ef2",
+    "jaccard": 0.7881944444444444,
+    "changed_bins": 122,
+    "selected_bins": 515,
+    "r2_component_weights": {
+      "discriminative": 0.4,
+      "early": 0.24,
+      "stability": 0.16,
+      "multiclass": 0.2
+    },
+    "multiclass_type_run_counts": {
+      "0": 128,
+      "1": 6,
+      "2": 6,
+      "3": 6,
+      "4": 6,
+      "5": 6,
+      "6": 6,
+      "7": 6,
+      "8": 6,
+      "9": 6,
+      "10": 6,
+      "11": 6,
+      "12": 6,
+      "13": 6,
+      "14": 6,
+      "15": 6,
+      "16": 6,
+      "17": 6,
+      "18": 6,
+      "19": 6,
+      "20": 6
+    },
+    "fit_split": "train"
+  },
+  "checks": {
+    "macro_f1_mean_gain_for_go": false,
+    "macro_f1_wins": true,
+    "auprc_mean_preserved": true,
+    "recall_mean_preserved": true,
+    "far_mean_preserved": true,
+    "early_mean_preserved": true,
+    "no_catastrophic_seed": true
+  },
+  "catastrophic_by_seed": {
+    "7": false,
+    "42": false,
+    "2026": false
+  },
+  "paper_final_claim_allowed": false
+}
