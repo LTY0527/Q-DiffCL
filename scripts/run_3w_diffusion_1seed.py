@@ -62,6 +62,7 @@ def run(config: dict, data_root: Path) -> dict:
     base_config = yaml.safe_load(Path(config["base_config"]).read_text(encoding="utf-8"))
     base = yaml.safe_load(Path(base_config["base_config"]).read_text(encoding="utf-8"))
     seed = int(config["seed"])
+    protocol_seed = int(config.get("protocol_seed", 42))
     device = select_device(str(config["device"]))
     output = Path(config["output_dir"])
     output.mkdir(parents=True, exist_ok=True)
@@ -86,9 +87,11 @@ def run(config: dict, data_root: Path) -> dict:
             refs.extend(current)
             refs_by_instance[item.instance_id] = current
         refs_by_split[name] = refs
-    train_refs = base3w.stratified_refs(refs_by_split["train"], int(base_config["train_windows_per_class"]), seed)
+    train_refs = base3w.stratified_refs(
+        refs_by_split["train"], int(base_config["train_windows_per_class"]), protocol_seed
+    )
     validation_refs = base3w.stratified_refs(
-        refs_by_split["validation"], int(base_config["validation_windows_per_class"]), seed + 1
+        refs_by_split["validation"], int(base_config["validation_windows_per_class"]), protocol_seed + 1
     )
     length = int(base["protocol"]["window_length"])
     train_x, train_y = base3w.materialize(train_refs, by_instance, preprocessor, length, False)
@@ -99,19 +102,27 @@ def run(config: dict, data_root: Path) -> dict:
         original = FINAL_PRIMARY_CLASSES[ref.target] if ref.target else 0
         return f"training:fault_{original}:{item.well_id}"
 
-    train_bundle = {"run_uid": np.asarray([run_uid(ref) for ref in train_refs]), "labels": train_y}
-    train_stages = np.asarray([ref.stage for ref in train_refs])
-    train_log = log_amplitude_phase(train_x)[0]
-    scaler = fit_frequency_scaler(train_log, "train")
-    criticality = build_criticality(
-        scaler.transform(train_log), train_bundle, train_stages, config["criticality"], train_log
-    )
+    criticality_source = config.get("criticality_source")
+    if criticality_source:
+        source = json.loads(Path(criticality_source).read_text(encoding="utf-8"))
+        criticality_payload = source["criticality"]
+        critical_soft_mask = np.asarray(criticality_payload["soft_mask"], dtype=np.float32)
+    else:
+        train_bundle = {"run_uid": np.asarray([run_uid(ref) for ref in train_refs]), "labels": train_y}
+        train_stages = np.asarray([ref.stage for ref in train_refs])
+        train_log = log_amplitude_phase(train_x)[0]
+        scaler = fit_frequency_scaler(train_log, "train")
+        criticality = build_criticality(
+            scaler.transform(train_log), train_bundle, train_stages, config["criticality"], train_log
+        )
+        criticality_payload = json_ready_criticality(criticality)
+        critical_soft_mask = criticality["soft_mask"]
     statistics = fit_spectral_statistics(train_x, float(config["spectral_diffusion"]["clip_quantile"]), "train")
     schedule = DiffusionSchedule.cosine(int(config["spectral_diffusion"]["diffusion_steps"]), device)
     augmenter = FrequencyForwardDiffusion(
         statistics,
         schedule.alpha_bars,
-        criticality["soft_mask"],
+        critical_soft_mask,
         int(config["spectral_diffusion"]["t_uniform"]),
         int(config["spectral_diffusion"]["t_key"]),
         bool(config["spectral_diffusion"]["preserve_phase"]),
@@ -218,10 +229,11 @@ def run(config: dict, data_root: Path) -> dict:
     payload = {
         "stage_a_status": stability["status"],
         "seed": seed,
+        "protocol_seed": protocol_seed,
         "canonical_split_index": split_index,
         "primary_classes": list(FINAL_PRIMARY_CLASSES),
         "methods": results,
-        "criticality": json_ready_criticality(criticality),
+        "criticality": criticality_payload,
         "augmentation_diagnostics": {
             METHODS[1]: {"train": uniform_train_diagnostics, "validation": uniform_validation_diagnostics},
             METHODS[2]: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
@@ -236,6 +248,12 @@ def run(config: dict, data_root: Path) -> dict:
             "uniform_r1_total_budget_matched": True,
             "initialization_sha256": initialization_sha256,
             "probe_weights_train_only": weights.tolist(),
+            "window_refs_sha256": hashlib.sha256(
+                "\n".join(f"{ref.instance_id}:{ref.start}:{ref.target}" for ref in train_refs + validation_refs).encode()
+            ).hexdigest(),
+            "critical_soft_mask_sha256": hashlib.sha256(
+                np.ascontiguousarray(critical_soft_mask).tobytes()
+            ).hexdigest(),
         },
     }
     (output / "result.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")

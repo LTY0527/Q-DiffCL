@@ -3,6 +3,7 @@ stability_result: docs/3w_final_primary_stability.json
 grouped_output: outputs/3w_final_primary_grouped_seed42
 canonical_split_index: 0
 seed: 42
+protocol_seed: 42
 device: auto
 criticality:
   critical_ratio: 0.30
