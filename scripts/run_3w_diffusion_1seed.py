@@ -4,6 +4,7 @@ import argparse
 import copy
 import hashlib
 import json
+from collections import Counter
 from pathlib import Path
 
 import numpy as np
@@ -17,7 +18,9 @@ from frequency import build_criticality, fit_frequency_scaler, log_amplitude_pha
 from scripts.run_3w_clean_collapse_diagnosis import train_probe
 from scripts.run_3w_final_primary_grouped import FINAL_PRIMARY_CLASSES, build_model
 from scripts.run_diffusion_quality_retest import _fit_supcon, epoch_orders
-from trainers.balanced import PositiveSafeBatchSampler, sqrt_inverse_frequency_weights
+from trainers.balanced import (CrossWellPositiveSafeBatchSampler,
+                               PositiveSafeBatchSampler,
+                               sqrt_inverse_frequency_weights)
 from utils import seed_everything, select_device
 
 
@@ -32,7 +35,59 @@ def state_hash(state: dict[str, torch.Tensor]) -> str:
     return digest.hexdigest()
 
 
-def supcon_orders(labels: np.ndarray, training: dict, seed: int) -> tuple[list[np.ndarray], dict]:
+def _cross_well_order_audit(orders: list[np.ndarray], labels: np.ndarray, well_ids: np.ndarray,
+                            batch_size: int, include_batches: bool) -> dict:
+    well_ids = np.asarray(well_ids, dtype=object)
+    if len(well_ids) != len(labels): raise ValueError("WELL ids must align with SupCon labels")
+    available = {int(c): sorted(set(map(str, well_ids[labels == c]))) for c in np.unique(labels)}
+    available_counts = {c: {well: int(((labels == c) & (well_ids == well)).sum()) for well in wells}
+                        for c, wells in available.items()}
+    epoch_rows = []; total_clean = total_paired = cross_clean = cross_paired = 0
+    duplicate_windows = sampled_windows = 0
+    per_class = {c: {"clean_cross": 0, "clean_total": 0, "paired_cross": 0, "paired_total": 0} for c in available}
+    minimum_wells = min((len(wells) for wells in available.values() if len(wells) > 1), default=1)
+    for order in orders:
+        well_counts = {c: Counter() for c in available}; batch_rows = []
+        for start in range(0, len(order), batch_size):
+            indices = order[start:start + batch_size]; current_y = labels[indices]; current_wells = well_ids[indices]
+            duplicates = len(indices) - len(np.unique(indices)); duplicate_windows += duplicates; sampled_windows += len(indices)
+            class_counts = Counter(map(int, current_y)); class_well_counts = {}; clean_num = clean_den = paired_num = paired_den = 0
+            for c, count in sorted(class_counts.items()):
+                counts = Counter(map(str, current_wells[current_y == c])); class_well_counts[c] = len(counts)
+                well_counts[c].update(counts); minimum_wells = min(minimum_wells, len(counts)) if len(available[c]) > 1 else minimum_wells
+                clean_total = count * (count - 1); clean_cross = clean_total - sum(n * (n - 1) for n in counts.values())
+                paired_total = 2 * count * (2 * count - 1); paired_cross = paired_total - sum(2 * n * (2 * n - 1) for n in counts.values())
+                clean_num += clean_cross; clean_den += clean_total; paired_num += paired_cross; paired_den += paired_total
+                item = per_class[c]; item["clean_cross"] += clean_cross; item["clean_total"] += clean_total
+                item["paired_cross"] += paired_cross; item["paired_total"] += paired_total
+            cross_clean += clean_num; total_clean += clean_den; cross_paired += paired_num; total_paired += paired_den
+            if include_batches:
+                batch_rows.append({"class_counts": dict(class_counts), "class_well_counts": class_well_counts,
+                                   "duplicate_window_count": duplicates,
+                                   "clean_cross_well_positive_ratio": clean_num / clean_den if clean_den else 0.0,
+                                   "paired_view_cross_well_positive_ratio": paired_num / paired_den if paired_den else 0.0})
+        epoch_rows.append({"per_class_well_sample_counts": {c: dict(sorted(counts.items())) for c, counts in well_counts.items()},
+                           "per_class_well_oversampling_factors": {
+                               c: {well: count / available_counts[c][well] for well, count in sorted(counts.items())}
+                               for c, counts in well_counts.items()},
+                           **({"batches": batch_rows} if include_batches else {})})
+    return {"class_available_wells": available, "class_well_window_counts": available_counts,
+            "class_well_counts": {c: len(wells) for c, wells in available.items()},
+            "classes_without_cross_well_support": [c for c, wells in available.items() if len(wells) < 2],
+            "minimum_wells_for_multiwell_class_in_any_batch": minimum_wells,
+            "duplicate_window_count": duplicate_windows,
+            "duplicate_window_rate": duplicate_windows / sampled_windows if sampled_windows else 0.0,
+            "clean_cross_well_positive_ratio": cross_clean / total_clean if total_clean else 0.0,
+            "paired_view_cross_well_positive_ratio": cross_paired / total_paired if total_paired else 0.0,
+            "per_class_cross_well_positive_ratio": {
+                c: {"clean": item["clean_cross"] / item["clean_total"] if item["clean_total"] else 0.0,
+                    "paired_view": item["paired_cross"] / item["paired_total"] if item["paired_total"] else 0.0}
+                for c, item in per_class.items()},
+            "per_epoch": epoch_rows}
+
+
+def supcon_orders(labels: np.ndarray, training: dict, seed: int, well_ids: np.ndarray | None = None,
+                  include_batch_audit: bool = True) -> tuple[list[np.ndarray], dict]:
     epochs = int(training["epochs"]); mode = str(training.get("supcon_batching", "original"))
     if mode == "original":
         orders = epoch_orders(len(labels), epochs, seed + 10_000)
@@ -57,8 +112,29 @@ def supcon_orders(labels: np.ndarray, training: dict, seed: int) -> tuple[list[n
                  "minimum_classes_in_any_batch": minimum_classes, "minimum_clean_samples_per_present_class": minimum_samples,
                  "clean_positive_anchor_rate": valid / total, "paired_view_positive_anchor_rate": 1.0,
                  "all_classes_retain_positive_pairs": bool(valid == total)}
+    elif mode == "cross_well_positive_safe":
+        if well_ids is None: raise ValueError("cross-WELL SupCon batching requires training WELL ids")
+        spec = training["cross_well_sampler"]
+        sampler = CrossWellPositiveSafeBatchSampler(labels, well_ids, int(spec["classes_per_batch"]),
+                                                     int(spec["samples_per_class"]), int(spec["batches_per_epoch"]),
+                                                     seed + 10_000, float(spec["max_oversampling"]))
+        orders = []; epoch_counts = []
+        for epoch in range(epochs):
+            sampler.set_epoch(epoch); batches = list(sampler)
+            orders.append(np.asarray([index for batch in batches for index in batch], dtype=np.int64))
+            epoch_counts.append(np.bincount(labels[orders[-1]], minlength=len(np.unique(labels))).tolist())
+        audit = {"mode": mode, "sampler_fit_scope": "train labels and train WELL ids only",
+                 "classes_per_batch": int(spec["classes_per_batch"]), "samples_per_class": int(spec["samples_per_class"]),
+                 "batches_per_epoch": int(spec["batches_per_epoch"]), "planned_sample_counts_per_epoch": sampler.planned_sample_counts,
+                 "oversampling_factors": sampler.oversampling_factors, "actual_sample_counts_per_epoch": epoch_counts,
+                 "clean_positive_anchor_rate": 1.0, "paired_view_positive_anchor_rate": 1.0,
+                 "all_classes_retain_positive_pairs": True}
     else:
         raise ValueError(f"unknown SupCon batching mode: {mode}")
+    if well_ids is not None:
+        audit["cross_well"] = _cross_well_order_audit(
+            orders, labels, np.asarray(well_ids, dtype=object), int(training["batch_size"]), include_batch_audit
+        )
     audit["batch_order_sha256"] = hashlib.sha256(
         "\n".join(",".join(map(str, order.tolist())) for order in orders).encode()
     ).hexdigest()
@@ -197,7 +273,22 @@ def run(config: dict, data_root: Path) -> dict:
         METHODS[2]: (r1_train, r1_validation),
     }
     training = dict(config["training"])
-    pretrain_orders, sampler_audit = supcon_orders(train_y, training, encoder_seed)
+    train_well_ids = np.asarray([by_instance[ref.instance_id].well_id for ref in train_refs], dtype=object)
+    pretrain_orders, sampler_audit = supcon_orders(train_y, training, encoder_seed, train_well_ids)
+    batching_comparison = {}
+    if "comparison_balanced_sampler" in config:
+        for name, mode in (("ORIGINAL", "original"), ("BALANCED", "balanced_positive_safe"),
+                           ("CROSS_WELL", "cross_well_positive_safe")):
+            if mode == training.get("supcon_batching", "original"):
+                current_audit = sampler_audit
+            else:
+                comparison_training = dict(training); comparison_training["supcon_batching"] = mode
+                comparison_training["balanced_sampler"] = copy.deepcopy(config["comparison_balanced_sampler"])
+                _, current_audit = supcon_orders(
+                    train_y, comparison_training, encoder_seed, train_well_ids, include_batch_audit=False
+                )
+            cross = {key: value for key, value in current_audit["cross_well"].items() if key != "per_epoch"}
+            batching_comparison[name] = {"batch_order_sha256": current_audit["batch_order_sha256"], **cross}
     weights = sqrt_inverse_frequency_weights(train_y)
     seed_everything(encoder_seed)
     template = build_model(base["training"]["model"], train_x.shape[1], device)
@@ -284,6 +375,7 @@ def run(config: dict, data_root: Path) -> dict:
             METHODS[2]: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
         },
         "supcon_sampler": sampler_audit,
+        "supcon_batching_comparison": batching_comparison,
         "fairness": {
             "same_grouped_split": True,
             "same_train_only_preprocessor": True,

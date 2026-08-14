@@ -1,0 +1,25 @@
+base_config: configs/3w_diffusion_1seed.yaml
+original_manifest: outputs/3w_diffusion_3seed/result_manifest.json
+balanced_manifest: outputs/3w_balanced_supcon_stability/result_manifest.json
+criticality_source: outputs/3w_diffusion_1seed_seed42/result.json
+seeds: [42, 43, 44]
+protocol_seed: 42
+methods: [UNIFORM_DIFFUSION, FREQUENCY_SELECTIVE_R1]
+cross_well_sampler: &sampler
+  classes_per_batch: 4
+  samples_per_class: 64
+  batches_per_epoch: 23
+  max_oversampling: 3.0
+comparison_balanced_sampler: *sampler
+gate:
+  minimum_macro_improved_seeds: 2
+  maximum_any_seed_binary_auprc_drop: 0.03
+  minimum_class9_std_reduction_ratio: 0.20
+  minimum_cross_well_ratio_increase: 0.05
+  maximum_far_mean_increase: 0.05
+  maximum_macro_mean_drop: 0.03
+  maximum_binary_auprc_mean_drop: 0.03
+  maximum_early_mean_drop: 0.01
+  maximum_delay_ratio: 1.10
+  maximum_delay_absolute_increase_seconds: 60.0
+output_dir: outputs/3w_cross_well_supcon
