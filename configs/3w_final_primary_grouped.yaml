@@ -1,0 +1,40 @@
+base_config: configs/3w_clean_baseline.yaml
+primary_classes: [0, 2, 8, 9]
+secondary_classes: [1, 3, 4, 5, 6, 7]
+seed: 42
+split_seeds: [42, 43, 44]
+split_well_counts: {train: 20, validation: 8, test: 8}
+minimum_fault_wells: {train: 3, validation: 2, test: 2}
+maximum_test_jaccard: 0.5
+pretrain_epochs: 20
+probe_epochs: 15
+batch_size: 256
+learning_rate: 0.001
+temperature: 0.1
+train_windows_per_class: 4000
+validation_windows_per_class: 2000
+frozen_process_features:
+  - ABER-CKGL
+  - ABER-CKP
+  - ESTADO-DHSV
+  - ESTADO-M1
+  - ESTADO-M2
+  - ESTADO-PXO
+  - ESTADO-SDV-GL
+  - ESTADO-SDV-P
+  - ESTADO-W1
+  - ESTADO-W2
+  - ESTADO-XO
+  - P-ANULAR
+  - P-JUS-CKGL
+  - P-JUS-CKP
+  - P-MON-CKP
+  - P-PDG
+  - P-TPT
+  - QGL
+  - T-JUS-CKP
+  - T-MON-CKP
+  - T-PDG
+  - T-TPT
+output_dir: outputs/3w_final_primary_grouped_seed42
+resume: true

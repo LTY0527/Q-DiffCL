@@ -1,0 +1,40 @@
+base_config: configs/3w_final_primary_grouped.yaml
+stability_result: docs/3w_final_primary_stability.json
+grouped_output: outputs/3w_final_primary_grouped_seed42
+canonical_split_index: 0
+seed: 42
+device: auto
+criticality:
+  critical_ratio: 0.30
+  weight_discriminative: 0.5
+  weight_early: 0.3
+  weight_run_stability: 0.2
+  bootstrap_repeats: 64
+  bootstrap_seed: 17042
+spectral_diffusion:
+  diffusion_steps: 50
+  t_uniform: 3
+  t_key: 1
+  t_nonkey: 5
+  preserve_phase: true
+  preserve_dc: true
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+training:
+  epochs: 20
+  probe_epochs: 15
+  early_stopping_patience: 20
+  batch_size: 256
+  learning_rate: 0.001
+  temperature: 0.1
+gate:
+  maximum_early_recall_drop: 0.01
+  maximum_delay_ratio: 1.10
+  maximum_delay_absolute_increase_seconds: 60.0
+  catastrophic_macro_f1_drop: 0.03
+  catastrophic_auprc_drop: 0.03
+  catastrophic_far_increase: 0.05
+  catastrophic_early_recall_drop: 0.05
+  catastrophic_delay_ratio: 1.25
+  catastrophic_delay_increase_seconds: 300.0
+output_dir: outputs/3w_diffusion_1seed_seed42

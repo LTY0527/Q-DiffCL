@@ -1,0 +1,30 @@
+{
+  "status": "3W_FREQUENCY_SELECTIVE_R1_1SEED_GO",
+  "seed": 42,
+  "canonical_split_index": 0,
+  "r1_minus_uniform": {
+    "macro_f1": 0.024474989104221245,
+    "macro_recall": 0.0240713615402387,
+    "binary_auprc": 0.00479922930563037,
+    "multiclass_auprc": 0.007848371557820033,
+    "far": -0.09427655835429516,
+    "early_recall": -0.005176391155122917,
+    "mean_detection_delay_seconds": -49.454545454545496,
+    "class_0_recall": 0.09427655835429516,
+    "class_0_f1": 0.06774307330571694,
+    "class_2_recall": 0.0,
+    "class_2_f1": -0.001303529184570107,
+    "class_8_recall": 0.0020088878066597537,
+    "class_8_f1": 0.030175099502982805,
+    "class_9_recall": 0.0,
+    "class_9_f1": 0.0012853127927552836
+  },
+  "gate_checks": {
+    "macro_f1_improved": true,
+    "auprc_improved": true,
+    "far_not_worse": true,
+    "early_recall_not_materially_worse": true,
+    "delay_not_materially_worse": true
+  },
+  "three_seed_allowed": true
+}

@@ -1,0 +1,48 @@
+{
+  "status": "3W_FINAL_PRIMARY_STABILITY_GO",
+  "primary_classes": [
+    0,
+    2,
+    8,
+    9
+  ],
+  "split_count": 3,
+  "gate": "every Primary class must have Recall > 0 in every grouped test split",
+  "zero_recall_split_counts": {
+    "0": 0,
+    "2": 0,
+    "8": 0,
+    "9": 0
+  },
+  "metric_summary": {
+    "macro_f1": {
+      "mean": 0.5274401251228665,
+      "std": 0.026321910251092623
+    },
+    "recall_macro": {
+      "mean": 0.682990834646077,
+      "std": 0.094915969934812
+    },
+    "auprc_fault_vs_normal": {
+      "mean": 0.7053822704838156,
+      "std": 0.13985535169398655
+    },
+    "auprc_multiclass_macro": {
+      "mean": 0.572974955041192,
+      "std": 0.04389979697585872
+    },
+    "far": {
+      "mean": 0.4452105856374917,
+      "std": 0.1123723769078199
+    },
+    "early_recall": {
+      "mean": 0.9447245317130943,
+      "std": 0.03829574424440196
+    },
+    "mean_detection_delay_seconds": {
+      "mean": 1089.6441223832528,
+      "std": 898.8734488960524
+    }
+  },
+  "diffusion_allowed": true
+}
