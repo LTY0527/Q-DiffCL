@@ -67,3 +67,20 @@ def test_r2_multiclass_component_changes_composite_ranking_without_changing_r1()
     assert r2["multiclass_fisher"][0, 1] > np.median(r2["multiclass_fisher"])
     assert r2["composite"][0, 1] > r1["composite"][0, 1]
     assert np.array_equal(r1["masks"]["composite"], build_criticality(features, bundle, stages, SETTINGS)["masks"]["composite"])
+
+
+def test_r3_balances_classes_and_reliability_is_reproducible():
+    features, bundle, stages = _fixture()
+    features[8:16, 0, 1] += 5
+    features[16:24, 0, 1] -= 5
+    settings = {**SETTINGS, "weight_discriminative": .40, "weight_early": .24,
+                "weight_run_stability": .16, "weight_multiclass": .20,
+                "multiclass_mode": "balanced_reliable"}
+    first = build_criticality(features, bundle, stages, settings)
+    second = build_criticality(features, bundle, stages, settings)
+    assert first["multiclass_mode"] == "balanced_reliable"
+    assert set(first["multiclass_class_contributions"]) == {0, 1, 2}
+    assert all(values.shape == features.shape[1:] for values in first["multiclass_class_contributions"].values())
+    assert np.all((first["multiclass_reliability"] >= 0) & (first["multiclass_reliability"] <= 1))
+    assert np.array_equal(first["multiclass_reliability"], second["multiclass_reliability"])
+    assert np.array_equal(first["masks"]["composite"], second["masks"]["composite"])

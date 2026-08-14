@@ -26,6 +26,7 @@ from utils import seed_everything, select_device
 
 METHODS = ("CLEAN_HARD_SUPCON", "UNIFORM_DIFFUSION", "FREQUENCY_SELECTIVE_R1")
 R2_METHOD = "FREQUENCY_SELECTIVE_R2"
+R3_METHOD = "FREQUENCY_SELECTIVE_R3"
 
 
 def state_hash(state: dict[str, torch.Tensor]) -> str:
@@ -150,6 +151,11 @@ def json_ready_criticality(record: dict) -> dict:
         "early": record["early"].tolist(),
         "stability": record["stability"].tolist(),
         "multiclass_fisher": record["multiclass_fisher"].tolist(),
+        "multiclass_mode": record["multiclass_mode"],
+        "multiclass_reliability": record["multiclass_reliability"].tolist(),
+        "multiclass_class_contributions": {
+            str(kind): values.tolist() for kind, values in record["multiclass_class_contributions"].items()
+        },
         "composite": record["composite"].tolist(),
         "soft_mask": record["soft_mask"].tolist(),
         "composite_mask": record["masks"]["composite"].astype(int).tolist(),
@@ -277,6 +283,7 @@ def run(config: dict, data_root: Path) -> dict:
         METHODS[1]: (uniform_train, uniform_validation),
         METHODS[2]: (r1_train, r1_validation),
         R2_METHOD: (r1_train, r1_validation),
+        R3_METHOD: (r1_train, r1_validation),
     }
     training = dict(config["training"])
     train_well_ids = np.asarray([by_instance[ref.instance_id].well_id for ref in train_refs], dtype=object)
@@ -302,7 +309,7 @@ def run(config: dict, data_root: Path) -> dict:
     initialization_sha256 = state_hash(initial_state)
     results = {}
     selected_methods = tuple(config.get("methods", METHODS))
-    if any(method not in (*METHODS, R2_METHOD) for method in selected_methods):
+    if any(method not in (*METHODS, R2_METHOD, R3_METHOD) for method in selected_methods):
         raise ValueError("unknown 3W diffusion comparison method")
     for method in selected_methods:
         method_result_path = output / f"{method}_result.json"
@@ -380,6 +387,7 @@ def run(config: dict, data_root: Path) -> dict:
             METHODS[1]: {"train": uniform_train_diagnostics, "validation": uniform_validation_diagnostics},
             METHODS[2]: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
             R2_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
+            R3_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
         },
         "supcon_sampler": sampler_audit,
         "supcon_batching_comparison": batching_comparison,

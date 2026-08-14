@@ -160,6 +160,40 @@ def _multiclass_fisher(type_run_means: np.ndarray, type_labels: np.ndarray) -> n
     return between / (within + 1e-8)
 
 
+def _balanced_multiclass_fisher(type_run_means: np.ndarray, type_labels: np.ndarray) -> tuple[np.ndarray, dict[int, np.ndarray]]:
+    """Return an equal-class one-vs-rest score and its per-class contributions.
+
+    Both the rest centroid and its variance are averages over classes, so neither
+    run count nor window count can make a frequent class dominate M.
+    """
+    if len(type_run_means) != len(type_labels) or not len(type_run_means):
+        raise ValueError("balanced multiclass criticality requires aligned run means and type labels")
+    kinds = np.unique(type_labels)
+    if len(kinds) < 2:
+        raise ValueError("balanced multiclass criticality requires at least two classes")
+    centroids = {int(kind): type_run_means[type_labels == kind].mean(0) for kind in kinds}
+    variances = {int(kind): type_run_means[type_labels == kind].var(0) for kind in kinds}
+    contributions = {}
+    for kind in map(int, kinds):
+        rest = [int(other) for other in kinds if int(other) != kind]
+        rest_centroid = np.mean([centroids[other] for other in rest], axis=0)
+        rest_variance = np.mean([variances[other] for other in rest], axis=0)
+        raw = np.square(centroids[kind] - rest_centroid) / (variances[kind] + rest_variance + 1e-8)
+        contributions[kind] = _robust_normalize(raw)
+    balanced = np.mean(np.stack(list(contributions.values())), axis=0)
+    return balanced, contributions
+
+
+def _stratified_bootstrap_type_means(type_run_means: np.ndarray, type_labels: np.ndarray,
+                                     rng: np.random.Generator) -> tuple[np.ndarray, np.ndarray]:
+    sampled_means = []; sampled_labels = []
+    for kind in np.unique(type_labels):
+        group = type_run_means[type_labels == kind]
+        sampled = group[rng.integers(0, len(group), len(group))]
+        sampled_means.extend(sampled); sampled_labels.extend([kind] * len(sampled))
+    return np.stack(sampled_means), np.asarray(sampled_labels)
+
+
 def build_criticality(features: np.ndarray, bundle: dict[str, np.ndarray], stages: np.ndarray,
                       settings: dict[str, Any], raw_log_amplitude: np.ndarray | None = None) -> dict[str, Any]:
     """Fit all criticality statistics from one explicitly train-only bundle."""
@@ -173,7 +207,24 @@ def build_criticality(features: np.ndarray, bundle: dict[str, np.ndarray], stage
     type_ids = np.unique(np.concatenate((normal_ids, fault_ids)))
     type_run_means = np.stack([features[run_uids == uid].mean(0) for uid in type_ids])
     type_labels = np.asarray([fault_type(str(uid)) for uid in type_ids])
-    multiclass_fisher = _multiclass_fisher(type_run_means, type_labels)
+    multiclass_mode = str(settings.get("multiclass_mode", "fisher"))
+    multiclass_contributions: dict[int, np.ndarray] = {}
+    multiclass_reliability = np.ones(features.shape[1:], dtype=np.float64)
+    if multiclass_mode == "balanced_reliable":
+        balanced_multiclass, multiclass_contributions = _balanced_multiclass_fisher(type_run_means, type_labels)
+        reliability_rng = np.random.default_rng(int(settings["bootstrap_seed"]))
+        selected = []
+        for _ in range(int(settings["bootstrap_repeats"])):
+            sampled_means, sampled_labels = _stratified_bootstrap_type_means(
+                type_run_means, type_labels, reliability_rng)
+            boot_balanced, _ = _balanced_multiclass_fisher(sampled_means, sampled_labels)
+            selected.append(_top_mask(boot_balanced, float(settings["critical_ratio"])))
+        multiclass_reliability = np.mean(np.stack(selected), axis=0)
+        multiclass_fisher = balanced_multiclass * multiclass_reliability
+    elif multiclass_mode == "fisher":
+        multiclass_fisher = _multiclass_fisher(type_run_means, type_labels)
+    else:
+        raise ValueError(f"unknown multiclass criticality mode: {multiclass_mode}")
     discriminative, early, stability, composite = _scores_from_runs(
         normal_runs, fault_runs, early_runs, multiclass_fisher, settings)
     ratio = float(settings["critical_ratio"])
@@ -192,12 +243,12 @@ def build_criticality(features: np.ndarray, bundle: dict[str, np.ndarray], stage
         sampled_early = early_runs[rng.integers(0, len(early_runs), len(early_runs))]
         boot_multiclass = multiclass_fisher
         if float(settings.get("weight_multiclass", 0.0)) != 0:
-            sampled_type_means = []; sampled_type_labels = []
-            for kind in np.unique(type_labels):
-                group = type_run_means[type_labels == kind]
-                sampled = group[rng.integers(0, len(group), len(group))]
-                sampled_type_means.extend(sampled); sampled_type_labels.extend([kind] * len(sampled))
-            boot_multiclass = _multiclass_fisher(np.stack(sampled_type_means), np.asarray(sampled_type_labels))
+            sampled_type_means, sampled_type_labels = _stratified_bootstrap_type_means(type_run_means, type_labels, rng)
+            if multiclass_mode == "balanced_reliable":
+                boot_balanced, _ = _balanced_multiclass_fisher(sampled_type_means, sampled_type_labels)
+                boot_multiclass = boot_balanced * multiclass_reliability
+            else:
+                boot_multiclass = _multiclass_fisher(sampled_type_means, sampled_type_labels)
         _, _, _, boot_composite = _scores_from_runs(
             sampled_normal, sampled_fault, sampled_early, boot_multiclass, settings)
         overlaps.append(mask_jaccard(_top_mask(boot_composite, ratio), masks["composite"]))
@@ -205,6 +256,9 @@ def build_criticality(features: np.ndarray, bundle: dict[str, np.ndarray], stage
         "fit_split": "train", "discriminative": discriminative, "early": early,
         "stability": stability, "composite": composite, "soft_mask": soft_mask.astype(np.float32),
         "energy": energy, "multiclass_fisher": multiclass_fisher, "masks": masks,
+        "multiclass_mode": multiclass_mode,
+        "multiclass_reliability": multiclass_reliability,
+        "multiclass_class_contributions": multiclass_contributions,
         "component_weights": {"discriminative": float(settings["weight_discriminative"]),
                               "early": float(settings["weight_early"]),
                               "stability": float(settings["weight_run_stability"]),

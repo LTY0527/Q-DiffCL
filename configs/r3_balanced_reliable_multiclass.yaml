@@ -1,0 +1,58 @@
+mode: r3_balanced_reliable_multiclass
+markers: [R3_BALANCED_RELIABLE_MULTICLASS, TRAIN_ONLY_RUN_BOOTSTRAP, FIXED_WEIGHT_NO_SEARCH]
+criticality_weights: &r3_weights
+  weight_discriminative: 0.40
+  weight_early: 0.24
+  weight_run_stability: 0.16
+  weight_multiclass: 0.20
+  multiclass_mode: balanced_reliable
+three_w:
+  base_config: configs/3w_diffusion_1seed.yaml
+  original_manifest: outputs/3w_diffusion_3seed/result_manifest.json
+  r2_manifest: outputs/r2_multiclass_criticality_3w_all_classes/result_manifest.json
+  output_dir: outputs/r3_balanced_reliable_multiclass_3w
+  seeds: [42, 43, 44]
+  protocol_seed: 42
+  method: FREQUENCY_SELECTIVE_R3
+  criticality_weights: *r3_weights
+  gate:
+    minimum_macro_f1_mean_gain: 0.020
+    minimum_macro_f1_wins: 2
+    minimum_r1_macro_f1_nonnegative_seeds: 2
+    minimum_r1_macro_f1_mean_gain: -0.005
+    maximum_macro_f1_delta_std: 0.050
+    minimum_multiclass_auprc_mean_gain: 0.0
+    minimum_binary_auprc_mean_gain: 0.0
+    maximum_single_binary_auprc_drop: 0.030
+    maximum_far_mean_increase: 0.050
+    minimum_meaningful_class9_recall: 0.020
+    minimum_meaningful_class9_f1: 0.010
+tep:
+  base_config: configs/frequency_selective_r1_3seed.yaml
+  previous_result: outputs/frequency_selective_r1_3seed/result.json
+  r2_result: outputs/r2_multiclass_criticality_tep/result.json
+  output_dir: outputs/r3_balanced_reliable_multiclass_tep
+  seeds: [7, 42, 2026]
+  criticality_weights: *r3_weights
+  markers: [R3_CROSS_DATASET_TRANSFER_CHECK, EXPLORATORY_TEP_SUBSET, NOT_FOR_PAPER_FINAL_CLAIMS]
+  gate:
+    minimum_macro_f1_nonnegative_seeds_vs_c1: 3
+    maximum_mean_macro_f1_drop_vs_r2: 0.005
+    maximum_mean_auprc_drop: 0.005
+    maximum_mean_recall_drop: 0.010
+    maximum_mean_far_increase: 0.030
+    maximum_mean_early_recall_drop: 0.010
+    catastrophic_macro_f1_drop: 0.020
+    catastrophic_auprc_drop: 0.030
+    catastrophic_far_increase: 0.050
+    catastrophic_early_recall_drop: 0.050
+docs:
+  three_w_report: docs/r3_balanced_reliable_multiclass_3w.md
+  three_w_json: docs/r3_balanced_reliable_multiclass_3w.json
+  three_w_results_csv: docs/r3_balanced_reliable_multiclass_3w_results.csv
+  three_w_paired_csv: docs/r3_balanced_reliable_multiclass_3w_paired.csv
+  tep_report: docs/r3_balanced_reliable_multiclass_tep.md
+  tep_json: docs/r3_balanced_reliable_multiclass_tep.json
+  tep_results_csv: docs/r3_balanced_reliable_multiclass_tep_results.csv
+  tep_paired_csv: docs/r3_balanced_reliable_multiclass_tep_paired.csv
+  summary_report: docs/r3_balanced_reliable_multiclass_summary.md
