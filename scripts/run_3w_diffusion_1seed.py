@@ -17,7 +17,7 @@ from frequency import build_criticality, fit_frequency_scaler, log_amplitude_pha
 from scripts.run_3w_clean_collapse_diagnosis import train_probe
 from scripts.run_3w_final_primary_grouped import FINAL_PRIMARY_CLASSES, build_model
 from scripts.run_diffusion_quality_retest import _fit_supcon, epoch_orders
-from trainers.balanced import sqrt_inverse_frequency_weights
+from trainers.balanced import PositiveSafeBatchSampler, sqrt_inverse_frequency_weights
 from utils import seed_everything, select_device
 
 
@@ -30,6 +30,39 @@ def state_hash(state: dict[str, torch.Tensor]) -> str:
         digest.update(name.encode())
         digest.update(value.detach().cpu().numpy().tobytes())
     return digest.hexdigest()
+
+
+def supcon_orders(labels: np.ndarray, training: dict, seed: int) -> tuple[list[np.ndarray], dict]:
+    epochs = int(training["epochs"]); mode = str(training.get("supcon_batching", "original"))
+    if mode == "original":
+        orders = epoch_orders(len(labels), epochs, seed + 10_000)
+        audit = {"mode": mode, "sampler_fit_scope": "train labels only"}
+    elif mode == "balanced_positive_safe":
+        spec = training["balanced_sampler"]
+        sampler = PositiveSafeBatchSampler(labels, int(spec["classes_per_batch"]), int(spec["samples_per_class"]),
+                                            int(spec["batches_per_epoch"]), seed + 10_000, float(spec["max_oversampling"]))
+        orders = []; epoch_counts = []; minimum_classes = len(np.unique(labels)); minimum_samples = int(spec["samples_per_class"])
+        valid = total = 0
+        for epoch in range(epochs):
+            sampler.set_epoch(epoch); batches = list(sampler); orders.append(np.asarray([index for batch in batches for index in batch], dtype=np.int64))
+            counts = np.bincount(labels[orders[-1]], minlength=len(np.unique(labels))); epoch_counts.append(counts.tolist())
+            for batch in batches:
+                current = np.bincount(labels[np.asarray(batch)], minlength=len(counts)); present = current[current > 0]
+                minimum_classes = min(minimum_classes, len(present)); minimum_samples = min(minimum_samples, int(present.min()))
+                valid += int(present[present >= 2].sum()); total += len(batch)
+        audit = {"mode": mode, "sampler_fit_scope": "train labels only", "classes_per_batch": int(spec["classes_per_batch"]),
+                 "samples_per_class": int(spec["samples_per_class"]), "batches_per_epoch": int(spec["batches_per_epoch"]),
+                 "planned_sample_counts_per_epoch": sampler.planned_sample_counts,
+                 "oversampling_factors": sampler.oversampling_factors, "actual_sample_counts_per_epoch": epoch_counts,
+                 "minimum_classes_in_any_batch": minimum_classes, "minimum_clean_samples_per_present_class": minimum_samples,
+                 "clean_positive_anchor_rate": valid / total, "paired_view_positive_anchor_rate": 1.0,
+                 "all_classes_retain_positive_pairs": bool(valid == total)}
+    else:
+        raise ValueError(f"unknown SupCon batching mode: {mode}")
+    audit["batch_order_sha256"] = hashlib.sha256(
+        "\n".join(",".join(map(str, order.tolist())) for order in orders).encode()
+    ).hexdigest()
+    return orders, audit
 
 
 def json_ready_criticality(record: dict) -> dict:
@@ -164,7 +197,7 @@ def run(config: dict, data_root: Path) -> dict:
         METHODS[2]: (r1_train, r1_validation),
     }
     training = dict(config["training"])
-    pretrain_orders = epoch_orders(len(train_y), int(training["epochs"]), encoder_seed + 10_000)
+    pretrain_orders, sampler_audit = supcon_orders(train_y, training, encoder_seed)
     weights = sqrt_inverse_frequency_weights(train_y)
     seed_everything(encoder_seed)
     template = build_model(base["training"]["model"], train_x.shape[1], device)
@@ -250,6 +283,7 @@ def run(config: dict, data_root: Path) -> dict:
             METHODS[1]: {"train": uniform_train_diagnostics, "validation": uniform_validation_diagnostics},
             METHODS[2]: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
         },
+        "supcon_sampler": sampler_audit,
         "fairness": {
             "same_grouped_split": True,
             "same_train_only_preprocessor": True,
@@ -266,6 +300,7 @@ def run(config: dict, data_root: Path) -> dict:
             "critical_soft_mask_sha256": hashlib.sha256(
                 np.ascontiguousarray(critical_soft_mask).tobytes()
             ).hexdigest(),
+            "supcon_batch_order_sha256": sampler_audit["batch_order_sha256"],
         },
     }
     (output / "result.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
