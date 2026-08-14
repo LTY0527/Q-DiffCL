@@ -1,0 +1,13 @@
+base_config: configs/3w_diffusion_1seed.yaml
+three_seed_config: configs/3w_diffusion_3seed.yaml
+seed42_result: outputs/3w_diffusion_1seed_seed42/result.json
+seed42_output: outputs/3w_diffusion_1seed_seed42
+criticality_source: outputs/3w_diffusion_1seed_seed42/result.json
+seeds: [42, 43, 44]
+protocol_seed: 42
+fixed_validation_diffusion_seed: 42
+fixed_encoder_seed: 42
+fixed_probe_seed: 42
+methods: [UNIFORM_DIFFUSION, FREQUENCY_SELECTIVE_R1]
+dominance_ratio: 1.25
+output_dir: outputs/3w_seed_source_audit

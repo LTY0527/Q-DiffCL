@@ -63,6 +63,10 @@ def run(config: dict, data_root: Path) -> dict:
     base = yaml.safe_load(Path(base_config["base_config"]).read_text(encoding="utf-8"))
     seed = int(config["seed"])
     protocol_seed = int(config.get("protocol_seed", 42))
+    diffusion_seed = int(config.get("diffusion_seed", seed))
+    validation_diffusion_seed = int(config.get("validation_diffusion_seed", diffusion_seed))
+    encoder_seed = int(config.get("encoder_seed", seed))
+    probe_seed = int(config.get("probe_seed", seed))
     device = select_device(str(config["device"]))
     output = Path(config["output_dir"])
     output.mkdir(parents=True, exist_ok=True)
@@ -129,7 +133,8 @@ def run(config: dict, data_root: Path) -> dict:
         bool(config["spectral_diffusion"]["preserve_dc"]),
         device,
     )
-    sampling_seed = seed + int(config["spectral_diffusion"]["sampling_seed_offset"])
+    sampling_seed = diffusion_seed + int(config["spectral_diffusion"]["sampling_seed_offset"])
+    validation_sampling_seed = validation_diffusion_seed + int(config["spectral_diffusion"]["sampling_seed_offset"]) + 100
     uniform_train, uniform_train_diagnostics = augmenter.augment(
         train_x, "uniform", sampling_seed, batch_size=int(config["training"]["batch_size"])
     )
@@ -141,12 +146,12 @@ def run(config: dict, data_root: Path) -> dict:
         int(config["training"]["batch_size"]),
     )
     uniform_validation, uniform_validation_diagnostics = augmenter.augment(
-        validation_x, "uniform", sampling_seed + 100, batch_size=int(config["training"]["batch_size"])
+        validation_x, "uniform", validation_sampling_seed, batch_size=int(config["training"]["batch_size"])
     )
     r1_validation, r1_validation_diagnostics = augmenter.augment(
         validation_x,
         "selective",
-        sampling_seed + 100,
+        validation_sampling_seed,
         int(config["spectral_diffusion"]["t_nonkey"]),
         int(config["training"]["batch_size"]),
     )
@@ -159,21 +164,24 @@ def run(config: dict, data_root: Path) -> dict:
         METHODS[2]: (r1_train, r1_validation),
     }
     training = dict(config["training"])
-    pretrain_orders = epoch_orders(len(train_y), int(training["epochs"]), seed + 10_000)
+    pretrain_orders = epoch_orders(len(train_y), int(training["epochs"]), encoder_seed + 10_000)
     weights = sqrt_inverse_frequency_weights(train_y)
-    seed_everything(seed)
+    seed_everything(encoder_seed)
     template = build_model(base["training"]["model"], train_x.shape[1], device)
     initial_state = copy.deepcopy(template.state_dict())
     initialization_sha256 = state_hash(initial_state)
     results = {}
-    for method in METHODS:
+    selected_methods = tuple(config.get("methods", METHODS))
+    if any(method not in METHODS for method in selected_methods):
+        raise ValueError("unknown 3W diffusion comparison method")
+    for method in selected_methods:
         method_result_path = output / f"{method}_result.json"
         if method_result_path.exists():
             results[method] = json.loads(method_result_path.read_text(encoding="utf-8"))
             print("skip", method, flush=True)
             continue
         print("start", method, flush=True)
-        seed_everything(seed)
+        seed_everything(encoder_seed)
         model = build_model(base["training"]["model"], train_x.shape[1], device)
         model.load_state_dict(initial_state)
         checkpoint_path = output / f"{method}_model.pt"
@@ -204,7 +212,7 @@ def run(config: dict, data_root: Path) -> dict:
                 int(training["probe_epochs"]),
                 float(training["learning_rate"]),
                 int(training["batch_size"]),
-                seed,
+                probe_seed,
                 device,
             )
             recovered_from_checkpoint = False
@@ -230,6 +238,10 @@ def run(config: dict, data_root: Path) -> dict:
         "stage_a_status": stability["status"],
         "seed": seed,
         "protocol_seed": protocol_seed,
+        "diffusion_seed": diffusion_seed,
+        "validation_diffusion_seed": validation_diffusion_seed,
+        "encoder_seed": encoder_seed,
+        "probe_seed": probe_seed,
         "canonical_split_index": split_index,
         "primary_classes": list(FINAL_PRIMARY_CLASSES),
         "methods": results,
