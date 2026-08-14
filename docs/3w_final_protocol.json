@@ -1,0 +1,46 @@
+{
+  "status": "3W_REAL_ONLY_GENERALIZATION_HOLD",
+  "base_commit": "b30d7c8",
+  "seed": 42,
+  "input": "PROCESS_ONLY",
+  "class_summary": {
+    "4": {
+      "held_out_wells": 7,
+      "recall_mean": 0.0011097301066197642,
+      "recall_median": 0.0,
+      "recall_std": 0.001937368455674582,
+      "zero_recall_wells": 5,
+      "positive_recall_wells": 2,
+      "best_recall": 0.005420692905962762,
+      "worst_recall": 0.0,
+      "classification": "SYSTEMATIC_CROSS_WELL_FAILURE"
+    },
+    "7": {
+      "held_out_wells": 6,
+      "recall_mean": 0.018529438041633164,
+      "recall_median": 0.0,
+      "recall_std": 0.041433083045962334,
+      "zero_recall_wells": 5,
+      "positive_recall_wells": 1,
+      "best_recall": 0.11117662824979899,
+      "worst_recall": 0.0,
+      "classification": "SYSTEMATIC_CROSS_WELL_FAILURE"
+    }
+  },
+  "FINAL_3W_PRIMARY_CLASSES": [
+    0,
+    2,
+    8,
+    9
+  ],
+  "FINAL_3W_SECONDARY_CLASSES": [
+    1,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "diffusion_allowed": false,
+  "note": "Protocol frozen from full class 4/7 LOOW; no diffusion was run."
+}

@@ -1,0 +1,7 @@
+base_config: configs/3w_strict_mask_ablation.yaml
+strict_manifest: configs/3w_strict_split_manifest.json
+seed: 42
+validation_wells: 8
+target_classes: [4, 7]
+output_dir: outputs/3w_class47_loow_seed42
+resume: true
