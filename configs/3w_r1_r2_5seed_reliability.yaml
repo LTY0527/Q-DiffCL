@@ -1,0 +1,35 @@
+mode: 3w_r1_r2_5seed_reliability
+markers: [FROZEN_R1_R2_RELIABILITY_AUDIT, NO_PARAMETER_SEARCH, ORIGINAL_BATCHING]
+base_config: configs/3w_diffusion_1seed.yaml
+existing_seeds: [42, 43, 44]
+new_seeds: [45, 46]
+all_seeds: [42, 43, 44, 45, 46]
+protocol_seed: 42
+existing_r1_manifest: outputs/3w_diffusion_3seed/result_manifest.json
+existing_r2_manifest: outputs/r2_multiclass_criticality_3w_all_classes/result_manifest.json
+r1_criticality_source: outputs/3w_diffusion_1seed_seed42/result.json
+r2_criticality_source: outputs/r2_multiclass_criticality_3w_all_classes/seed_42/result.json
+output_dir: outputs/3w_r1_r2_5seed_reliability
+r2_weights:
+  weight_discriminative: 0.40
+  weight_early: 0.24
+  weight_run_stability: 0.16
+  weight_multiclass: 0.20
+r1_gate:
+  minimum_macro_f1_positive_seeds: 4
+  minimum_macro_f1_mean_gain: 0.015
+  minimum_multiclass_auprc_nonworse_seeds: 3
+  maximum_far_mean_increase: 0.0
+  minimum_leave_best_out_macro_f1_mean_gain: 0.0
+r2_gate:
+  minimum_macro_f1_positive_seeds_vs_uniform: 3
+  minimum_macro_f1_nonworse_seeds_vs_r1: 3
+  minimum_binary_auprc_nonworse_seeds_vs_uniform: 3
+  minimum_multiclass_auprc_nonworse_seeds_vs_uniform: 3
+  minimum_binary_auprc_mean_gain_vs_uniform: 0.0
+  minimum_multiclass_auprc_mean_gain_vs_uniform: 0.0
+docs:
+  report: docs/3w_r1_r2_5seed_reliability.md
+  json: docs/3w_r1_r2_5seed_reliability.json
+  results_csv: docs/3w_r1_r2_5seed_reliability_results.csv
+  paired_csv: docs/3w_r1_r2_5seed_reliability_paired.csv
