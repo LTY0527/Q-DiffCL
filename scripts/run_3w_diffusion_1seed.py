@@ -14,9 +14,9 @@ import yaml
 import scripts.run_3w_clean_baseline as base3w
 from datasets.three_w import discover_instances
 from diffusion import DiffusionSchedule, FrequencyForwardDiffusion, fit_spectral_statistics
-from frequency import (build_criticality, build_hierarchical_criticality,
-                       build_rival_aware_criticality, fit_frequency_scaler,
-                       log_amplitude_phase)
+from frequency import (build_criticality, build_early_warning_criticality,
+                       build_hierarchical_criticality, build_rival_aware_criticality,
+                       fit_frequency_scaler, log_amplitude_phase)
 from scripts.run_3w_clean_collapse_diagnosis import train_probe
 from scripts.run_3w_final_primary_grouped import FINAL_PRIMARY_CLASSES, build_model
 from scripts.run_diffusion_quality_retest import _fit_supcon, epoch_orders
@@ -31,6 +31,7 @@ R2_METHOD = "FREQUENCY_SELECTIVE_R2"
 R3_METHOD = "FREQUENCY_SELECTIVE_R3"
 HFSC_METHOD = "HIERARCHICAL_FAULT_SEMANTIC_CRITICALITY"
 RRDC_METHOD = "RIVAL_AWARE_RELIABLE_DIAGNOSTIC_CRITICALITY"
+EWIC_METHOD = "EARLY_WARNING_INVARIANT_CRITICALITY"
 
 
 def state_hash(state: dict[str, torch.Tensor]) -> str:
@@ -204,6 +205,20 @@ def json_ready_rival_aware_criticality(record: dict) -> dict:
             "bootstrap_repeats": record["bootstrap_repeats"], "combination": record["combination"]}
 
 
+def json_ready_early_criticality(record: dict) -> dict:
+    return {"fit_split": record["fit_split"], "r1": json_ready_criticality(record["r1"]),
+            "horizon_count": record["horizon_count"], "lead_decay": record["lead_decay"],
+            "lead_weights": record["lead_weights"].tolist(), "horizon_coverage": record["horizon_coverage"],
+            "horizon_fisher": [value.tolist() for value in record["horizon_fisher"]],
+            "horizon_normalized": [value.tolist() for value in record["horizon_normalized"]],
+            "early_lead": record["early_lead"].tolist(), "early_reliability": record["early_reliability"].tolist(),
+            "early_invariant": record["early_invariant"].tolist(),
+            "early_invariant_normalized": record["early_invariant_normalized"].tolist(),
+            "composite": record["composite"].tolist(), "hard_mask": record["hard_mask"].astype(int).tolist(),
+            "soft_mask": record["soft_mask"].tolist(), "bootstrap_overlap": record["bootstrap_overlap"].tolist(),
+            "bootstrap_unit_count": record["bootstrap_unit_count"], "component_weights": record["component_weights"]}
+
+
 def run(config: dict, data_root: Path) -> dict:
     stability = json.loads(Path(config["stability_result"]).read_text(encoding="utf-8"))
     if stability["status"] != "3W_FINAL_PRIMARY_STABILITY_GO" or not stability["diffusion_allowed"]:
@@ -266,8 +281,9 @@ def run(config: dict, data_root: Path) -> dict:
 
     hierarchical_enabled = bool(config.get("hierarchical_criticality", False))
     rival_aware_enabled = bool(config.get("rival_aware_criticality", False))
-    if hierarchical_enabled and rival_aware_enabled:
-        raise ValueError("HFSC and RRDC criticality modes are mutually exclusive")
+    early_warning_enabled = bool(config.get("early_warning_criticality", False))
+    if sum(map(int, (hierarchical_enabled, rival_aware_enabled, early_warning_enabled))) > 1:
+        raise ValueError("HFSC, RRDC and EWIC criticality modes are mutually exclusive")
     class_conditional_enabled = hierarchical_enabled or rival_aware_enabled
     criticality_source = config.get("criticality_source")
     hierarchical_soft_masks = None
@@ -284,7 +300,24 @@ def run(config: dict, data_root: Path) -> dict:
         train_stages = np.asarray([ref.stage for ref in train_refs])
         train_log = log_amplitude_phase(train_x)[0]
         scaler = fit_frequency_scaler(train_log, "train")
-        if class_conditional_enabled:
+        if early_warning_enabled:
+            def horizon(ref) -> int:
+                if ref.target == 0 or ref.onset_seconds is None: return 0
+                progress = ref.end_seconds - float(ref.onset_seconds) - (length - 1)
+                value = int(np.floor(progress / int(base["protocol"]["stride"]))) + 1
+                return value if 1 <= value <= 8 else 0
+            horizon_refs = [ref for ref in refs_by_split["train"] if horizon(ref) > 0]
+            early_x, _ = base3w.materialize(horizon_refs, by_instance, preprocessor, length, False)
+            early_log = log_amplitude_phase(early_x)[0]
+            early_bundle = {"run_uid": np.asarray([run_uid(ref) for ref in horizon_refs]),
+                            "labels": np.ones(len(horizon_refs), dtype=np.int64)}
+            criticality = build_early_warning_criticality(
+                scaler.transform(train_log), train_bundle, train_stages,
+                np.asarray([horizon(ref) for ref in horizon_refs]), config["criticality"], train_log,
+                scaler.transform(early_log), early_bundle)
+            criticality_payload = json_ready_early_criticality(criticality)
+            critical_soft_mask = criticality["soft_mask"]
+        elif class_conditional_enabled:
             criticality = (build_rival_aware_criticality if rival_aware_enabled else build_hierarchical_criticality)(
                 scaler.transform(train_log), train_bundle, train_stages, config["criticality"], train_log)
             criticality_payload = (json_ready_rival_aware_criticality(criticality) if rival_aware_enabled
@@ -343,6 +376,7 @@ def run(config: dict, data_root: Path) -> dict:
         R3_METHOD: (r1_train, r1_validation),
         HFSC_METHOD: (r1_train, r1_validation),
         RRDC_METHOD: (r1_train, r1_validation),
+        EWIC_METHOD: (r1_train, r1_validation),
     }
     training = dict(config["training"])
     train_well_ids = np.asarray([by_instance[ref.instance_id].well_id for ref in train_refs], dtype=object)
@@ -368,7 +402,7 @@ def run(config: dict, data_root: Path) -> dict:
     initialization_sha256 = state_hash(initial_state)
     results = {}
     selected_methods = tuple(config.get("methods", METHODS))
-    if any(method not in (*METHODS, R2_METHOD, R3_METHOD, HFSC_METHOD, RRDC_METHOD) for method in selected_methods):
+    if any(method not in (*METHODS, R2_METHOD, R3_METHOD, HFSC_METHOD, RRDC_METHOD, EWIC_METHOD) for method in selected_methods):
         raise ValueError("unknown 3W diffusion comparison method")
     for method in selected_methods:
         method_result_path = output / f"{method}_result.json"
@@ -449,6 +483,7 @@ def run(config: dict, data_root: Path) -> dict:
             R3_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
             HFSC_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
             RRDC_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
+            EWIC_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
         },
         "supcon_sampler": sampler_audit,
         "supcon_batching_comparison": batching_comparison,

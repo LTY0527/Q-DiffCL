@@ -7,6 +7,8 @@ from .cross_channel_structure import (
 )
 from .hierarchical import SHARED_WEIGHTS, build_hierarchical_criticality
 from .rival_aware import HARD_RIVAL_QUANTILE, build_rival_aware_criticality
+from .early_criticality import (EWIC_WEIGHTS, HORIZONS, LEAD_DECAY,
+                                build_early_warning_criticality, onset_horizons)
 
 __all__ = [
     "FrequencyScaler", "build_criticality", "classify_stage", "fault_stages",
@@ -14,4 +16,5 @@ __all__ = [
     "CrossChannelSpectralStructure", "fit_cross_channel_spectral_structure",
     "SHARED_WEIGHTS", "build_hierarchical_criticality",
     "HARD_RIVAL_QUANTILE", "build_rival_aware_criticality",
+    "EWIC_WEIGHTS", "HORIZONS", "LEAD_DECAY", "build_early_warning_criticality", "onset_horizons",
 ]

@@ -1,0 +1,48 @@
+mode: early_warning_invariant_criticality
+markers: [EWIC_EXPLORATORY_DUAL_DATASET, TRAIN_ONLY_CRITICALITY, VALIDATION_ONLY_FIXED_FAR, BINARY_EARLY_DETECTION]
+device: cuda
+criticality: &criticality
+  critical_ratio: 0.30
+  weight_discriminative: 0.50
+  weight_early: 0.30
+  weight_run_stability: 0.20
+  horizon_count: 8
+  lead_decay: 0.35
+  bootstrap_repeats: 64
+  bootstrap_seed: 18042
+spectral_diffusion: &spectral
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+fixed_far: {operating_points: [0.01, 0.05], calibration: validation_normal_percentile}
+three_w:
+  base_config: configs/3w_diffusion_1seed.yaml
+  existing_manifest: outputs/3w_diffusion_3seed/result_manifest.json
+  output_dir: outputs/ewic_3w
+  seeds: [42, 43, 44]
+  protocol_seed: 42
+  criticality: *criticality
+  spectral_diffusion: *spectral
+tep:
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  existing_result: outputs/frequency_selective_r1_3seed/result.json
+  output_dir: outputs/ewic_tep
+  seeds: [7, 42, 2026]
+  criticality: *criticality
+  spectral_diffusion: *spectral
+docs:
+  three_w_report: docs/ewic_3w_report.md
+  tep_report: docs/ewic_tep_report.md
+  summary: docs/ewic_summary.md
+  three_w_json: docs/ewic_3w_result.json
+  tep_json: docs/ewic_tep_result.json
+  paired_csv: docs/ewic_paired.csv
+  horizon_csv: docs/ewic_horizon_profiles.csv
+  fault_csv: docs/ewic_fault_profiles.csv
+  mask_audit: docs/ewic_mask_audit.json

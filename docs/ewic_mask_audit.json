@@ -1,0 +1,346 @@
+{
+  "three_w": {
+    "r1_mask_sha256": "547d63f2845c521c708131c2961d05fee0f75ed9bfa4acb947c6ec20905cee09",
+    "ewic_mask_sha256": "5ed416a9e0e809538dd3281cdbe44aeddcb2449db00a9e45152038e8137bd5a6",
+    "hard_mask_jaccard": 0.7868852459016393,
+    "changed_bins": 52,
+    "soft_mask_mean_absolute_difference": 0.053284279242691586,
+    "composite_correlation": 0.8647625267202629,
+    "reliability": {
+      "mean": 0.3002754820936639,
+      "std": 0.3352651966809019,
+      "median": 0.15625,
+      "min": 0.0,
+      "max": 0.9375,
+      "below_half_fraction": 0.6900826446280992,
+      "lead_top_bins_filtered_below_half": 8
+    },
+    "bootstrap_overlap": {
+      "mean": 0.5967140259751853,
+      "std": 0.13497330169947622,
+      "median": 0.5683453237410072,
+      "min": 0.30930930930930933,
+      "max": 0.9122807017543859
+    },
+    "early_h1_h2_dominant_bins": [
+      {
+        "channel": 17,
+        "frequency_bin": 6,
+        "score": 1.3894144057994708
+      },
+      {
+        "channel": 17,
+        "frequency_bin": 7,
+        "score": 1.3693745804484934
+      },
+      {
+        "channel": 17,
+        "frequency_bin": 10,
+        "score": 1.3606860400177538
+      },
+      {
+        "channel": 17,
+        "frequency_bin": 20,
+        "score": 1.3495037679094821
+      },
+      {
+        "channel": 17,
+        "frequency_bin": 13,
+        "score": 1.3407292170450091
+      },
+      {
+        "channel": 17,
+        "frequency_bin": 21,
+        "score": 1.33776871743612
+      },
+      {
+        "channel": 17,
+        "frequency_bin": 12,
+        "score": 1.334218115429394
+      },
+      {
+        "channel": 17,
+        "frequency_bin": 19,
+        "score": 1.3329498037928715
+      },
+      {
+        "channel": 17,
+        "frequency_bin": 30,
+        "score": 1.325053265900351
+      },
+      {
+        "channel": 17,
+        "frequency_bin": 18,
+        "score": 1.324313922377769
+      }
+    ],
+    "late_h7_h8_dominant_bins": [
+      {
+        "channel": 21,
+        "frequency_bin": 1,
+        "score": -3.724150151014328
+      },
+      {
+        "channel": 21,
+        "frequency_bin": 2,
+        "score": -3.52240914106369
+      },
+      {
+        "channel": 21,
+        "frequency_bin": 3,
+        "score": -3.2137315571308136
+      },
+      {
+        "channel": 21,
+        "frequency_bin": 4,
+        "score": -3.167233407497406
+      },
+      {
+        "channel": 21,
+        "frequency_bin": 25,
+        "score": -3.0635710060596466
+      },
+      {
+        "channel": 21,
+        "frequency_bin": 28,
+        "score": -3.032167971134186
+      },
+      {
+        "channel": 21,
+        "frequency_bin": 30,
+        "score": -3.0179121494293213
+      },
+      {
+        "channel": 21,
+        "frequency_bin": 18,
+        "score": -3.0176790952682495
+      },
+      {
+        "channel": 21,
+        "frequency_bin": 8,
+        "score": -2.9827320277690887
+      },
+      {
+        "channel": 21,
+        "frequency_bin": 9,
+        "score": -2.980893522500992
+      }
+    ],
+    "horizon_coverage": {
+      "1": {
+        "windows": 17,
+        "runs_or_wells": 11
+      },
+      "2": {
+        "windows": 17,
+        "runs_or_wells": 11
+      },
+      "3": {
+        "windows": 17,
+        "runs_or_wells": 11
+      },
+      "4": {
+        "windows": 17,
+        "runs_or_wells": 11
+      },
+      "5": {
+        "windows": 17,
+        "runs_or_wells": 11
+      },
+      "6": {
+        "windows": 17,
+        "runs_or_wells": 11
+      },
+      "7": {
+        "windows": 17,
+        "runs_or_wells": 11
+      },
+      "8": {
+        "windows": 17,
+        "runs_or_wells": 11
+      }
+    },
+    "lead_weights": [
+      0.3144325748492798,
+      0.22157689051587534,
+      0.15614259570344471,
+      0.11003182748998187,
+      0.07753811832217433,
+      0.054640188480836606,
+      0.03850429004243121,
+      0.027133514595976127
+    ]
+  },
+  "tep": {
+    "r1_mask_sha256": "d2e1879bc012ac1326ea8c721461d31641105af2c4fe0c89eacdebac413b9395",
+    "ewic_mask_sha256": "4bac44cd7702f6d03add4897b4ba5855d36f710b00b2f421209f80567b99cdb5",
+    "hard_mask_jaccard": 0.8968692449355433,
+    "changed_bins": 56,
+    "soft_mask_mean_absolute_difference": 0.03069958505861131,
+    "composite_correlation": 0.9769900424521373,
+    "reliability": {
+      "mean": 0.30011655011655014,
+      "std": 0.42584087325967723,
+      "median": 0.0,
+      "min": 0.0,
+      "max": 1.0,
+      "below_half_fraction": 0.701048951048951,
+      "lead_top_bins_filtered_below_half": 8
+    },
+    "bootstrap_overlap": {
+      "mean": 0.8710982135524791,
+      "std": 0.02676697284755515,
+      "median": 0.8727272727272727,
+      "min": 0.7697594501718213,
+      "max": 0.9252336448598131
+    },
+    "early_h1_h2_dominant_bins": [
+      {
+        "channel": 40,
+        "frequency_bin": 2,
+        "score": 2.981743893586099
+      },
+      {
+        "channel": 28,
+        "frequency_bin": 8,
+        "score": 2.557408357039094
+      },
+      {
+        "channel": 26,
+        "frequency_bin": 4,
+        "score": 2.5159310065209866
+      },
+      {
+        "channel": 40,
+        "frequency_bin": 3,
+        "score": 2.5130565762519836
+      },
+      {
+        "channel": 10,
+        "frequency_bin": 7,
+        "score": 2.305824786424637
+      },
+      {
+        "channel": 25,
+        "frequency_bin": 16,
+        "score": 2.304014280438423
+      },
+      {
+        "channel": 36,
+        "frequency_bin": 1,
+        "score": 2.1309707313776016
+      },
+      {
+        "channel": 12,
+        "frequency_bin": 7,
+        "score": 2.0879074931144714
+      },
+      {
+        "channel": 21,
+        "frequency_bin": 7,
+        "score": 2.071393609046936
+      },
+      {
+        "channel": 2,
+        "frequency_bin": 7,
+        "score": 2.0265048146247864
+      }
+    ],
+    "late_h7_h8_dominant_bins": [
+      {
+        "channel": 29,
+        "frequency_bin": 4,
+        "score": -2.8394404938444495
+      },
+      {
+        "channel": 29,
+        "frequency_bin": 0,
+        "score": -2.5325499922037125
+      },
+      {
+        "channel": 29,
+        "frequency_bin": 15,
+        "score": -2.51374543691054
+      },
+      {
+        "channel": 17,
+        "frequency_bin": 0,
+        "score": -2.4844784662127495
+      },
+      {
+        "channel": 37,
+        "frequency_bin": 1,
+        "score": -2.3422925546765327
+      },
+      {
+        "channel": 30,
+        "frequency_bin": 5,
+        "score": -2.123555096797645
+      },
+      {
+        "channel": 29,
+        "frequency_bin": 17,
+        "score": -1.898044440895319
+      },
+      {
+        "channel": 38,
+        "frequency_bin": 0,
+        "score": -1.8884380906820297
+      },
+      {
+        "channel": 17,
+        "frequency_bin": 1,
+        "score": -1.8740135617554188
+      },
+      {
+        "channel": 22,
+        "frequency_bin": 1,
+        "score": -1.8185268640518188
+      }
+    ],
+    "horizon_coverage": {
+      "1": {
+        "windows": 120,
+        "runs_or_wells": 120
+      },
+      "2": {
+        "windows": 120,
+        "runs_or_wells": 120
+      },
+      "3": {
+        "windows": 120,
+        "runs_or_wells": 120
+      },
+      "4": {
+        "windows": 120,
+        "runs_or_wells": 120
+      },
+      "5": {
+        "windows": 120,
+        "runs_or_wells": 120
+      },
+      "6": {
+        "windows": 120,
+        "runs_or_wells": 120
+      },
+      "7": {
+        "windows": 120,
+        "runs_or_wells": 120
+      },
+      "8": {
+        "windows": 120,
+        "runs_or_wells": 120
+      }
+    },
+    "lead_weights": [
+      0.3144325748492798,
+      0.22157689051587534,
+      0.15614259570344471,
+      0.11003182748998187,
+      0.07753811832217433,
+      0.054640188480836606,
+      0.03850429004243121,
+      0.027133514595976127
+    ]
+  }
+}
