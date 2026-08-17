@@ -14,7 +14,8 @@ import yaml
 import scripts.run_3w_clean_baseline as base3w
 from datasets.three_w import discover_instances
 from diffusion import DiffusionSchedule, FrequencyForwardDiffusion, fit_spectral_statistics
-from frequency import build_criticality, fit_frequency_scaler, log_amplitude_phase
+from frequency import (build_criticality, build_hierarchical_criticality,
+                       fit_frequency_scaler, log_amplitude_phase)
 from scripts.run_3w_clean_collapse_diagnosis import train_probe
 from scripts.run_3w_final_primary_grouped import FINAL_PRIMARY_CLASSES, build_model
 from scripts.run_diffusion_quality_retest import _fit_supcon, epoch_orders
@@ -27,6 +28,7 @@ from utils import seed_everything, select_device
 METHODS = ("CLEAN_HARD_SUPCON", "UNIFORM_DIFFUSION", "FREQUENCY_SELECTIVE_R1")
 R2_METHOD = "FREQUENCY_SELECTIVE_R2"
 R3_METHOD = "FREQUENCY_SELECTIVE_R3"
+HFSC_METHOD = "HIERARCHICAL_FAULT_SEMANTIC_CRITICALITY"
 
 
 def state_hash(state: dict[str, torch.Tensor]) -> str:
@@ -166,6 +168,17 @@ def json_ready_criticality(record: dict) -> dict:
     }
 
 
+def json_ready_hierarchical_criticality(record: dict) -> dict:
+    def item_ready(item: dict) -> dict:
+        return {"score": item["score"].tolist(), "hard_mask": item["hard_mask"].astype(int).tolist(),
+                "soft_mask": item["soft_mask"].tolist()}
+    return {"fit_split": record["fit_split"], "shared": json_ready_criticality(record["shared"]),
+            "diagnostic": {str(kind): item_ready(item) for kind, item in record["diagnostic"].items()},
+            "hierarchical": {str(kind): item_ready(item) for kind, item in record["hierarchical"].items()},
+            "fault_run_counts": record["fault_run_counts"], "diagnostic_classes": record["diagnostic_classes"],
+            "shared_weight": record["shared_weight"], "diagnostic_weight": record["diagnostic_weight"]}
+
+
 def run(config: dict, data_root: Path) -> dict:
     stability = json.loads(Path(config["stability_result"]).read_text(encoding="utf-8"))
     if stability["status"] != "3W_FINAL_PRIMARY_STABILITY_GO" or not stability["diffusion_allowed"]:
@@ -226,7 +239,13 @@ def run(config: dict, data_root: Path) -> dict:
         original = FINAL_PRIMARY_CLASSES[ref.target] if ref.target else 0
         return f"training:fault_{original}:{item.well_id}"
 
+    hierarchical_enabled = bool(config.get("hierarchical_criticality", False))
     criticality_source = config.get("criticality_source")
+    hierarchical_soft_masks = None
+    train_original_y = np.asarray([FINAL_PRIMARY_CLASSES[ref.target] if ref.target else 0 for ref in train_refs])
+    validation_original_y = np.asarray([FINAL_PRIMARY_CLASSES[ref.target] if ref.target else 0 for ref in validation_refs])
+    if hierarchical_enabled and criticality_source:
+        raise ValueError("HFSC criticality must be fitted train-only in the current protocol, not loaded globally")
     if criticality_source:
         source = json.loads(Path(criticality_source).read_text(encoding="utf-8"))
         criticality_payload = source["criticality"]
@@ -236,11 +255,17 @@ def run(config: dict, data_root: Path) -> dict:
         train_stages = np.asarray([ref.stage for ref in train_refs])
         train_log = log_amplitude_phase(train_x)[0]
         scaler = fit_frequency_scaler(train_log, "train")
-        criticality = build_criticality(
-            scaler.transform(train_log), train_bundle, train_stages, config["criticality"], train_log
-        )
-        criticality_payload = json_ready_criticality(criticality)
-        critical_soft_mask = criticality["soft_mask"]
+        if hierarchical_enabled:
+            criticality = build_hierarchical_criticality(
+                scaler.transform(train_log), train_bundle, train_stages, config["criticality"], train_log)
+            criticality_payload = json_ready_hierarchical_criticality(criticality)
+            critical_soft_mask = criticality["shared"]["soft_mask"]
+            hierarchical_soft_masks = criticality["soft_masks"]
+        else:
+            criticality = build_criticality(
+                scaler.transform(train_log), train_bundle, train_stages, config["criticality"], train_log)
+            criticality_payload = json_ready_criticality(criticality)
+            critical_soft_mask = criticality["soft_mask"]
     statistics = fit_spectral_statistics(train_x, float(config["spectral_diffusion"]["clip_quantile"]), "train")
     schedule = DiffusionSchedule.cosine(int(config["spectral_diffusion"]["diffusion_steps"]), device)
     augmenter = FrequencyForwardDiffusion(
@@ -258,23 +283,25 @@ def run(config: dict, data_root: Path) -> dict:
     uniform_train, uniform_train_diagnostics = augmenter.augment(
         train_x, "uniform", sampling_seed, batch_size=int(config["training"]["batch_size"])
     )
-    r1_train, r1_train_diagnostics = augmenter.augment(
-        train_x,
-        "selective",
-        sampling_seed,
-        int(config["spectral_diffusion"]["t_nonkey"]),
-        int(config["training"]["batch_size"]),
-    )
+    if hierarchical_enabled:
+        r1_train, r1_train_diagnostics = augmenter.augment_hierarchical(
+            train_x, train_original_y, hierarchical_soft_masks, sampling_seed,
+            int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]))
+    else:
+        r1_train, r1_train_diagnostics = augmenter.augment(
+            train_x, "selective", sampling_seed, int(config["spectral_diffusion"]["t_nonkey"]),
+            int(config["training"]["batch_size"]))
     uniform_validation, uniform_validation_diagnostics = augmenter.augment(
         validation_x, "uniform", validation_sampling_seed, batch_size=int(config["training"]["batch_size"])
     )
-    r1_validation, r1_validation_diagnostics = augmenter.augment(
-        validation_x,
-        "selective",
-        validation_sampling_seed,
-        int(config["spectral_diffusion"]["t_nonkey"]),
-        int(config["training"]["batch_size"]),
-    )
+    if hierarchical_enabled:
+        r1_validation, r1_validation_diagnostics = augmenter.augment_hierarchical(
+            validation_x, validation_original_y, hierarchical_soft_masks, validation_sampling_seed,
+            int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]))
+    else:
+        r1_validation, r1_validation_diagnostics = augmenter.augment(
+            validation_x, "selective", validation_sampling_seed,
+            int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]))
     if abs(uniform_train_diagnostics["expected_total_noise_budget"] - r1_train_diagnostics["expected_total_noise_budget"]) > 1e-6:
         raise RuntimeError("Uniform/R1 total perturbation budgets are not comparable")
 
@@ -284,6 +311,7 @@ def run(config: dict, data_root: Path) -> dict:
         METHODS[2]: (r1_train, r1_validation),
         R2_METHOD: (r1_train, r1_validation),
         R3_METHOD: (r1_train, r1_validation),
+        HFSC_METHOD: (r1_train, r1_validation),
     }
     training = dict(config["training"])
     train_well_ids = np.asarray([by_instance[ref.instance_id].well_id for ref in train_refs], dtype=object)
@@ -309,7 +337,7 @@ def run(config: dict, data_root: Path) -> dict:
     initialization_sha256 = state_hash(initial_state)
     results = {}
     selected_methods = tuple(config.get("methods", METHODS))
-    if any(method not in (*METHODS, R2_METHOD, R3_METHOD) for method in selected_methods):
+    if any(method not in (*METHODS, R2_METHOD, R3_METHOD, HFSC_METHOD) for method in selected_methods):
         raise ValueError("unknown 3W diffusion comparison method")
     for method in selected_methods:
         method_result_path = output / f"{method}_result.json"
@@ -388,6 +416,7 @@ def run(config: dict, data_root: Path) -> dict:
             METHODS[2]: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
             R2_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
             R3_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
+            HFSC_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
         },
         "supcon_sampler": sampler_audit,
         "supcon_batching_comparison": batching_comparison,
@@ -404,9 +433,9 @@ def run(config: dict, data_root: Path) -> dict:
             "window_refs_sha256": hashlib.sha256(
                 "\n".join(f"{ref.instance_id}:{ref.start}:{ref.target}" for ref in train_refs + validation_refs).encode()
             ).hexdigest(),
-            "critical_soft_mask_sha256": hashlib.sha256(
-                np.ascontiguousarray(critical_soft_mask).tobytes()
-            ).hexdigest(),
+            "critical_soft_mask_sha256": hashlib.sha256(np.ascontiguousarray(
+                np.stack([hierarchical_soft_masks[kind] for kind in sorted(hierarchical_soft_masks)])
+                if hierarchical_soft_masks is not None else critical_soft_mask).tobytes()).hexdigest(),
             "supcon_batch_order_sha256": sampler_audit["batch_order_sha256"],
         },
     }

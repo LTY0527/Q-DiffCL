@@ -212,3 +212,62 @@ class FrequencyForwardDiffusion:
             "amplitude_min": float(output.min()), "amplitude_max": float(output.max()),
         }
         return output, diagnostics
+
+    @torch.no_grad()
+    def augment_hierarchical(self, values: np.ndarray, class_ids: np.ndarray,
+                             class_soft_masks: dict[int, np.ndarray], seed: int,
+                             t_noncritical: int, batch_size: int = 256,
+                             noise_structure: NoiseStructure = "iid") -> tuple[np.ndarray, dict[str, Any]]:
+        """Apply a train-fitted class-specific mask while preserving the global RNG order."""
+        values = np.asarray(values, dtype=np.float32); class_ids = np.asarray(class_ids, dtype=np.int64)
+        if len(values) != len(class_ids): raise ValueError("hierarchical class ids must align with samples")
+        if values.ndim != 3 or values.shape[1:] != (self.soft_mask.shape[0], (self.soft_mask.shape[1] - 1) * 2):
+            raise ValueError("frequency diffusion input shape mismatch")
+        if noise_structure != "iid": raise ValueError("HFSC first version freezes iid noise")
+        present = set(map(int, np.unique(class_ids)))
+        if not present.issubset(set(map(int, class_soft_masks))):
+            raise ValueError("hierarchical soft masks do not cover all sample classes")
+        variances = {}
+        for kind in sorted(present):
+            mask = torch.as_tensor(class_soft_masks[kind], dtype=torch.float32, device=self.device)
+            variances[kind] = spectral_noise_variance(
+                self.alpha_bars, self.soft_mask.shape[0], self.soft_mask.shape[1], "selective",
+                self.t_uniform, self.preserve_dc, mask, self.t_critical, int(t_noncritical))
+        mean = torch.as_tensor(self.statistics.mean, dtype=torch.float32, device=self.device)
+        scale = torch.as_tensor(self.statistics.scale, dtype=torch.float32, device=self.device)
+        maximum = torch.as_tensor(self.statistics.maximum_log_amplitude, dtype=torch.float32, device=self.device)
+        generator = torch.Generator(device=self.device).manual_seed(int(seed)); output = np.empty_like(values)
+        phase_error = []; reconstruction_error = []
+        for start in range(0, len(values), batch_size):
+            stop = min(start + batch_size, len(values)); base = torch.from_numpy(values[start:stop]).to(self.device)
+            spectrum = torch.fft.rfft(base, dim=-1); log_amplitude = torch.log1p(torch.abs(spectrum)); phase = torch.angle(spectrum)
+            standardized = (log_amplitude - mean) / scale
+            variance = torch.stack([variances[int(kind)] for kind in class_ids[start:stop]])
+            noise = torch.randn(standardized.shape, device=self.device, generator=generator)
+            changed_standardized = (1 - variance).sqrt() * standardized + variance.sqrt() * noise
+            changed_log_amplitude = torch.minimum((changed_standardized * scale + mean).clamp_min(0), maximum)
+            if self.preserve_dc: changed_log_amplitude[:, :, 0] = log_amplitude[:, :, 0]
+            amplitude = torch.expm1(changed_log_amplitude).clamp_min(0)
+            changed = torch.fft.irfft(torch.polar(amplitude, phase), n=values.shape[-1], dim=-1)
+            if not torch.isfinite(changed).all(): raise FloatingPointError("non-finite hierarchical spectral augmentation")
+            output[start:stop] = changed.cpu().numpy(); roundtrip = torch.fft.rfft(changed, dim=-1)
+            valid = amplitude > 1e-6
+            angular = torch.atan2(torch.sin(torch.angle(roundtrip) - phase), torch.cos(torch.angle(roundtrip) - phase)).abs()
+            phase_error.append(float(angular[valid].mean()) if valid.any() else 0.0)
+            reconstructed = torch.fft.irfft(spectrum, n=values.shape[-1], dim=-1)
+            reconstruction_error.append(float(torch.max(torch.abs(reconstructed - base))))
+        class_budget = {kind: float(value.mean()) for kind, value in variances.items()}
+        target_budget = float(self.variance("uniform").mean())
+        if any(abs(value - target_budget) > 1e-6 for value in class_budget.values()):
+            raise RuntimeError("HFSC class noise budget differs from Uniform")
+        diagnostics = {"mode": "hierarchical_selective", "t_uniform": self.t_uniform,
+                       "t_critical": self.t_critical, "t_noncritical": int(t_noncritical),
+                       "expected_total_noise_budget": float(np.mean([class_budget[int(kind)] for kind in class_ids])),
+                       "per_class_noise_budget": class_budget, "noise_structure": "iid",
+                       "phase_preserved": self.preserve_phase, "mean_phase_error": float(np.mean(phase_error)),
+                       "dc_preserved": self.preserve_dc,
+                       "inverse_fft_reconstruction_max_error": float(np.max(reconstruction_error)),
+                       "finite": bool(np.isfinite(output).all()),
+                       "time_normalized_l1": normalized_difference(values, output),
+                       "amplitude_min": float(output.min()), "amplitude_max": float(output.max())}
+        return output, diagnostics
