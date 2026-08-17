@@ -1,0 +1,61 @@
+mode: rival_aware_reliable_diagnostic_criticality
+markers: [RRDC_EXPLORATORY_DUAL_DATASET, TRAIN_ONLY, FAULT_VS_FAULT_ONLY, FIXED_Q25, NOT_FOR_PAPER_FINAL_CLAIMS]
+device: cuda
+shared_criticality: &criticality
+  critical_ratio: 0.30
+  weight_discriminative: 0.50
+  weight_early: 0.30
+  weight_run_stability: 0.20
+  hard_rival_quantile: 0.25
+  bootstrap_repeats: 64
+  bootstrap_seed: 17042
+spectral_diffusion: &spectral
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+three_w:
+  base_config: configs/3w_diffusion_1seed.yaml
+  existing_r1_manifest: outputs/3w_diffusion_3seed/result_manifest.json
+  existing_r2_manifest: outputs/r2_multiclass_criticality_3w_all_classes/result_manifest.json
+  existing_hfsc_manifest: outputs/hfsc_3w/result_manifest.json
+  output_dir: outputs/rrdc_3w
+  seeds: [42, 43, 44]
+  protocol_seed: 42
+  diagnostic_classes: [2, 8, 9]
+  criticality: *criticality
+  spectral_diffusion: *spectral
+tep:
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  fixed_views_manifest: outputs/fixed_diffusion_views/views_manifest.json
+  existing_hfsc_result: outputs/hfsc_tep_multiclass/result.json
+  output_dir: outputs/rrdc_tep_multiclass
+  seeds: [7, 42, 2026]
+  diagnostic_classes: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  criticality: *criticality
+  spectral_diffusion: *spectral
+  training:
+    model: {name: tcn, hidden_channels: 32, projection_dim: 32, levels: 3}
+    batch_size: 128
+    learning_rate: 0.001
+    epochs: 8
+    early_stopping_patience: 8
+    probe_epochs: 8
+    temperature: 0.1
+  detection: {sustained_alarm_windows: 3}
+docs:
+  three_w_report: docs/rrdc_3w_report.md
+  three_w_json: docs/rrdc_3w_result.json
+  three_w_results_csv: docs/rrdc_3w_results.csv
+  three_w_paired_csv: docs/rrdc_3w_paired.csv
+  mask_audit_json: docs/rrdc_mask_audit.json
+  tep_report: docs/rrdc_tep_multiclass_report.md
+  tep_json: docs/rrdc_tep_multiclass_result.json
+  tep_results_csv: docs/rrdc_tep_multiclass_results.csv
+  tep_paired_csv: docs/rrdc_tep_multiclass_paired.csv
+  summary: docs/rrdc_summary.md
