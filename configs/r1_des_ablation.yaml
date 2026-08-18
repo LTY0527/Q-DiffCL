@@ -1,0 +1,50 @@
+mode: r1_des_ablation
+device: cuda
+variants:
+  FULL_DES: {weight_discriminative: 0.5, weight_early: 0.3, weight_run_stability: 0.2}
+  W/O_D: {weight_discriminative: 0.0, weight_early: 0.6, weight_run_stability: 0.4}
+  W/O_E: {weight_discriminative: 0.7142857142857143, weight_early: 0.0, weight_run_stability: 0.2857142857142857}
+  W/O_S: {weight_discriminative: 0.625, weight_early: 0.375, weight_run_stability: 0.0}
+  D_ONLY: {weight_discriminative: 1.0, weight_early: 0.0, weight_run_stability: 0.0}
+  E_ONLY: {weight_discriminative: 0.0, weight_early: 1.0, weight_run_stability: 0.0}
+  S_ONLY: {weight_discriminative: 0.0, weight_early: 0.0, weight_run_stability: 1.0}
+criticality_base: &criticality
+  critical_ratio: 0.30
+  bootstrap_repeats: 64
+  bootstrap_seed: 22042
+spectral_diffusion: &spectral
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+three_w:
+  seeds: [42, 43, 44]
+  protocol_seed: 42
+  base_config: configs/3w_diffusion_1seed.yaml
+  baseline_manifest: outputs/3w_diffusion_3seed/result_manifest.json
+  output_dir: outputs/r1_des_ablation/3w
+  criticality: *criticality
+  spectral_diffusion: *spectral
+tep:
+  seeds: [7, 42, 2026]
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  baseline_result: outputs/frequency_selective_r1_3seed/result.json
+  output_dir: outputs/r1_des_ablation/tep
+  criticality: *criticality
+  spectral_diffusion: *spectral
+output:
+  mask_dir: outputs/r1_des_ablation/masks
+  manifest: outputs/r1_des_ablation/result_manifest.json
+  mask_audit: docs/r1_des_mask_audit.json
+docs:
+  three_w: docs/r1_des_ablation_3w.md
+  tep: docs/r1_des_ablation_tep.md
+  summary: docs/r1_des_ablation_summary.md
+  results_csv: docs/r1_des_ablation_results.csv
+  main_table_csv: docs/r1_des_ablation_main_table.csv
+  supplementary_csv: docs/r1_des_ablation_supplementary.csv
