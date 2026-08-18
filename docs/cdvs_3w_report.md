@@ -1,0 +1,8 @@
+# CDVS 3W Kill Test
+
+`CDVS_KILL_TEST_NO_GO`。
+
+- Macro-F1：R1 0.500837，CDVS 0.476245，delta -0.024593
+- FAR：R1 0.344475，CDVS 0.437683，delta +0.093208
+- AUPRC / Early Recall / Delay：0.773419 / 0.905868 / 283.409
+FAR 增加超过 +0.05，触发停止线。

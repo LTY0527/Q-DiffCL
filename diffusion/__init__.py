@@ -17,3 +17,6 @@ __all__.extend(["FIXED_STAGE_BETAS", "apply_stage_perturbation_budget"])
 from .safe_frequency_allocation import asymmetric_safe_timestep, constrained_safe_variance
 
 __all__.extend(["asymmetric_safe_timestep", "constrained_safe_variance"])
+from .cross_domain_safe_allocation import cross_domain_safe_timestep, cross_domain_safe_variance
+
+__all__.extend(["cross_domain_safe_timestep", "cross_domain_safe_variance"])

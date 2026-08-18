@@ -14,11 +14,13 @@ import yaml
 import scripts.run_3w_clean_baseline as base3w
 from datasets.three_w import discover_instances
 from diffusion import (DiffusionSchedule, FrequencyForwardDiffusion,
-                       constrained_safe_variance, fit_spectral_statistics)
+                       constrained_safe_variance, cross_domain_safe_variance,
+                       fit_spectral_statistics)
 from frequency import (build_criticality, build_early_warning_criticality,
                        build_hierarchical_criticality, build_rival_aware_criticality,
                        build_uncertainty_gated_criticality,
                        build_three_w_leave_one_well_out,
+                       build_three_w_cross_domain_safety,
                        fit_frequency_scaler, log_amplitude_phase)
 from scripts.run_3w_clean_collapse_diagnosis import train_probe
 from scripts.run_3w_final_primary_grouped import FINAL_PRIMARY_CLASSES, build_model
@@ -37,6 +39,7 @@ RRDC_METHOD = "RIVAL_AWARE_RELIABLE_DIAGNOSTIC_CRITICALITY"
 EWIC_METHOD = "EARLY_WARNING_INVARIANT_CRITICALITY"
 UG_R1_METHOD = "UNCERTAINTY_GATED_R1"
 DRFD_METHOD = "DOMAIN_RELIABLE_SAFE_FREQUENCY_DIFFUSION"
+CDVS_METHOD = "CROSS_DOMAIN_VALIDATED_SAFETY"
 
 
 def state_hash(state: dict[str, torch.Tensor]) -> str:
@@ -247,6 +250,14 @@ def json_ready_domain_reliability(record: dict) -> dict:
             "r1": json_ready_criticality(record["r1"]), "test_used_for_reliability": False}
 
 
+def json_ready_cross_domain_safety(record: dict, r1: dict) -> dict:
+    return {"fit_split": "train", "resampling": record["resampling"],
+            "valid_unit_ids": record["valid_unit_ids"], "invalid_units": record["invalid_units"],
+            "minimum_support": record["minimum_support"], "unsafe_rate": record["unsafe_rate"].tolist(),
+            "safe_prob": record["safe_prob"].tolist(), "valid_support": record["valid_support"].tolist(),
+            "r1": json_ready_criticality(r1), "test_or_validation_used": False}
+
+
 def run(config: dict, data_root: Path) -> dict:
     stability = json.loads(Path(config["stability_result"]).read_text(encoding="utf-8"))
     if stability["status"] != "3W_FINAL_PRIMARY_STABILITY_GO" or not stability["diffusion_allowed"]:
@@ -312,15 +323,16 @@ def run(config: dict, data_root: Path) -> dict:
     early_warning_enabled = bool(config.get("early_warning_criticality", False))
     uncertainty_gated_enabled = bool(config.get("uncertainty_gated_criticality", False))
     drfd_enabled = bool(config.get("domain_reliable_safe_frequency_diffusion", False))
+    cdvs_enabled = bool(config.get("cross_domain_validated_safety", False))
     if sum(map(int, (hierarchical_enabled, rival_aware_enabled, early_warning_enabled,
-                     uncertainty_gated_enabled, drfd_enabled))) > 1:
+                     uncertainty_gated_enabled, drfd_enabled, cdvs_enabled))) > 1:
         raise ValueError("experimental criticality modes are mutually exclusive")
     class_conditional_enabled = hierarchical_enabled or rival_aware_enabled
     criticality_source = config.get("criticality_source")
     hierarchical_soft_masks = None
     train_original_y = np.asarray([FINAL_PRIMARY_CLASSES[ref.target] if ref.target else 0 for ref in train_refs])
     validation_original_y = np.asarray([FINAL_PRIMARY_CLASSES[ref.target] if ref.target else 0 for ref in validation_refs])
-    if (class_conditional_enabled or early_warning_enabled or uncertainty_gated_enabled or drfd_enabled) and criticality_source:
+    if (class_conditional_enabled or early_warning_enabled or uncertainty_gated_enabled or drfd_enabled or cdvs_enabled) and criticality_source:
         raise ValueError("experimental criticality must be fitted train-only in the current protocol")
     if criticality_source:
         source = json.loads(Path(criticality_source).read_text(encoding="utf-8"))
@@ -331,7 +343,15 @@ def run(config: dict, data_root: Path) -> dict:
         train_stages = np.asarray([ref.stage for ref in train_refs])
         train_log = log_amplitude_phase(train_x)[0]
         scaler = fit_frequency_scaler(train_log, "train")
-        if drfd_enabled:
+        if cdvs_enabled:
+            unit_ids = np.asarray([by_instance[ref.instance_id].well_id for ref in train_refs], dtype=object)
+            cdvs = build_three_w_cross_domain_safety(
+                scaler.transform(train_log), train_bundle, train_stages, unit_ids, config["criticality"])
+            criticality = build_criticality(
+                scaler.transform(train_log), train_bundle, train_stages, config["criticality"], train_log)
+            criticality_payload = json_ready_cross_domain_safety(cdvs, criticality)
+            critical_soft_mask = criticality["soft_mask"]
+        elif drfd_enabled:
             unit_ids = np.asarray([by_instance[ref.instance_id].well_id for ref in train_refs], dtype=object)
             criticality = build_three_w_leave_one_well_out(
                 scaler.transform(train_log), train_bundle, train_stages, unit_ids,
@@ -400,12 +420,24 @@ def run(config: dict, data_root: Path) -> dict:
             int(config["spectral_diffusion"]["t_nonkey"]))
         if drfd_allocation["budget_error_fraction"] > .02:
             raise RuntimeError("3W DRFD mechanism Gate is not GO")
+    cdvs_variance = None; cdvs_allocation = None
+    if cdvs_enabled:
+        cdvs_variance, cdvs_allocation = cross_domain_safe_variance(
+            schedule.alpha_bars, critical_soft_mask, cdvs["safe_prob"],
+            bool(config["spectral_diffusion"]["preserve_dc"]), int(config["spectral_diffusion"]["t_key"]),
+            int(config["spectral_diffusion"]["t_uniform"]), int(config["spectral_diffusion"]["t_nonkey"]))
+        if cdvs_allocation["budget_error_fraction"] > .02:
+            raise RuntimeError("3W CDVS mechanism Gate is not GO")
     sampling_seed = diffusion_seed + int(config["spectral_diffusion"]["sampling_seed_offset"])
     validation_sampling_seed = validation_diffusion_seed + int(config["spectral_diffusion"]["sampling_seed_offset"]) + 100
     uniform_train, uniform_train_diagnostics = augmenter.augment(
         train_x, "uniform", sampling_seed, batch_size=int(config["training"]["batch_size"])
     )
-    if drfd_enabled:
+    if cdvs_enabled:
+        r1_train, r1_train_diagnostics = augmenter.augment(
+            train_x, "domain_reliable_safe", sampling_seed, int(config["spectral_diffusion"]["t_nonkey"]),
+            int(config["training"]["batch_size"]), variance_override=cdvs_variance)
+    elif drfd_enabled:
         r1_train, r1_train_diagnostics = augmenter.augment(
             train_x, "domain_reliable_safe", sampling_seed, int(config["spectral_diffusion"]["t_nonkey"]),
             int(config["training"]["batch_size"]), variance_override=drfd_variance)
@@ -424,7 +456,12 @@ def run(config: dict, data_root: Path) -> dict:
     uniform_validation, uniform_validation_diagnostics = augmenter.augment(
         validation_x, "uniform", validation_sampling_seed, batch_size=int(config["training"]["batch_size"])
     )
-    if drfd_enabled:
+    if cdvs_enabled:
+        r1_validation, r1_validation_diagnostics = augmenter.augment(
+            validation_x, "domain_reliable_safe", validation_sampling_seed,
+            int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]),
+            variance_override=cdvs_variance)
+    elif drfd_enabled:
         r1_validation, r1_validation_diagnostics = augmenter.augment(
             validation_x, "domain_reliable_safe", validation_sampling_seed,
             int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]),
@@ -456,6 +493,7 @@ def run(config: dict, data_root: Path) -> dict:
         EWIC_METHOD: (r1_train, r1_validation),
         UG_R1_METHOD: (r1_train, r1_validation),
         DRFD_METHOD: (r1_train, r1_validation),
+        CDVS_METHOD: (r1_train, r1_validation),
     }
     training = dict(config["training"])
     train_well_ids = np.asarray([by_instance[ref.instance_id].well_id for ref in train_refs], dtype=object)
@@ -482,7 +520,7 @@ def run(config: dict, data_root: Path) -> dict:
     results = {}
     selected_methods = tuple(config.get("methods", METHODS))
     if any(method not in (*METHODS, R2_METHOD, R3_METHOD, HFSC_METHOD, RRDC_METHOD,
-                          EWIC_METHOD, UG_R1_METHOD, DRFD_METHOD) for method in selected_methods):
+                          EWIC_METHOD, UG_R1_METHOD, DRFD_METHOD, CDVS_METHOD) for method in selected_methods):
         raise ValueError("unknown 3W diffusion comparison method")
     for method in selected_methods:
         method_result_path = output / f"{method}_result.json"
@@ -566,10 +604,14 @@ def run(config: dict, data_root: Path) -> dict:
             EWIC_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
             UG_R1_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
             DRFD_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
+            CDVS_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
         },
         "drfd_allocation": None if drfd_allocation is None else {
             key: (value.tolist() if isinstance(value, np.ndarray) else value)
             for key, value in drfd_allocation.items()},
+        "cdvs_allocation": None if cdvs_allocation is None else {
+            key: (value.tolist() if isinstance(value, np.ndarray) else value)
+            for key, value in cdvs_allocation.items()},
         "supcon_sampler": sampler_audit,
         "supcon_batching_comparison": batching_comparison,
         "fairness": {

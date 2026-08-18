@@ -1,0 +1,65 @@
+mode: cross_domain_validated_safety
+device: cuda
+drfd_mechanism_audit: outputs/drfd/mechanism_audit.json
+three_w:
+  seeds: [42, 43, 44]
+  base_config: configs/3w_diffusion_1seed.yaml
+  protocol_seed: 42
+  r1_manifest: outputs/3w_diffusion_3seed/result_manifest.json
+  drfd_result: outputs/drfd/result.json
+  drfd_output: outputs/drfd/3w
+  criticality:
+    critical_ratio: 0.30
+    weight_discriminative: 0.50
+    weight_early: 0.30
+    weight_run_stability: 0.20
+    bootstrap_repeats: 64
+    bootstrap_seed: 20042
+  spectral_diffusion: &spectral
+    diffusion_steps: 50
+    t_uniform: 3
+    t_critical: 1
+    t_noncritical: 5
+    preserve_phase: true
+    preserve_dc: true
+    noise_structure: iid
+    sampling_seed_offset: 61000
+    clip_quantile: 0.999
+    maximum_budget_error: 0.02
+tep:
+  seeds: [7, 42, 2026]
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  r1_result: outputs/frequency_selective_r1_3seed/result.json
+  drfd_result: outputs/drfd/result.json
+  drfd_output: outputs/drfd/tep
+  criticality:
+    critical_ratio: 0.30
+    weight_discriminative: 0.50
+    weight_early: 0.30
+    weight_run_stability: 0.20
+    bootstrap_repeats: 64
+    bootstrap_seed: 20042
+  spectral_diffusion: *spectral
+phase_a:
+  output: outputs/cdvs/drfd_failure_audit.json
+  report: docs/drfd_failure_audit.md
+  fixed_far_csv: docs/drfd_fixed_far_paired.csv
+  trajectory_csv: docs/drfd_seed44_trajectory.csv
+stage_0:
+  output: outputs/cdvs/mechanism_audit.json
+  report: docs/cdvs_mechanism_audit.md
+  profile_csv: docs/cdvs_safe_probability_profiles.csv
+  fold_audit: outputs/cdvs/pseudo_unseen_fold_audit.json
+stage_1:
+  output: outputs/cdvs/kill_test.json
+stage_2:
+  output: outputs/cdvs/result.json
+output:
+  three_w: outputs/cdvs/3w
+  tep: outputs/cdvs/tep
+docs:
+  three_w_report: docs/cdvs_3w_report.md
+  tep_report: docs/cdvs_tep_report.md
+  summary: docs/cdvs_summary.md
+  paired_csv: docs/cdvs_paired_results.csv
+  final_json: outputs/cdvs/final_summary.json

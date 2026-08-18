@@ -1,0 +1,5 @@
+# CDVS TEP Kill Test
+
+- Macro-F1：R1 0.891992，CDVS 0.891316，delta -0.000676
+- FAR：R1 0.029687，CDVS 0.030859，delta +0.001172
+- AUPRC / Early Recall / Delay：0.931495 / 0.793750 / 103.000
