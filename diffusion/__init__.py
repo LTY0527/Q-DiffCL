@@ -20,3 +20,6 @@ __all__.extend(["asymmetric_safe_timestep", "constrained_safe_variance"])
 from .cross_domain_safe_allocation import cross_domain_safe_timestep, cross_domain_safe_variance
 
 __all__.extend(["cross_domain_safe_timestep", "cross_domain_safe_variance"])
+from .domain_shortcut_selective import domain_shortcut_timestep, matched_domain_shortcut_variance
+
+__all__.extend(["domain_shortcut_timestep", "matched_domain_shortcut_variance"])

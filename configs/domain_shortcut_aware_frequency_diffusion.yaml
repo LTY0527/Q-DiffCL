@@ -1,0 +1,46 @@
+mode: domain_shortcut_aware_frequency_diffusion
+device: cuda
+criticality: &criticality
+  critical_ratio: 0.30
+  weight_discriminative: 0.50
+  weight_early: 0.30
+  weight_run_stability: 0.20
+  bootstrap_repeats: 64
+  bootstrap_seed: 21042
+spectral_diffusion: &spectral
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+  maximum_budget_error: 0.02
+three_w:
+  seed: 42
+  protocol_seed: 42
+  base_config: configs/3w_diffusion_1seed.yaml
+  r1_manifest: outputs/3w_diffusion_3seed/result_manifest.json
+  criticality: *criticality
+  spectral_diffusion: *spectral
+tep:
+  seed: 7
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  r1_result: outputs/frequency_selective_r1_3seed/result.json
+  criticality: *criticality
+  spectral_diffusion: *spectral
+stage_a:
+  output: outputs/dsfd/stage_a.json
+  audit_report: docs/dsfd_domain_audit.md
+  probe_report: docs/dsfd_shortcut_probe.md
+  domain_csv: docs/dsfd_domain_score_profiles.csv
+  quadrant_csv: docs/dsfd_fault_domain_quadrants.csv
+  probe_csv: docs/dsfd_shortcut_probe_results.csv
+docs:
+  three_w_report: docs/dsfd_3w_report.md
+  tep_report: docs/dsfd_tep_report.md
+  summary: docs/dsfd_summary.md
+  paired_csv: docs/dsfd_paired_results.csv
+  final_json: outputs/dsfd/final_summary.json
