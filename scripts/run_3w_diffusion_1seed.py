@@ -16,6 +16,7 @@ from datasets.three_w import discover_instances
 from diffusion import DiffusionSchedule, FrequencyForwardDiffusion, fit_spectral_statistics
 from frequency import (build_criticality, build_early_warning_criticality,
                        build_hierarchical_criticality, build_rival_aware_criticality,
+                       build_uncertainty_gated_criticality,
                        fit_frequency_scaler, log_amplitude_phase)
 from scripts.run_3w_clean_collapse_diagnosis import train_probe
 from scripts.run_3w_final_primary_grouped import FINAL_PRIMARY_CLASSES, build_model
@@ -32,6 +33,7 @@ R3_METHOD = "FREQUENCY_SELECTIVE_R3"
 HFSC_METHOD = "HIERARCHICAL_FAULT_SEMANTIC_CRITICALITY"
 RRDC_METHOD = "RIVAL_AWARE_RELIABLE_DIAGNOSTIC_CRITICALITY"
 EWIC_METHOD = "EARLY_WARNING_INVARIANT_CRITICALITY"
+UG_R1_METHOD = "UNCERTAINTY_GATED_R1"
 
 
 def state_hash(state: dict[str, torch.Tensor]) -> str:
@@ -219,6 +221,18 @@ def json_ready_early_criticality(record: dict) -> dict:
             "bootstrap_unit_count": record["bootstrap_unit_count"], "component_weights": record["component_weights"]}
 
 
+def json_ready_uncertainty_criticality(record: dict) -> dict:
+    return {"fit_split": record["fit_split"], "r1": json_ready_criticality(record["r1"]),
+            "selection_probability": record["selection_probability"].tolist(),
+            "assignment_confidence": record["assignment_confidence"].tolist(),
+            "bootstrap_repeats": record["bootstrap_repeats"],
+            "bootstrap_overlap": record["bootstrap_overlap"].tolist(),
+            "bootstrap_unit_count": record["bootstrap_unit_count"],
+            "bootstrap_unit_ids": record["bootstrap_unit_ids"],
+            "stratified_unit_counts": record["stratified_unit_counts"],
+            "bootstrap_scope": record["bootstrap_scope"]}
+
+
 def run(config: dict, data_root: Path) -> dict:
     stability = json.loads(Path(config["stability_result"]).read_text(encoding="utf-8"))
     if stability["status"] != "3W_FINAL_PRIMARY_STABILITY_GO" or not stability["diffusion_allowed"]:
@@ -282,15 +296,16 @@ def run(config: dict, data_root: Path) -> dict:
     hierarchical_enabled = bool(config.get("hierarchical_criticality", False))
     rival_aware_enabled = bool(config.get("rival_aware_criticality", False))
     early_warning_enabled = bool(config.get("early_warning_criticality", False))
-    if sum(map(int, (hierarchical_enabled, rival_aware_enabled, early_warning_enabled))) > 1:
-        raise ValueError("HFSC, RRDC and EWIC criticality modes are mutually exclusive")
+    uncertainty_gated_enabled = bool(config.get("uncertainty_gated_criticality", False))
+    if sum(map(int, (hierarchical_enabled, rival_aware_enabled, early_warning_enabled, uncertainty_gated_enabled))) > 1:
+        raise ValueError("HFSC, RRDC, EWIC and UG-R1 criticality modes are mutually exclusive")
     class_conditional_enabled = hierarchical_enabled or rival_aware_enabled
     criticality_source = config.get("criticality_source")
     hierarchical_soft_masks = None
     train_original_y = np.asarray([FINAL_PRIMARY_CLASSES[ref.target] if ref.target else 0 for ref in train_refs])
     validation_original_y = np.asarray([FINAL_PRIMARY_CLASSES[ref.target] if ref.target else 0 for ref in validation_refs])
-    if class_conditional_enabled and criticality_source:
-        raise ValueError("class-conditional criticality must be fitted train-only in the current protocol")
+    if (class_conditional_enabled or early_warning_enabled or uncertainty_gated_enabled) and criticality_source:
+        raise ValueError("experimental criticality must be fitted train-only in the current protocol")
     if criticality_source:
         source = json.loads(Path(criticality_source).read_text(encoding="utf-8"))
         criticality_payload = source["criticality"]
@@ -300,7 +315,18 @@ def run(config: dict, data_root: Path) -> dict:
         train_stages = np.asarray([ref.stage for ref in train_refs])
         train_log = log_amplitude_phase(train_x)[0]
         scaler = fit_frequency_scaler(train_log, "train")
-        if early_warning_enabled:
+        if uncertainty_gated_enabled:
+            unit_ids = np.asarray([by_instance[ref.instance_id].well_id for ref in train_refs], dtype=object)
+            # 3W is resampled by complete WELL without class stratification: a WELL may
+            # legitimately contain normal and multiple event-class instances.
+            unit_strata = np.zeros(len(unit_ids), dtype=np.int64)
+            criticality = build_uncertainty_gated_criticality(
+                scaler.transform(train_log), train_bundle, train_stages, unit_ids, unit_strata,
+                config["criticality"], train_log)
+            criticality_payload = json_ready_uncertainty_criticality(criticality)
+            critical_soft_mask = criticality["r1"]["soft_mask"]
+            uncertainty_confidence = criticality["assignment_confidence"]
+        elif early_warning_enabled:
             def horizon(ref) -> int:
                 if ref.target == 0 or ref.onset_seconds is None: return 0
                 progress = ref.end_seconds - float(ref.onset_seconds) - (length - 1)
@@ -350,6 +376,10 @@ def run(config: dict, data_root: Path) -> dict:
         r1_train, r1_train_diagnostics = augmenter.augment_hierarchical(
             train_x, train_original_y, hierarchical_soft_masks, sampling_seed,
             int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]))
+    elif uncertainty_gated_enabled:
+        r1_train, r1_train_diagnostics = augmenter.augment(
+            train_x, "uncertainty_gated", sampling_seed, int(config["spectral_diffusion"]["t_nonkey"]),
+            int(config["training"]["batch_size"]), assignment_confidence=uncertainty_confidence)
     else:
         r1_train, r1_train_diagnostics = augmenter.augment(
             train_x, "selective", sampling_seed, int(config["spectral_diffusion"]["t_nonkey"]),
@@ -361,6 +391,11 @@ def run(config: dict, data_root: Path) -> dict:
         r1_validation, r1_validation_diagnostics = augmenter.augment_hierarchical(
             validation_x, validation_original_y, hierarchical_soft_masks, validation_sampling_seed,
             int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]))
+    elif uncertainty_gated_enabled:
+        r1_validation, r1_validation_diagnostics = augmenter.augment(
+            validation_x, "uncertainty_gated", validation_sampling_seed,
+            int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]),
+            assignment_confidence=uncertainty_confidence)
     else:
         r1_validation, r1_validation_diagnostics = augmenter.augment(
             validation_x, "selective", validation_sampling_seed,
@@ -377,6 +412,7 @@ def run(config: dict, data_root: Path) -> dict:
         HFSC_METHOD: (r1_train, r1_validation),
         RRDC_METHOD: (r1_train, r1_validation),
         EWIC_METHOD: (r1_train, r1_validation),
+        UG_R1_METHOD: (r1_train, r1_validation),
     }
     training = dict(config["training"])
     train_well_ids = np.asarray([by_instance[ref.instance_id].well_id for ref in train_refs], dtype=object)
@@ -402,7 +438,7 @@ def run(config: dict, data_root: Path) -> dict:
     initialization_sha256 = state_hash(initial_state)
     results = {}
     selected_methods = tuple(config.get("methods", METHODS))
-    if any(method not in (*METHODS, R2_METHOD, R3_METHOD, HFSC_METHOD, RRDC_METHOD, EWIC_METHOD) for method in selected_methods):
+    if any(method not in (*METHODS, R2_METHOD, R3_METHOD, HFSC_METHOD, RRDC_METHOD, EWIC_METHOD, UG_R1_METHOD) for method in selected_methods):
         raise ValueError("unknown 3W diffusion comparison method")
     for method in selected_methods:
         method_result_path = output / f"{method}_result.json"
@@ -484,6 +520,7 @@ def run(config: dict, data_root: Path) -> dict:
             HFSC_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
             RRDC_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
             EWIC_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
+            UG_R1_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
         },
         "supcon_sampler": sampler_audit,
         "supcon_batching_comparison": batching_comparison,

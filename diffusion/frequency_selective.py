@@ -9,7 +9,7 @@ import torch
 from frequency.cross_channel_structure import CrossChannelSpectralStructure
 
 
-Mode = Literal["uniform", "selective"]
+Mode = Literal["uniform", "selective", "uncertainty_gated"]
 NoiseStructure = Literal["iid", "correlated"]
 
 
@@ -48,6 +48,7 @@ def spectral_noise_variance(
     alpha_bars: torch.Tensor, channels: int, frequencies: int, mode: Mode,
     t_uniform: int, preserve_dc: bool, soft_mask: torch.Tensor | None = None,
     t_critical: int | None = None, t_noncritical: int | None = None,
+    assignment_confidence: torch.Tensor | None = None,
 ) -> torch.Tensor:
     uniform = 1 - alpha_bars[int(t_uniform)]
     target = torch.full((channels, frequencies), uniform, device=alpha_bars.device)
@@ -56,7 +57,15 @@ def spectral_noise_variance(
     if soft_mask is None or t_critical is None or t_noncritical is None:
         raise ValueError("selective diffusion requires mask and critical/noncritical timesteps")
     if soft_mask.shape != (channels, frequencies): raise ValueError("soft mask shape mismatch")
-    timestep = float(t_critical) + (1 - soft_mask.clamp(0, 1)) * (float(t_noncritical) - float(t_critical))
+    r1_timestep = float(t_critical) + (1 - soft_mask.clamp(0, 1)) * (float(t_noncritical) - float(t_critical))
+    if mode == "uncertainty_gated":
+        if assignment_confidence is None or assignment_confidence.shape != soft_mask.shape:
+            raise ValueError("uncertainty-gated diffusion requires aligned assignment confidence")
+        if torch.any((assignment_confidence < 0) | (assignment_confidence > 1)):
+            raise ValueError("assignment confidence must lie in [0,1]")
+        timestep = float(t_uniform) + assignment_confidence * (r1_timestep - float(t_uniform))
+    elif mode == "selective": timestep = r1_timestep
+    else: raise ValueError(f"unknown spectral diffusion mode: {mode}")
     variance = 1 - continuous_alpha_bar(alpha_bars, timestep)
     return match_noise_budget(variance, float(target.mean()), preserve_dc)
 
@@ -141,11 +150,13 @@ class FrequencyForwardDiffusion:
                 raise ValueError("cross-channel structure shape mismatch")
 
     def variance(self, mode: Mode, t_noncritical: int | None = None,
-                 apply_channel_budget: bool = False) -> torch.Tensor:
+                 apply_channel_budget: bool = False,
+                 assignment_confidence: np.ndarray | torch.Tensor | None = None) -> torch.Tensor:
         channels, frequencies = self.soft_mask.shape
         variance = spectral_noise_variance(
             self.alpha_bars, channels, frequencies, mode, self.t_uniform, self.preserve_dc,
-            self.soft_mask, self.t_critical, t_noncritical)
+            self.soft_mask, self.t_critical, t_noncritical,
+            None if assignment_confidence is None else torch.as_tensor(assignment_confidence, dtype=torch.float32, device=self.device))
         if apply_channel_budget:
             if self.maximum_channel_budget_ratio is None:
                 raise ValueError("channel budget ratio is not configured")
@@ -157,7 +168,8 @@ class FrequencyForwardDiffusion:
     @torch.no_grad()
     def augment(self, values: np.ndarray, mode: Mode, seed: int, t_noncritical: int | None = None,
                 batch_size: int = 256, noise_structure: NoiseStructure = "iid",
-                apply_channel_budget: bool = False) -> tuple[np.ndarray, dict[str, Any]]:
+                apply_channel_budget: bool = False,
+                assignment_confidence: np.ndarray | None = None) -> tuple[np.ndarray, dict[str, Any]]:
         values = np.asarray(values, dtype=np.float32)
         if values.ndim != 3 or values.shape[1:] != (self.soft_mask.shape[0], (self.soft_mask.shape[1] - 1) * 2):
             raise ValueError("frequency diffusion input shape mismatch")
@@ -165,7 +177,7 @@ class FrequencyForwardDiffusion:
             raise ValueError("unknown spectral noise structure")
         if noise_structure == "correlated" and self.cross_channel_structure is None:
             raise ValueError("correlated noise requires fitted train-only structure")
-        variance = self.variance(mode, t_noncritical, apply_channel_budget); alpha = 1 - variance
+        variance = self.variance(mode, t_noncritical, apply_channel_budget, assignment_confidence); alpha = 1 - variance
         mean = torch.as_tensor(self.statistics.mean, dtype=torch.float32, device=self.device)
         scale = torch.as_tensor(self.statistics.scale, dtype=torch.float32, device=self.device)
         maximum = torch.as_tensor(self.statistics.maximum_log_amplitude, dtype=torch.float32, device=self.device)
@@ -211,6 +223,20 @@ class FrequencyForwardDiffusion:
             "finite": bool(np.isfinite(output).all()), "time_normalized_l1": normalized_difference(values, output),
             "amplitude_min": float(output.min()), "amplitude_max": float(output.max()),
         }
+        if mode == "uncertainty_gated":
+            confidence = torch.as_tensor(assignment_confidence, dtype=torch.float32, device=self.device)
+            r1_timestep = self.t_critical + (1 - self.soft_mask.clamp(0, 1)) * (int(t_noncritical) - self.t_critical)
+            timestep = self.t_uniform + confidence * (r1_timestep - self.t_uniform)
+            uncertain = confidence < .25; stable_critical = (confidence >= .75) & (self.soft_mask >= .5)
+            stable_noncritical = (confidence >= .75) & (self.soft_mask < .5)
+            diagnostics.update({"assignment_confidence_min": float(confidence.min()),
+                "assignment_confidence_max": float(confidence.max()),
+                "timestep_mean": float(timestep.mean()), "timestep_min": float(timestep.min()),
+                "timestep_max": float(timestep.max()),
+                "timestep_mean_absolute_change_from_r1": float(torch.mean(torch.abs(timestep - r1_timestep))),
+                "uncertain_noise_budget": float(variance[uncertain].mean()) if uncertain.any() else None,
+                "stable_critical_noise_budget": float(variance[stable_critical].mean()) if stable_critical.any() else None,
+                "stable_noncritical_noise_budget": float(variance[stable_noncritical].mean()) if stable_noncritical.any() else None})
         return output, diagnostics
 
     @torch.no_grad()

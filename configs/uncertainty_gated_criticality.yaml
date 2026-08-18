@@ -1,0 +1,44 @@
+mode: uncertainty_gated_criticality
+markers: [UG_R1_EXPLORATORY_DUAL_DATASET, COMPLETE_R1_BOOTSTRAP, TRAIN_ONLY, NOT_PAPER_FINAL]
+device: cuda
+criticality: &criticality
+  critical_ratio: 0.30
+  weight_discriminative: 0.50
+  weight_early: 0.30
+  weight_run_stability: 0.20
+  bootstrap_repeats: 64
+  bootstrap_seed: 19042
+spectral_diffusion: &spectral
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+three_w:
+  base_config: configs/3w_diffusion_1seed.yaml
+  existing_manifest: outputs/3w_diffusion_3seed/result_manifest.json
+  output_dir: outputs/ug_r1_3w
+  seeds: [42, 43, 44]
+  protocol_seed: 42
+  criticality: *criticality
+  spectral_diffusion: *spectral
+tep:
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  existing_result: outputs/frequency_selective_r1_3seed/result.json
+  output_dir: outputs/ug_r1_tep
+  seeds: [7, 42, 2026]
+  criticality: *criticality
+  spectral_diffusion: *spectral
+docs:
+  three_w_report: docs/ug_r1_3w_report.md
+  tep_report: docs/ug_r1_tep_report.md
+  summary: docs/ug_r1_summary.md
+  three_w_json: docs/ug_r1_3w_result.json
+  tep_json: docs/ug_r1_tep_result.json
+  paired_csv: docs/ug_r1_paired.csv
+  uncertainty_csv: docs/ug_r1_uncertainty_profiles.csv
+  audit_json: docs/ug_r1_mask_uncertainty_audit.json
