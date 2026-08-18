@@ -11,6 +11,9 @@ from .early_criticality import (EWIC_WEIGHTS, HORIZONS, LEAD_DECAY,
                                 build_early_warning_criticality, onset_horizons)
 from .uncertainty import (FROZEN_REPEATS, assignment_confidence,
                           build_uncertainty_gated_criticality)
+from .domain_reliability import (RANK_THRESHOLD, build_tep_stratified_run_bootstrap,
+                                 build_three_w_leave_one_well_out,
+                                 percentile_ranks, summarize_rank_distribution)
 
 __all__ = [
     "FrequencyScaler", "build_criticality", "classify_stage", "fault_stages",
@@ -20,4 +23,6 @@ __all__ = [
     "HARD_RIVAL_QUANTILE", "build_rival_aware_criticality",
     "EWIC_WEIGHTS", "HORIZONS", "LEAD_DECAY", "build_early_warning_criticality", "onset_horizons",
     "FROZEN_REPEATS", "assignment_confidence", "build_uncertainty_gated_criticality",
+    "RANK_THRESHOLD", "percentile_ranks", "summarize_rank_distribution",
+    "build_three_w_leave_one_well_out", "build_tep_stratified_run_bootstrap",
 ]

@@ -13,10 +13,12 @@ import yaml
 
 import scripts.run_3w_clean_baseline as base3w
 from datasets.three_w import discover_instances
-from diffusion import DiffusionSchedule, FrequencyForwardDiffusion, fit_spectral_statistics
+from diffusion import (DiffusionSchedule, FrequencyForwardDiffusion,
+                       constrained_safe_variance, fit_spectral_statistics)
 from frequency import (build_criticality, build_early_warning_criticality,
                        build_hierarchical_criticality, build_rival_aware_criticality,
                        build_uncertainty_gated_criticality,
+                       build_three_w_leave_one_well_out,
                        fit_frequency_scaler, log_amplitude_phase)
 from scripts.run_3w_clean_collapse_diagnosis import train_probe
 from scripts.run_3w_final_primary_grouped import FINAL_PRIMARY_CLASSES, build_model
@@ -34,6 +36,7 @@ HFSC_METHOD = "HIERARCHICAL_FAULT_SEMANTIC_CRITICALITY"
 RRDC_METHOD = "RIVAL_AWARE_RELIABLE_DIAGNOSTIC_CRITICALITY"
 EWIC_METHOD = "EARLY_WARNING_INVARIANT_CRITICALITY"
 UG_R1_METHOD = "UNCERTAINTY_GATED_R1"
+DRFD_METHOD = "DOMAIN_RELIABLE_SAFE_FREQUENCY_DIFFUSION"
 
 
 def state_hash(state: dict[str, torch.Tensor]) -> str:
@@ -233,6 +236,17 @@ def json_ready_uncertainty_criticality(record: dict) -> dict:
             "bootstrap_scope": record["bootstrap_scope"]}
 
 
+def json_ready_domain_reliability(record: dict) -> dict:
+    return {"fit_split": record["fit_split"], "resampling": record["resampling"],
+            "unit_ids": record["unit_ids"], "replicate_count": record["replicate_count"],
+            "rank_median": record["rank_median"].tolist(), "rank_q25": record["rank_q25"].tolist(),
+            "rank_q75": record["rank_q75"].tolist(), "rank_iqr": record["rank_iqr"].tolist(),
+            "reliable_critical": record["reliable_critical"].astype(int).tolist(),
+            "ambiguous": record["ambiguous"].astype(int).tolist(),
+            "reliable_noncritical": record["reliable_noncritical"].astype(int).tolist(),
+            "r1": json_ready_criticality(record["r1"]), "test_used_for_reliability": False}
+
+
 def run(config: dict, data_root: Path) -> dict:
     stability = json.loads(Path(config["stability_result"]).read_text(encoding="utf-8"))
     if stability["status"] != "3W_FINAL_PRIMARY_STABILITY_GO" or not stability["diffusion_allowed"]:
@@ -297,14 +311,16 @@ def run(config: dict, data_root: Path) -> dict:
     rival_aware_enabled = bool(config.get("rival_aware_criticality", False))
     early_warning_enabled = bool(config.get("early_warning_criticality", False))
     uncertainty_gated_enabled = bool(config.get("uncertainty_gated_criticality", False))
-    if sum(map(int, (hierarchical_enabled, rival_aware_enabled, early_warning_enabled, uncertainty_gated_enabled))) > 1:
-        raise ValueError("HFSC, RRDC, EWIC and UG-R1 criticality modes are mutually exclusive")
+    drfd_enabled = bool(config.get("domain_reliable_safe_frequency_diffusion", False))
+    if sum(map(int, (hierarchical_enabled, rival_aware_enabled, early_warning_enabled,
+                     uncertainty_gated_enabled, drfd_enabled))) > 1:
+        raise ValueError("experimental criticality modes are mutually exclusive")
     class_conditional_enabled = hierarchical_enabled or rival_aware_enabled
     criticality_source = config.get("criticality_source")
     hierarchical_soft_masks = None
     train_original_y = np.asarray([FINAL_PRIMARY_CLASSES[ref.target] if ref.target else 0 for ref in train_refs])
     validation_original_y = np.asarray([FINAL_PRIMARY_CLASSES[ref.target] if ref.target else 0 for ref in validation_refs])
-    if (class_conditional_enabled or early_warning_enabled or uncertainty_gated_enabled) and criticality_source:
+    if (class_conditional_enabled or early_warning_enabled or uncertainty_gated_enabled or drfd_enabled) and criticality_source:
         raise ValueError("experimental criticality must be fitted train-only in the current protocol")
     if criticality_source:
         source = json.loads(Path(criticality_source).read_text(encoding="utf-8"))
@@ -315,7 +331,14 @@ def run(config: dict, data_root: Path) -> dict:
         train_stages = np.asarray([ref.stage for ref in train_refs])
         train_log = log_amplitude_phase(train_x)[0]
         scaler = fit_frequency_scaler(train_log, "train")
-        if uncertainty_gated_enabled:
+        if drfd_enabled:
+            unit_ids = np.asarray([by_instance[ref.instance_id].well_id for ref in train_refs], dtype=object)
+            criticality = build_three_w_leave_one_well_out(
+                scaler.transform(train_log), train_bundle, train_stages, unit_ids,
+                config["criticality"], train_log)
+            criticality_payload = json_ready_domain_reliability(criticality)
+            critical_soft_mask = criticality["r1"]["soft_mask"]
+        elif uncertainty_gated_enabled:
             unit_ids = np.asarray([by_instance[ref.instance_id].well_id for ref in train_refs], dtype=object)
             # 3W is resampled by complete WELL without class stratification: a WELL may
             # legitimately contain normal and multiple event-class instances.
@@ -367,12 +390,26 @@ def run(config: dict, data_root: Path) -> dict:
         bool(config["spectral_diffusion"]["preserve_dc"]),
         device,
     )
+    drfd_variance = None; drfd_allocation = None
+    if drfd_enabled:
+        drfd_variance, drfd_allocation = constrained_safe_variance(
+            schedule.alpha_bars, critical_soft_mask, criticality["rank_q25"], criticality["rank_q75"],
+            criticality["reliable_noncritical"], criticality["ambiguous"],
+            bool(config["spectral_diffusion"]["preserve_dc"]),
+            int(config["spectral_diffusion"]["t_key"]), int(config["spectral_diffusion"]["t_uniform"]),
+            int(config["spectral_diffusion"]["t_nonkey"]))
+        if drfd_allocation["budget_error_fraction"] > .02:
+            raise RuntimeError("3W DRFD mechanism Gate is not GO")
     sampling_seed = diffusion_seed + int(config["spectral_diffusion"]["sampling_seed_offset"])
     validation_sampling_seed = validation_diffusion_seed + int(config["spectral_diffusion"]["sampling_seed_offset"]) + 100
     uniform_train, uniform_train_diagnostics = augmenter.augment(
         train_x, "uniform", sampling_seed, batch_size=int(config["training"]["batch_size"])
     )
-    if class_conditional_enabled:
+    if drfd_enabled:
+        r1_train, r1_train_diagnostics = augmenter.augment(
+            train_x, "domain_reliable_safe", sampling_seed, int(config["spectral_diffusion"]["t_nonkey"]),
+            int(config["training"]["batch_size"]), variance_override=drfd_variance)
+    elif class_conditional_enabled:
         r1_train, r1_train_diagnostics = augmenter.augment_hierarchical(
             train_x, train_original_y, hierarchical_soft_masks, sampling_seed,
             int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]))
@@ -387,7 +424,12 @@ def run(config: dict, data_root: Path) -> dict:
     uniform_validation, uniform_validation_diagnostics = augmenter.augment(
         validation_x, "uniform", validation_sampling_seed, batch_size=int(config["training"]["batch_size"])
     )
-    if class_conditional_enabled:
+    if drfd_enabled:
+        r1_validation, r1_validation_diagnostics = augmenter.augment(
+            validation_x, "domain_reliable_safe", validation_sampling_seed,
+            int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]),
+            variance_override=drfd_variance)
+    elif class_conditional_enabled:
         r1_validation, r1_validation_diagnostics = augmenter.augment_hierarchical(
             validation_x, validation_original_y, hierarchical_soft_masks, validation_sampling_seed,
             int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]))
@@ -413,6 +455,7 @@ def run(config: dict, data_root: Path) -> dict:
         RRDC_METHOD: (r1_train, r1_validation),
         EWIC_METHOD: (r1_train, r1_validation),
         UG_R1_METHOD: (r1_train, r1_validation),
+        DRFD_METHOD: (r1_train, r1_validation),
     }
     training = dict(config["training"])
     train_well_ids = np.asarray([by_instance[ref.instance_id].well_id for ref in train_refs], dtype=object)
@@ -438,7 +481,8 @@ def run(config: dict, data_root: Path) -> dict:
     initialization_sha256 = state_hash(initial_state)
     results = {}
     selected_methods = tuple(config.get("methods", METHODS))
-    if any(method not in (*METHODS, R2_METHOD, R3_METHOD, HFSC_METHOD, RRDC_METHOD, EWIC_METHOD, UG_R1_METHOD) for method in selected_methods):
+    if any(method not in (*METHODS, R2_METHOD, R3_METHOD, HFSC_METHOD, RRDC_METHOD,
+                          EWIC_METHOD, UG_R1_METHOD, DRFD_METHOD) for method in selected_methods):
         raise ValueError("unknown 3W diffusion comparison method")
     for method in selected_methods:
         method_result_path = output / f"{method}_result.json"
@@ -521,7 +565,11 @@ def run(config: dict, data_root: Path) -> dict:
             RRDC_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
             EWIC_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
             UG_R1_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
+            DRFD_METHOD: {"train": r1_train_diagnostics, "validation": r1_validation_diagnostics},
         },
+        "drfd_allocation": None if drfd_allocation is None else {
+            key: (value.tolist() if isinstance(value, np.ndarray) else value)
+            for key, value in drfd_allocation.items()},
         "supcon_sampler": sampler_audit,
         "supcon_batching_comparison": batching_comparison,
         "fairness": {

@@ -1,0 +1,49 @@
+mode: domain_reliable_safe_frequency_diffusion
+markers: [DRFD, TRAIN_ONLY_DOMAIN_RELIABILITY, ASYMMETRIC_SAFE_GATING, CONSTRAINED_BUDGET]
+device: cuda
+criticality: &criticality
+  critical_ratio: 0.30
+  weight_discriminative: 0.50
+  weight_early: 0.30
+  weight_run_stability: 0.20
+  bootstrap_repeats: 64
+  bootstrap_seed: 20042
+spectral_diffusion: &spectral
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+  maximum_budget_error: 0.02
+three_w:
+  seed: 42
+  protocol_seed: 42
+  base_config: configs/3w_diffusion_1seed.yaml
+  existing_manifest: outputs/3w_diffusion_3seed/result_manifest.json
+  output_dir: outputs/drfd/3w
+  criticality: *criticality
+  spectral_diffusion: *spectral
+tep:
+  seed: 7
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  existing_result: outputs/frequency_selective_r1_3seed/result.json
+  output_dir: outputs/drfd/tep
+  criticality: *criticality
+  spectral_diffusion: *spectral
+stage_a:
+  output: outputs/drfd/mechanism_audit.json
+  report: docs/drfd_mechanism_audit.md
+stage_b:
+  output: outputs/drfd/kill_test.json
+stage_c:
+  output: outputs/drfd/result.json
+docs:
+  three_w_report: docs/drfd_3w_report.md
+  tep_report: docs/drfd_tep_report.md
+  summary: docs/drfd_summary.md
+  paired_csv: docs/drfd_paired.csv
+  reliability_csv: docs/drfd_reliability_profiles.csv

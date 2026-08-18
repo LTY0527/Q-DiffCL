@@ -9,7 +9,7 @@ import torch
 from frequency.cross_channel_structure import CrossChannelSpectralStructure
 
 
-Mode = Literal["uniform", "selective", "uncertainty_gated"]
+Mode = Literal["uniform", "selective", "uncertainty_gated", "domain_reliable_safe"]
 NoiseStructure = Literal["iid", "correlated"]
 
 
@@ -151,12 +151,24 @@ class FrequencyForwardDiffusion:
 
     def variance(self, mode: Mode, t_noncritical: int | None = None,
                  apply_channel_budget: bool = False,
-                 assignment_confidence: np.ndarray | torch.Tensor | None = None) -> torch.Tensor:
+                 assignment_confidence: np.ndarray | torch.Tensor | None = None,
+                 variance_override: np.ndarray | torch.Tensor | None = None) -> torch.Tensor:
         channels, frequencies = self.soft_mask.shape
-        variance = spectral_noise_variance(
-            self.alpha_bars, channels, frequencies, mode, self.t_uniform, self.preserve_dc,
-            self.soft_mask, self.t_critical, t_noncritical,
-            None if assignment_confidence is None else torch.as_tensor(assignment_confidence, dtype=torch.float32, device=self.device))
+        if mode == "domain_reliable_safe":
+            if variance_override is None:
+                raise ValueError("DRFD requires an audited variance override")
+            variance = torch.as_tensor(variance_override, dtype=torch.float32, device=self.device)
+            if variance.shape != self.soft_mask.shape or not torch.isfinite(variance).all():
+                raise ValueError("DRFD variance override must be finite and aligned")
+            if torch.any((variance < 0) | (variance >= 1)):
+                raise ValueError("DRFD variance override must lie in [0,1)")
+            if self.preserve_dc and torch.any(variance[:, 0] != 0):
+                raise ValueError("DRFD variance override must preserve DC")
+        else:
+            variance = spectral_noise_variance(
+                self.alpha_bars, channels, frequencies, mode, self.t_uniform, self.preserve_dc,
+                self.soft_mask, self.t_critical, t_noncritical,
+                None if assignment_confidence is None else torch.as_tensor(assignment_confidence, dtype=torch.float32, device=self.device))
         if apply_channel_budget:
             if self.maximum_channel_budget_ratio is None:
                 raise ValueError("channel budget ratio is not configured")
@@ -169,7 +181,8 @@ class FrequencyForwardDiffusion:
     def augment(self, values: np.ndarray, mode: Mode, seed: int, t_noncritical: int | None = None,
                 batch_size: int = 256, noise_structure: NoiseStructure = "iid",
                 apply_channel_budget: bool = False,
-                assignment_confidence: np.ndarray | None = None) -> tuple[np.ndarray, dict[str, Any]]:
+                assignment_confidence: np.ndarray | None = None,
+                variance_override: np.ndarray | torch.Tensor | None = None) -> tuple[np.ndarray, dict[str, Any]]:
         values = np.asarray(values, dtype=np.float32)
         if values.ndim != 3 or values.shape[1:] != (self.soft_mask.shape[0], (self.soft_mask.shape[1] - 1) * 2):
             raise ValueError("frequency diffusion input shape mismatch")
@@ -177,7 +190,8 @@ class FrequencyForwardDiffusion:
             raise ValueError("unknown spectral noise structure")
         if noise_structure == "correlated" and self.cross_channel_structure is None:
             raise ValueError("correlated noise requires fitted train-only structure")
-        variance = self.variance(mode, t_noncritical, apply_channel_budget, assignment_confidence); alpha = 1 - variance
+        variance = self.variance(mode, t_noncritical, apply_channel_budget, assignment_confidence,
+                                 variance_override); alpha = 1 - variance
         mean = torch.as_tensor(self.statistics.mean, dtype=torch.float32, device=self.device)
         scale = torch.as_tensor(self.statistics.scale, dtype=torch.float32, device=self.device)
         maximum = torch.as_tensor(self.statistics.maximum_log_amplitude, dtype=torch.float32, device=self.device)
