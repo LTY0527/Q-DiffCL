@@ -1,0 +1,58 @@
+mode: qdiffcl_final_5seed_reliability
+device: cuda
+final_config: configs/qdiffcl_final.yaml
+reliability_audit:
+  nonworse_tolerance: 1.0e-12
+  catastrophic_macro_f1_drop: 0.10
+reference_variant: CURRENT_R1
+variants:
+  CURRENT_R1: {weight_discriminative: 0.5, weight_early: 0.3, weight_run_stability: 0.2}
+  FINAL_DE: {weight_discriminative: 0.5, weight_early: 0.5, weight_run_stability: 0.0}
+  D_ONLY: {weight_discriminative: 1.0, weight_early: 0.0, weight_run_stability: 0.0}
+  E_ONLY: {weight_discriminative: 0.0, weight_early: 1.0, weight_run_stability: 0.0}
+criticality_base: &criticality
+  critical_ratio: 0.30
+  bootstrap_repeats: 64
+  bootstrap_seed: 22042
+spectral_diffusion: &spectral
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+three_w:
+  seeds: [42, 43, 44, 45, 46]
+  component_seeds: [42, 43, 44]
+  protocol_seed: 42
+  base_config: configs/3w_diffusion_1seed.yaml
+  existing_3seed_manifest: outputs/3w_diffusion_3seed/result_manifest.json
+  existing_5seed_manifest: outputs/3w_r1_r2_5seed_reliability/result_manifest.json
+  final_validation_dir: outputs/r1_des_weight_search/3w/DE_50_50
+  component_manifest: outputs/r1_des_ablation/3w/manifest.json
+  output_dir: outputs/qdiffcl_final_5seed/3w
+  criticality: *criticality
+  spectral_diffusion: *spectral
+tep:
+  seeds: [7, 42, 43, 44, 2026]
+  component_seeds: [7, 42, 2026]
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  existing_3seed_result: outputs/frequency_selective_r1_3seed/result.json
+  final_validation_dir: outputs/r1_des_weight_search/tep/DE_50_50
+  component_manifest: outputs/r1_des_ablation/tep/manifest.json
+  output_dir: outputs/qdiffcl_final_5seed/tep
+  criticality: *criticality
+  spectral_diffusion: *spectral
+output:
+  mask_dir: outputs/qdiffcl_final_5seed/masks
+  manifest: outputs/qdiffcl_final_5seed/result_manifest.json
+  mask_audit: docs/qdiffcl_final_5seed_mask_audit.json
+docs:
+  summary: docs/qdiffcl_final_5seed_summary.md
+  results_csv: docs/qdiffcl_final_5seed_results.csv
+  paired_csv: docs/qdiffcl_final_5seed_paired.csv
+  component_report: docs/qdiffcl_final_component_ablation.md
+  component_csv: docs/qdiffcl_final_component_ablation.csv

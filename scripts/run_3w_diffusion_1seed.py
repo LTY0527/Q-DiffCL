@@ -536,11 +536,22 @@ def run(config: dict, data_root: Path) -> dict:
         model = build_model(base["training"]["model"], train_x.shape[1], device)
         model.load_state_dict(initial_state)
         checkpoint_path = output / f"{method}_model.pt"
+        pretrained_checkpoint = config.get("pretrained_checkpoint_by_method", {}).get(method)
         if checkpoint_path.exists():
             model.load_state_dict(torch.load(checkpoint_path, map_location=device, weights_only=True))
             pretrain_history = None
             probe_history = None
             recovered_from_checkpoint = True
+            reused_checkpoint_source = str(checkpoint_path)
+        elif pretrained_checkpoint:
+            source_path = Path(pretrained_checkpoint)
+            if not source_path.exists():
+                raise FileNotFoundError(source_path)
+            model.load_state_dict(torch.load(source_path, map_location=device, weights_only=True))
+            pretrain_history = None
+            probe_history = None
+            recovered_from_checkpoint = True
+            reused_checkpoint_source = str(source_path)
         else:
             train_view, validation_view = restored[method]
             pretrain_history = _fit_supcon(
@@ -567,6 +578,7 @@ def run(config: dict, data_root: Path) -> dict:
                 device,
             )
             recovered_from_checkpoint = False
+            reused_checkpoint_source = None
         evaluation_config = copy.deepcopy(base)
         evaluation_config["protocol"]["append_missing_mask"] = False
         evaluation_config["training"]["batch_size"] = int(training["batch_size"])
@@ -581,6 +593,7 @@ def run(config: dict, data_root: Path) -> dict:
             "probe_history": probe_history,
             "initialization_sha256": initialization_sha256,
             "recovered_from_checkpoint": recovered_from_checkpoint,
+            "reused_checkpoint_source": reused_checkpoint_source,
         }
         method_result_path.write_text(json.dumps(results[method], ensure_ascii=False, indent=2), encoding="utf-8")
         print("done", method, metrics["macro_f1"], metrics["auprc_multiclass_macro"], metrics["far"], flush=True)
