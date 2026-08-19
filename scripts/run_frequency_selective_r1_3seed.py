@@ -74,7 +74,10 @@ def _stage_metrics(stages: np.ndarray, prediction: np.ndarray) -> dict[str, dict
 
 def _fit_method(name: str, augmented: dict[str, np.ndarray], audit: dict[str, Any], views, base, stages,
                 initial_state, pretrain_orders, probe_orders, runtime, device: str,
-                checkpoint: Path, metadata: dict[str, Any]) -> dict[str, Any]:
+                checkpoint: Path, metadata: dict[str, Any],
+                evaluation_splits: tuple[str, ...] = ("validation", "test")) -> dict[str, Any]:
+    if not evaluation_splits or any(split not in ("validation", "test") for split in evaluation_splits):
+        raise ValueError("evaluation_splits must contain validation and/or test")
     metrics_path = checkpoint.parent / "metrics.json"
     if checkpoint.exists() and metrics_path.exists():
         payload = torch.load(checkpoint, map_location="cpu", weights_only=False)
@@ -99,7 +102,7 @@ def _fit_method(name: str, augmented: dict[str, np.ndarray], audit: dict[str, An
                        probe_orders, runtime, device)
     best = best_probe_record(probe); threshold = float(best["validation_threshold"])
     splits = {}
-    for split in ("validation", "test"):
+    for split in evaluation_splits:
         probability, embedding = _probabilities(model, base[split], int(runtime["batch_size"]), device)
         _, augmented_embedding = _probabilities(model, augmented[split], int(runtime["batch_size"]), device)
         scores = probability[:, 1]; prediction = scores >= threshold
@@ -115,8 +118,8 @@ def _fit_method(name: str, augmented: dict[str, np.ndarray], audit: dict[str, An
     record = {"method": name, "seed": int(runtime["random_seed"]), "validation_threshold": threshold,
               "best_pretrain_epoch": int(min(pretrain, key=lambda row: row["validation_supcon_loss"])["epoch"]),
               "best_probe_epoch": int(best["epoch"]), "pretrain_history": pretrain, "probe_history": probe,
-              "initialization_sha256": _state_hash(initial_state), "validation": splits["validation"],
-              "test": splits["test"], "augmentation_audit": audit, "metadata": metadata,
+              "initialization_sha256": _state_hash(initial_state), **splits,
+              "evaluation_splits": list(evaluation_splits), "augmentation_audit": audit, "metadata": metadata,
               "training_seconds": time.perf_counter() - started,
               "peak_gpu_mib": torch.cuda.max_memory_allocated() / 1024 ** 2 if torch.cuda.is_available() else 0.0}
     checkpoint.parent.mkdir(parents=True, exist_ok=False)

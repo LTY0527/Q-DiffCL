@@ -64,8 +64,9 @@ def build_masks(config:dict[str,Any],data_root:Path):
     path=Path(config["output"]["mask_dir"]);path.mkdir(parents=True,exist_ok=True)
     three=_build_three_w_masks(config,data_root);base,views,clean,stages,tep=_tep_context(config)
     audits={}
+    reference_name=str(config.get("reference_variant","FULL_DES"))
     for dataset,masks,shape in (("3W",three,None),("TEP",tep,None)):
-        full=np.asarray(masks["FULL_DES"]["hard_mask"],bool);audits[dataset]={}
+        full=np.asarray(masks[reference_name]["hard_mask"],bool);audits[dataset]={}
         for name,item in masks.items():
             hard=np.asarray(item["hard_mask"],bool);soft=np.asarray(item["soft_mask"],np.float32)
             schedule=DiffusionSchedule.cosine(50,"cpu")
@@ -78,7 +79,7 @@ def build_masks(config:dict[str,Any],data_root:Path):
                 "changed_bins_from_full":int(np.sum(hard!=full)),"timestep":timestep.tolist(),"critical_noise_budget":float(variance[torch.as_tensor(critical)].mean()),
                 "noncritical_noise_budget":float(variance[torch.as_tensor(~critical)].mean()),"total_budget_error":float(abs(variance.mean()-uniform_variance.mean())),
                 "largest_composite_changes":[{"channel":int(i//hard.shape[1]),"frequency_bin":int(i%hard.shape[1]),"absolute_change":float(v)}
-                    for i,v in sorted(enumerate(np.abs(np.asarray(item["composite"])-np.asarray(masks["FULL_DES"]["composite"])).reshape(-1)),key=lambda x:x[1],reverse=True)[:20]]}
+                    for i,v in sorted(enumerate(np.abs(np.asarray(item["composite"])-np.asarray(masks[reference_name]["composite"])).reshape(-1)),key=lambda x:x[1],reverse=True)[:20]]}
             write_json(path/f"{dataset.lower()}_{name.replace('/','_')}.json",{"criticality":item})
     write_json(Path(config["output"]["mask_audit"]),audits)
     return three,(base,views,clean,stages,tep),audits

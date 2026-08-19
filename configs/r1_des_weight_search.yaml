@@ -1,0 +1,63 @@
+mode: r1_des_validation_weight_search
+device: cuda
+reference_variant: CURRENT
+variants:
+  CURRENT:   {weight_discriminative: 0.5, weight_early: 0.3, weight_run_stability: 0.2}
+  BALANCED:  {weight_discriminative: 0.4, weight_early: 0.3, weight_run_stability: 0.3}
+  D_HEAVY_1: {weight_discriminative: 0.6, weight_early: 0.3, weight_run_stability: 0.1}
+  D_HEAVY_2: {weight_discriminative: 0.6, weight_early: 0.2, weight_run_stability: 0.2}
+  E_HEAVY_1: {weight_discriminative: 0.4, weight_early: 0.5, weight_run_stability: 0.1}
+  E_HEAVY_2: {weight_discriminative: 0.3, weight_early: 0.5, weight_run_stability: 0.2}
+  DE_HEAVY:  {weight_discriminative: 0.5, weight_early: 0.4, weight_run_stability: 0.1}
+  LOW_D:     {weight_discriminative: 0.3, weight_early: 0.4, weight_run_stability: 0.3}
+  DE_50_50:  {weight_discriminative: 0.5, weight_early: 0.5, weight_run_stability: 0.0}
+  DE_60_40:  {weight_discriminative: 0.6, weight_early: 0.4, weight_run_stability: 0.0}
+  DS:        {weight_discriminative: 0.6, weight_early: 0.0, weight_run_stability: 0.4}
+  ES:        {weight_discriminative: 0.0, weight_early: 0.6, weight_run_stability: 0.4}
+criticality_base: &criticality
+  critical_ratio: 0.30
+  bootstrap_repeats: 64
+  bootstrap_seed: 22042
+spectral_diffusion: &spectral
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+three_w:
+  stage1_seed: 42
+  seeds: [42, 43, 44]
+  protocol_seed: 42
+  base_config: configs/3w_diffusion_1seed.yaml
+  output_dir: outputs/r1_des_weight_search/3w
+  criticality: *criticality
+  spectral_diffusion: *spectral
+tep:
+  stage1_seed: 7
+  seeds: [7, 42, 2026]
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  baseline_result: outputs/frequency_selective_r1_3seed/result.json
+  output_dir: outputs/r1_des_weight_search/tep
+  criticality: *criticality
+  spectral_diffusion: *spectral
+selection:
+  top_k: 3
+  far_tolerance: {3W: 0.02, TEP: 0.005}
+  final_min_mean_relative_macro_gain: 0.002
+  final_max_dataset_macro_drop: 0.002
+  final_max_std_ratio: 1.10
+  budget_tolerance: 1.0e-6
+output:
+  mask_dir: outputs/r1_des_weight_search/masks
+  manifest: outputs/r1_des_weight_search/result_manifest.json
+  selection: outputs/r1_des_weight_search/selection.json
+  mask_audit: docs/r1_des_weight_search_mask_audit.json
+docs:
+  summary: docs/r1_des_weight_search_summary.md
+  results_csv: docs/r1_des_weight_search_results.csv
+  stage2_table_csv: docs/r1_des_weight_search_stage2.csv
+  final_config: configs/qdiffcl_final.yaml

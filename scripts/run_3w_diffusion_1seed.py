@@ -281,6 +281,9 @@ def run(config: dict, data_root: Path) -> dict:
     probe_seed = int(config.get("probe_seed", seed))
     device = select_device(str(config["device"]))
     output = Path(config["output_dir"])
+    evaluation_split = str(config.get("evaluation_split", "test"))
+    if evaluation_split not in ("validation", "test"):
+        raise ValueError("evaluation_split must be validation or test")
     output.mkdir(parents=True, exist_ok=True)
     base3w.PRIMARY_CLASSES = FINAL_PRIMARY_CLASSES
     base3w.CLASS_TO_TARGET = {value: index for index, value in enumerate(FINAL_PRIMARY_CLASSES)}
@@ -568,7 +571,7 @@ def run(config: dict, data_root: Path) -> dict:
         evaluation_config["protocol"]["append_missing_mask"] = False
         evaluation_config["training"]["batch_size"] = int(training["batch_size"])
         metrics, per_instance = base3w.evaluate_stream(
-            model, by_split["test"], refs_by_instance, preprocessor, evaluation_config, device
+            model, by_split[evaluation_split], refs_by_instance, preprocessor, evaluation_config, device
         )
         torch.save(model.state_dict(), checkpoint_path)
         results[method] = {
@@ -584,6 +587,7 @@ def run(config: dict, data_root: Path) -> dict:
 
     payload = {
         "stage_a_status": stability["status"],
+        "evaluation_split": evaluation_split,
         "seed": seed,
         "protocol_seed": protocol_seed,
         "diffusion_seed": diffusion_seed,
