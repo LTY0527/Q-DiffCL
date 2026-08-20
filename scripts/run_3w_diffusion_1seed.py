@@ -327,9 +327,16 @@ def run(config: dict, data_root: Path) -> dict:
     uncertainty_gated_enabled = bool(config.get("uncertainty_gated_criticality", False))
     drfd_enabled = bool(config.get("domain_reliable_safe_frequency_diffusion", False))
     cdvs_enabled = bool(config.get("cross_domain_validated_safety", False))
+    budget_override_path = config.get("selective_variance_override")
     if sum(map(int, (hierarchical_enabled, rival_aware_enabled, early_warning_enabled,
                      uncertainty_gated_enabled, drfd_enabled, cdvs_enabled))) > 1:
         raise ValueError("experimental criticality modes are mutually exclusive")
+    if budget_override_path and any((hierarchical_enabled, rival_aware_enabled, early_warning_enabled,
+                                     uncertainty_gated_enabled, drfd_enabled, cdvs_enabled)):
+        raise ValueError("budget shrinkage override cannot be combined with experimental criticality")
+    budget_override = None
+    if budget_override_path:
+        budget_override = np.load(Path(budget_override_path), allow_pickle=False)
     class_conditional_enabled = hierarchical_enabled or rival_aware_enabled
     criticality_source = config.get("criticality_source")
     hierarchical_soft_masks = None
@@ -436,7 +443,12 @@ def run(config: dict, data_root: Path) -> dict:
     uniform_train, uniform_train_diagnostics = augmenter.augment(
         train_x, "uniform", sampling_seed, batch_size=int(config["training"]["batch_size"])
     )
-    if cdvs_enabled:
+    if budget_override is not None:
+        r1_train, r1_train_diagnostics = augmenter.augment(
+            train_x, "budget_scaled_selective", sampling_seed,
+            int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]),
+            variance_override=budget_override)
+    elif cdvs_enabled:
         r1_train, r1_train_diagnostics = augmenter.augment(
             train_x, "domain_reliable_safe", sampling_seed, int(config["spectral_diffusion"]["t_nonkey"]),
             int(config["training"]["batch_size"]), variance_override=cdvs_variance)
@@ -459,7 +471,12 @@ def run(config: dict, data_root: Path) -> dict:
     uniform_validation, uniform_validation_diagnostics = augmenter.augment(
         validation_x, "uniform", validation_sampling_seed, batch_size=int(config["training"]["batch_size"])
     )
-    if cdvs_enabled:
+    if budget_override is not None:
+        r1_validation, r1_validation_diagnostics = augmenter.augment(
+            validation_x, "budget_scaled_selective", validation_sampling_seed,
+            int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]),
+            variance_override=budget_override)
+    elif cdvs_enabled:
         r1_validation, r1_validation_diagnostics = augmenter.augment(
             validation_x, "domain_reliable_safe", validation_sampling_seed,
             int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]),
@@ -482,7 +499,7 @@ def run(config: dict, data_root: Path) -> dict:
         r1_validation, r1_validation_diagnostics = augmenter.augment(
             validation_x, "selective", validation_sampling_seed,
             int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]))
-    if abs(uniform_train_diagnostics["expected_total_noise_budget"] - r1_train_diagnostics["expected_total_noise_budget"]) > 1e-6:
+    if budget_override is None and abs(uniform_train_diagnostics["expected_total_noise_budget"] - r1_train_diagnostics["expected_total_noise_budget"]) > 1e-6:
         raise RuntimeError("Uniform/R1 total perturbation budgets are not comparable")
 
     restored = {
@@ -638,7 +655,8 @@ def run(config: dict, data_root: Path) -> dict:
             "same_initialization": True,
             "same_pretrain_batch_order": True,
             "same_balanced_probe": True,
-            "uniform_r1_total_budget_matched": True,
+            "uniform_r1_total_budget_matched": budget_override is None,
+            "budget_scaled_selective_override": budget_override is not None,
             "initialization_sha256": initialization_sha256,
             "probe_weights_train_only": weights.tolist(),
             "window_refs_sha256": hashlib.sha256(

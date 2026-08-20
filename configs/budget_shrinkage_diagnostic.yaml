@@ -1,0 +1,57 @@
+mode: budget_shrinkage_diagnostic
+device: cuda
+final_config: configs/qdiffcl_final.yaml
+final_reliability_config: configs/qdiffcl_final_5seed.yaml
+rhos: [0.00, 0.25, 0.50, 0.75, 1.00]
+stage2_selection:
+  low_pool: [0.00, 0.25]
+  intermediate_pool: [0.50, 0.75]
+  fixed_reference: 1.00
+  low_rule: tep_validation_macro_f1_then_far
+  intermediate_rule: mean_dataset_normalized_validation_macro_f1_then_far
+  maximum_candidates: 3
+three_w:
+  stage1_seed: 42
+  stage2_seeds: [42, 43, 44]
+  protocol_seed: 42
+  base_config: configs/3w_diffusion_1seed.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/3w_FINAL_DE.json
+  rho1_reference_manifest: outputs/r1_des_weight_search/3w/manifest.json
+  output_dir: outputs/budget_shrinkage/3w
+tep:
+  stage1_seed: 7
+  stage2_seeds: [7, 42, 2026]
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/tep_FINAL_DE.json
+  rho1_reference_manifest: outputs/r1_des_weight_search/tep/manifest.json
+  output_dir: outputs/budget_shrinkage/tep
+spectral_diffusion:
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+audit:
+  budget_absolute_tolerance: 1.0e-8
+  allocation_ratio_tolerance: 1.0e-6
+  require_same_mask_hash: true
+  test_metrics_read: false
+decision_gate:
+  minimum_directional_seeds: 2
+  minimum_mean_macro_f1_gap: 0.005
+  nonworse_tolerance: 0.002
+  maximum_far_increase: 0.02
+  maximum_early_recall_drop: 0.03
+output:
+  manifest: outputs/budget_shrinkage/manifest.json
+  selection: outputs/budget_shrinkage/stage2_selection.json
+  summary_json: outputs/budget_shrinkage/summary.json
+  summary: docs/budget_shrinkage_summary.md
+  results_csv: docs/budget_shrinkage_results.csv
+  paired_csv: docs/budget_shrinkage_paired.csv
+  decision: docs/budget_shrinkage_decision.md
+  figure_dir: docs/assets/budget_shrinkage

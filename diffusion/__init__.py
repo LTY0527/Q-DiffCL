@@ -3,11 +3,12 @@ from .frequency_selective import (FrequencyForwardDiffusion,
                                   SpectralStatistics,
                                   constrain_channel_budget,
                                   fit_spectral_statistics,
+                                  scale_spectral_budget,
                                   spectral_noise_variance)
 
 __all__ = ["DiffusionSchedule", "ddpm_restore", "FrequencyForwardDiffusion",
            "SpectralStatistics", "fit_spectral_statistics", "spectral_noise_variance",
-           "constrain_channel_budget"]
+           "constrain_channel_budget", "scale_spectral_budget"]
 from .stage_curriculum import StageAwareTimestepScheduler
 
 __all__.append("StageAwareTimestepScheduler")

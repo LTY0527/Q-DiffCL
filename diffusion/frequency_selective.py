@@ -9,7 +9,8 @@ import torch
 from frequency.cross_channel_structure import CrossChannelSpectralStructure
 
 
-Mode = Literal["uniform", "selective", "uncertainty_gated", "domain_reliable_safe"]
+Mode = Literal["uniform", "selective", "uncertainty_gated", "domain_reliable_safe",
+               "budget_scaled_selective"]
 NoiseStructure = Literal["iid", "correlated"]
 
 
@@ -42,6 +43,25 @@ def match_noise_budget(variance: torch.Tensor, target_mean: float, preserve_dc: 
     if abs(float(value.mean()) - float(target_mean)) > 1e-6:
         raise RuntimeError("failed to match spectral noise budget")
     return value
+
+
+def scale_spectral_budget(variance: torch.Tensor, rho: float, preserve_dc: bool) -> torch.Tensor:
+    """Scale total variance while preserving the frozen relative allocation."""
+    if not 0.0 <= float(rho) <= 1.0:
+        raise ValueError("budget shrinkage rho must lie in [0,1]")
+    if variance.ndim != 2 or not torch.isfinite(variance).all():
+        raise ValueError("spectral variance must be a finite channel x frequency matrix")
+    if torch.any((variance < 0) | (variance >= 1)):
+        raise ValueError("spectral variance must lie in [0,1)")
+    if preserve_dc and torch.any(variance[:, 0] != 0):
+        raise ValueError("spectral variance must preserve DC before shrinkage")
+    scaled = variance * float(rho)
+    if preserve_dc:
+        scaled[:, 0] = 0
+    expected = float((variance * float(rho)).mean())
+    if abs(float(scaled.mean()) - expected) > 1e-8:
+        raise RuntimeError("budget shrinkage changed the requested total budget")
+    return scaled
 
 
 def spectral_noise_variance(
@@ -154,16 +174,16 @@ class FrequencyForwardDiffusion:
                  assignment_confidence: np.ndarray | torch.Tensor | None = None,
                  variance_override: np.ndarray | torch.Tensor | None = None) -> torch.Tensor:
         channels, frequencies = self.soft_mask.shape
-        if mode == "domain_reliable_safe":
+        if mode in {"domain_reliable_safe", "budget_scaled_selective"}:
             if variance_override is None:
-                raise ValueError("DRFD requires an audited variance override")
+                raise ValueError(f"{mode} requires an audited variance override")
             variance = torch.as_tensor(variance_override, dtype=torch.float32, device=self.device)
             if variance.shape != self.soft_mask.shape or not torch.isfinite(variance).all():
-                raise ValueError("DRFD variance override must be finite and aligned")
+                raise ValueError("variance override must be finite and aligned")
             if torch.any((variance < 0) | (variance >= 1)):
-                raise ValueError("DRFD variance override must lie in [0,1)")
+                raise ValueError("variance override must lie in [0,1)")
             if self.preserve_dc and torch.any(variance[:, 0] != 0):
-                raise ValueError("DRFD variance override must preserve DC")
+                raise ValueError("variance override must preserve DC")
         else:
             variance = spectral_noise_variance(
                 self.alpha_bars, channels, frequencies, mode, self.t_uniform, self.preserve_dc,
