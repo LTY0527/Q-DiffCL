@@ -1,0 +1,20 @@
+mode: budget_demand_proxy_audit
+final_config: configs/qdiffcl_final.yaml
+three_w:
+  loader_config: configs/budget_constrained_allocation_v2.yaml
+tep:
+  loader_config: configs/budget_constrained_allocation_v2.yaml
+bootstrap:
+  repeats: 256
+  seed: 73042
+gate:
+  minimum_bootstrap_direction_fraction: 0.80
+  minimum_loo_direction_fraction: 0.80
+output:
+  root: outputs/budget_demand_proxy_audit
+  audit_json: outputs/budget_demand_proxy_audit/audit.json
+  report: docs/budget_demand_audit.md
+  group_report: docs/budget_demand_group_check.md
+  results_csv: docs/budget_demand_results.csv
+  decision: docs/budget_demand_decision.md
+  figure_dir: docs/assets/budget_demand

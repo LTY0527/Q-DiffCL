@@ -20,6 +20,9 @@ from .cross_domain_safety import (build_tep_cross_domain_safety,
 from .domain_shortcut import build_domain_shortcut_score
 from .safe_capacity import distribution as capacity_distribution
 from .safe_capacity import safe_capacity
+from .budget_demand import (cross_group_shift_demand, group_bootstrap,
+                            leave_one_group_out, normalized_log_spectrum,
+                            separability_difficulty_demand)
 
 __all__ = [
     "FrequencyScaler", "build_criticality", "classify_stage", "fault_stages",
@@ -34,4 +37,6 @@ __all__ = [
     "build_three_w_cross_domain_safety", "build_tep_cross_domain_safety", "stratified_run_folds",
     "build_domain_shortcut_score",
     "safe_capacity", "capacity_distribution",
+    "normalized_log_spectrum", "cross_group_shift_demand",
+    "separability_difficulty_demand", "group_bootstrap", "leave_one_group_out",
 ]
