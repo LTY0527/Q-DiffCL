@@ -1,0 +1,31 @@
+mode: paper_mechanism_ablation
+device: cuda
+variants: [UNIFORM_DIFFUSION, HARD_MASK_SELECTIVE, SOFT_MASK_SELECTIVE, SOFT_MASK_WO_BUDGET_MATCH]
+three_w:
+  seeds: [42, 43, 44]
+  protocol_seed: 42
+  base_config: configs/3w_diffusion_1seed.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/3w_FINAL_DE.json
+  output_dir: outputs/paper_mechanism_ablation/3w
+tep:
+  seeds: [7, 42, 2026]
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/tep_FINAL_DE.json
+  output_dir: outputs/paper_mechanism_ablation/tep
+spectral_diffusion:
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+output:
+  manifest: outputs/paper_mechanism_ablation/manifest.json
+  results_csv: docs/paper_evidence/mechanism_ablation_validation.csv
+  paired_csv: docs/paper_evidence/mechanism_ablation_validation_paired.csv
+  report: docs/paper_evidence/mechanism_ablation_validation.md
+audit:
+  evaluation_split: validation
+  test_read: false

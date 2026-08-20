@@ -1,0 +1,55 @@
+mode: paper_final_nested_grouped_evaluation
+frozen: true
+algorithm:
+  primary: FINAL_QDIFFCL
+  extension: DCBR
+  criticality_weights: {D: 0.5, E: 0.5, S: 0.0}
+  critical_ratio: 0.30
+  t_critical: 1
+  t_noncritical: 5
+  scaling_std: 0.05
+  rho_candidates: [0.00, 0.25, 0.50, 0.75, 1.00]
+  backbone: TCN
+  objective: Hard SupCon
+  batching: original
+  probe: frozen_linear
+datasets:
+  three_w:
+    outer_protocol: repeated_grouped_outer_holdout
+    outer_split_seeds: [31001, 31002, 31003]
+    wells: {train: 20, inner_validation: 8, outer_test: 8}
+    model_seeds: [42, 43, 44, 45, 46]
+    grouping_unit: WELL
+  tep:
+    outer_protocol: repeated_stratified_run_group_holdout
+    outer_split_seeds: [32001, 32002, 32003]
+    outer_fraction: 0.20
+    inner_validation_fraction_of_remainder: 0.20
+    model_seeds: [7, 42, 43, 44, 2026]
+    grouping_unit: Run
+selection:
+  inner_validation_only:
+    - DCBR rho
+    - decision threshold
+    - early stopping epoch
+  forbidden_outer_test_selection: true
+metrics:
+  primary: Macro-F1
+  secondary: [AUPRC, FAR, Early Recall, Detection Delay, per-group performance]
+statistics:
+  unit: [WELL, Run]
+  bootstrap_repeats: 2000
+  confidence_interval: 0.95
+  report: [mean, std, paired_delta, positive_count, nonworse_count, worst_seed, LOSO, group_bootstrap_CI]
+stopping_rule:
+  algorithm_changes_after_outer_test: forbidden
+  candidate_grid_changes_after_outer_test: forbidden
+  outer_test_rerun_for_selection: forbidden
+output:
+  manifest: outputs/paper_final_protocol/dry_run_manifest.json
+  audit: outputs/paper_final_protocol/leakage_audit.json
+  report: docs/paper_final_protocol.md
+audit:
+  dry_run_only: true
+  outer_test_metrics_read: false
+  outer_training_run: false

@@ -1,0 +1,45 @@
+mode: paper_evidence_chain
+device: cuda
+data_root: null
+seeds:
+  three_w: [42, 43, 44, 45, 46]
+  tep: [7, 42, 43, 44, 2026]
+bootstrap:
+  repeats: 2000
+  seed: 26082026
+sources:
+  final_config: configs/qdiffcl_final.yaml
+  final_5seed: configs/qdiffcl_final_5seed.yaml
+  final_manifest_3w: outputs/qdiffcl_final_5seed/3w/manifest.json
+  final_manifest_tep: outputs/qdiffcl_final_5seed/tep/manifest.json
+  final_masks:
+    three_w: outputs/qdiffcl_final_5seed/masks/3w_FINAL_DE.json
+    tep: outputs/qdiffcl_final_5seed/masks/tep_FINAL_DE.json
+  external_manifest: outputs/external_baselines/manifest.json
+  dcbr_validation_3w: outputs/domain_budget_routing/3w/manifest.json
+  dcbr_validation_tep: outputs/domain_budget_routing/tep/manifest.json
+  dcbr_locked: outputs/domain_budget_routing/locked_test.json
+  dcbr_final: configs/domain_calibrated_budget_routing_final.yaml
+  component_table: docs/qdiffcl_final_component_ablation.csv
+  r1_des_table: docs/r1_des_ablation_main_table.csv
+  frequency_audit: outputs/stage_frequency_diffusion_mvp/frequency_audit/result.json
+  fixed_views: outputs/fixed_diffusion_views/views_manifest.json
+  grouped_3w: outputs/3w_final_primary_grouped_seed42
+output:
+  root: outputs/paper_evidence_chain
+  inventory_json: outputs/paper_evidence_chain/inventory.json
+  analysis_json: outputs/paper_evidence_chain/analysis.json
+  docs_root: docs/paper_evidence
+  inventory: docs/paper_evidence/repository_result_inventory.md
+  mechanism_csv: docs/paper_evidence/mechanism_ablation.csv
+  dcbr_csv: docs/paper_evidence/dcbr_extension_ablation.csv
+  well_csv: docs/paper_evidence/3w_per_well.csv
+  instance_csv: docs/paper_evidence/3w_instance_rescue_loss.csv
+  fault_csv: docs/paper_evidence/tep_fault_wise.csv
+  stability_csv: docs/paper_evidence/group_bootstrap.csv
+  efficiency_csv: docs/paper_evidence/efficiency.csv
+  figure_dir: docs/assets/paper_evidence
+audit:
+  existing_locked_test_is_development_evidence: true
+  locked_test_used_for_new_selection: false
+  paper_final_outer_test_run: false

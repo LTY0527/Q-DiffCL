@@ -3,7 +3,8 @@ import pytest
 import torch
 
 from diffusion import (DiffusionSchedule, FrequencyForwardDiffusion,
-                       fit_spectral_statistics, spectral_noise_variance)
+                       fit_spectral_statistics, spectral_noise_variance,
+                       unmatched_selective_noise_variance)
 
 
 def _augmenter(values, mask=None):
@@ -59,3 +60,14 @@ def test_c1_c2_use_same_total_budget_for_all_candidates():
     target = float(augmenter.variance("uniform").mean())
     for timestep in (3, 5, 8):
         assert abs(float(augmenter.variance("selective", timestep).mean()) - target) < 1e-6
+
+
+def test_unmatched_ablation_preserves_map_but_not_uniform_total_budget():
+    schedule = DiffusionSchedule.cosine(50, "cpu")
+    mask = torch.linspace(0, 1, 3 * 33).reshape(3, 33)
+    raw = unmatched_selective_noise_variance(schedule.alpha_bars, mask, 1, 5, True)
+    matched = spectral_noise_variance(schedule.alpha_bars, 3, 33, "selective", 3, True, mask, 1, 5)
+    uniform = spectral_noise_variance(schedule.alpha_bars, 3, 33, "uniform", 3, True)
+    assert raw.shape == matched.shape and torch.all(raw[:, 0] == 0)
+    assert not torch.isclose(raw.mean(), uniform.mean(), atol=1e-8)
+    assert torch.equal(torch.argsort(raw.flatten()), torch.argsort(matched.flatten()))

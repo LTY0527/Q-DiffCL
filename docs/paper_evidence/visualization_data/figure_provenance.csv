@@ -1,0 +1,11 @@
+﻿figure,filter,raw_data
+discriminative_heatmap.png,field=discriminative,criticality_maps.csv
+early_heatmap.png,field=early,criticality_maps.csv
+composite_heatmap.png,field=composite,criticality_maps.csv
+soft_mask_heatmap.png,field=soft_mask,criticality_maps.csv
+timestep_map.png,effective_timestep,frequency_allocation.csv
+uniform_vs_qdiff_noise.png,uniform_variance/selective_variance,frequency_allocation.csv
+dcbr_routing.png,all,dcbr_routing.csv
+budget_response_3w_tep.png,all,budget_response.csv
+3w_seed_well_heatmap.png,method=FINAL_QDIFFCL,../3w_per_well.csv
+tep_embedding_tsne.png,all,tep_embedding_tsne.csv

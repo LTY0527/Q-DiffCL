@@ -90,6 +90,27 @@ def spectral_noise_variance(
     return match_noise_budget(variance, float(target.mean()), preserve_dc)
 
 
+def unmatched_selective_noise_variance(
+    alpha_bars: torch.Tensor, soft_mask: torch.Tensor, t_critical: int,
+    t_noncritical: int, preserve_dc: bool,
+) -> torch.Tensor:
+    """Return the raw selective allocation before total-budget matching.
+
+    This is exposed only for the preregistered paper ablation.  It keeps the
+    frozen timestep map and DC rule, while intentionally omitting the global
+    rescaling performed by :func:`spectral_noise_variance`.
+    """
+    if soft_mask.ndim != 2 or not torch.isfinite(soft_mask).all():
+        raise ValueError("unmatched selective mask must be a finite 2-D matrix")
+    if torch.any((soft_mask < 0) | (soft_mask > 1)):
+        raise ValueError("unmatched selective mask must lie in [0,1]")
+    timestep = float(t_critical) + (1 - soft_mask) * (float(t_noncritical) - float(t_critical))
+    variance = (1 - continuous_alpha_bar(alpha_bars, timestep)).clamp(0, .999)
+    if preserve_dc:
+        variance[:, 0] = 0
+    return variance
+
+
 def constrain_channel_budget(variance: torch.Tensor, c1_variance: torch.Tensor,
                              maximum_ratio: float) -> torch.Tensor:
     if variance.shape != c1_variance.shape:
