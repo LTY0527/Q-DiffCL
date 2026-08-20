@@ -1,0 +1,52 @@
+mode: stochastic_view_routing
+device: cuda
+final_config: configs/qdiffcl_final.yaml
+candidates: [0.00, 0.25, 0.50, 0.75, 1.00]
+scaling_std: 0.05
+three_w:
+  base_config: configs/3w_diffusion_1seed.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/3w_FINAL_DE.json
+  stage_a_seed: 42
+  stage_b_seeds: [42, 43, 44]
+  stage_c_seeds: [42, 43, 44, 45, 46]
+  protocol_seed: 42
+  output_dir: outputs/stochastic_view_routing/3w
+tep:
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/tep_FINAL_DE.json
+  stage_a_seed: 7
+  stage_b_seeds: [7, 42, 2026]
+  stage_c_seeds: [7, 42, 43, 44, 2026]
+  output_dir: outputs/stochastic_view_routing/tep
+spectral_diffusion:
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+gate:
+  stage_b_macro_f1_gain: 0.003
+  stage_b_positive_seeds: 2
+  stage_b_auprc_min_delta: -0.002
+  stage_b_far_max_delta: 0.010
+  catastrophic_macro_f1_delta: -0.020
+  stage_c_macro_f1_gain: 0.002
+  stage_c_nonworse_seeds: 4
+  stage_c_positive_seeds: 3
+  nonworse_tolerance: 0.0
+output:
+  root: outputs/stochastic_view_routing
+  manifest: outputs/stochastic_view_routing/manifest.json
+  selection: outputs/stochastic_view_routing/selection.json
+  summary_json: outputs/stochastic_view_routing/summary.json
+  summary: docs/stochastic_view_routing_summary.md
+  results_csv: docs/stochastic_view_routing_results.csv
+  paired_csv: docs/stochastic_view_routing_paired.csv
+  decision: docs/stochastic_view_routing_decision.md
+audit:
+  validation_only: true
+  test_read: false

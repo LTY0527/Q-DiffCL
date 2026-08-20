@@ -11,7 +11,7 @@ import numpy as np
 import torch
 import yaml
 
-from augmentations import domain_budget_route
+from augmentations import domain_budget_route, stochastic_view_route
 import scripts.run_3w_clean_baseline as base3w
 from datasets.three_w import discover_instances
 from diffusion import (DiffusionSchedule, FrequencyForwardDiffusion,
@@ -516,6 +516,24 @@ def run(config: dict, data_root: Path) -> dict:
             int(routing["validation_scaling_seed"]))
         r1_train_diagnostics["domain_budget_routing"] = train_route
         r1_validation_diagnostics["domain_budget_routing"] = validation_route
+    stochastic_routing = config.get("stochastic_view_routing")
+    if stochastic_routing:
+        if routing:
+            raise ValueError("SVR and DCBR cannot be enabled simultaneously")
+        probability = float(stochastic_routing["p"])
+        train_ids = np.asarray([f"{ref.instance_id}:{ref.start}:{ref.target}" for ref in train_refs])
+        validation_ids = np.asarray([f"{ref.instance_id}:{ref.start}:{ref.target}" for ref in validation_refs])
+        r1_train, train_route = stochastic_view_route(
+            train_x, r1_train, train_ids, probability,
+            int(stochastic_routing["router_seed"]), int(stochastic_routing["scaling_seed"]),
+            float(stochastic_routing["scaling_std"]))
+        r1_validation, validation_route = stochastic_view_route(
+            validation_x, r1_validation, validation_ids, probability,
+            int(stochastic_routing["validation_router_seed"]),
+            int(stochastic_routing["validation_scaling_seed"]),
+            float(stochastic_routing["scaling_std"]))
+        r1_train_diagnostics["stochastic_view_routing"] = train_route
+        r1_validation_diagnostics["stochastic_view_routing"] = validation_route
     if budget_override is None and abs(uniform_train_diagnostics["expected_total_noise_budget"] - r1_train_diagnostics["expected_total_noise_budget"]) > 1e-6:
         raise RuntimeError("Uniform/R1 total perturbation budgets are not comparable")
 
