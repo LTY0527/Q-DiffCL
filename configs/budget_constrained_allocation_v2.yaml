@@ -1,0 +1,49 @@
+mode: budget_constrained_allocation_v2
+device: cuda
+final_config: configs/qdiffcl_final.yaml
+budget_diagnostic_config: configs/budget_shrinkage_diagnostic.yaml
+gamma_candidates: [0.5, 1.0, 2.0]
+gamma: 1.0
+direction_gate:
+  minimum_3w_minus_tep_mean_rho: 0.0
+three_w:
+  base_config: configs/3w_diffusion_1seed.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/3w_FINAL_DE.json
+  stage_c_seed: 42
+  stage_d_seeds: [42, 43, 44]
+  protocol_seed: 42
+tep:
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/tep_FINAL_DE.json
+  stage_c_seed: 7
+  stage_d_seeds: [7, 42, 2026]
+spectral_diffusion:
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+variants:
+  NO_DIFFUSION: 0.0
+  FIXED_LOW: 0.25
+  FINAL_V1: 1.0
+  ADAPTIVE_V2: adaptive
+output:
+  root: outputs/budget_allocator_v2
+  capacity_json: outputs/budget_allocator_v2/safe_capacity_audit.json
+  capacity_csv: docs/safe_capacity_audit.csv
+  capacity_report: docs/safe_capacity_audit.md
+  manifest: outputs/budget_allocator_v2/manifest.json
+  summary: docs/budget_allocator_v2_summary.md
+  results_csv: docs/budget_allocator_v2_results.csv
+  paired_csv: docs/budget_allocator_v2_paired.csv
+  decision: docs/budget_allocator_v2_decision.md
+  figure_dir: docs/assets/budget_allocator_v2
+audit:
+  test_metrics_read: false
+  validation_only: true
+  allocation_tolerance: 1.0e-6
