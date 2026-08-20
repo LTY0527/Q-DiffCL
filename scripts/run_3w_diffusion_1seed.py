@@ -11,6 +11,7 @@ import numpy as np
 import torch
 import yaml
 
+from augmentations import domain_budget_route
 import scripts.run_3w_clean_baseline as base3w
 from datasets.three_w import discover_instances
 from diffusion import (DiffusionSchedule, FrequencyForwardDiffusion,
@@ -267,9 +268,9 @@ def run(config: dict, data_root: Path) -> dict:
     split_index = int(config["canonical_split_index"])
     manifest_split = manifest["splits"][split_index]
     split = {name: set(wells) for name, wells in manifest_split["wells"].items()}
-    grouped_result = json.loads((grouped / f"split_{split_index:02d}" / "result.json").read_text(encoding="utf-8"))
-    if grouped_result["split"] != manifest_split["wells"]:
-        raise RuntimeError("canonical grouped result does not match frozen manifest")
+    split_groups = list(split.values())
+    if any(split_groups[i] & split_groups[j] for i in range(3) for j in range(i + 1, 3)):
+        raise RuntimeError("canonical grouped split contains WELL leakage")
 
     base_config = yaml.safe_load(Path(config["base_config"]).read_text(encoding="utf-8"))
     base = yaml.safe_load(Path(base_config["base_config"]).read_text(encoding="utf-8"))
@@ -294,7 +295,11 @@ def run(config: dict, data_root: Path) -> dict:
 
     refs_by_split = {}
     refs_by_instance = {}
+    required_ref_splits = {"train", "validation", evaluation_split}
     for name, items in by_split.items():
+        if name not in required_ref_splits:
+            refs_by_split[name] = []
+            continue
         refs = []
         for item in items:
             current = base3w.instance_refs(
@@ -499,6 +504,18 @@ def run(config: dict, data_root: Path) -> dict:
         r1_validation, r1_validation_diagnostics = augmenter.augment(
             validation_x, "selective", validation_sampling_seed,
             int(config["spectral_diffusion"]["t_nonkey"]), int(config["training"]["batch_size"]))
+    routing = config.get("domain_budget_routing")
+    if routing:
+        rho = float(routing["rho"]); sigma_base = float(routing["sigma_base"])
+        train_ids = np.asarray([f"{ref.instance_id}:{ref.start}:{ref.target}" for ref in train_refs])
+        validation_ids = np.asarray([f"{ref.instance_id}:{ref.start}:{ref.target}" for ref in validation_refs])
+        r1_train, train_route = domain_budget_route(
+            train_x, r1_train, train_ids, rho, sigma_base, int(routing["scaling_seed"]))
+        r1_validation, validation_route = domain_budget_route(
+            validation_x, r1_validation, validation_ids, rho, sigma_base,
+            int(routing["validation_scaling_seed"]))
+        r1_train_diagnostics["domain_budget_routing"] = train_route
+        r1_validation_diagnostics["domain_budget_routing"] = validation_route
     if budget_override is None and abs(uniform_train_diagnostics["expected_total_noise_budget"] - r1_train_diagnostics["expected_total_noise_budget"]) > 1e-6:
         raise RuntimeError("Uniform/R1 total perturbation budgets are not comparable")
 

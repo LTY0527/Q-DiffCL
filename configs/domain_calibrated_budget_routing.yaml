@@ -1,0 +1,55 @@
+mode: domain_calibrated_budget_routing
+device: cuda
+final_config: configs/qdiffcl_final.yaml
+budget_config: configs/budget_shrinkage_diagnostic.yaml
+rhos: [0.00, 0.25, 0.50, 0.75, 1.00]
+sigma_base: 0.05
+three_w:
+  base_config: configs/3w_diffusion_1seed.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/3w_FINAL_DE.json
+  reference_manifest: outputs/budget_shrinkage/3w/manifest.json
+  final_test_manifest: outputs/qdiffcl_final_5seed/3w/manifest.json
+  stage_b_seed: 42
+  stage_c_seeds: [42, 43, 44]
+  protocol_seed: 42
+  output_dir: outputs/domain_budget_routing/3w
+tep:
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/tep_FINAL_DE.json
+  reference_manifest: outputs/budget_shrinkage/tep/manifest.json
+  final_test_manifest: outputs/qdiffcl_final_5seed/tep/manifest.json
+  stage_b_seed: 7
+  stage_c_seeds: [7, 42, 2026]
+  output_dir: outputs/domain_budget_routing/tep
+spectral_diffusion:
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+selection:
+  top_k: 2
+  split: validation
+gate:
+  three_w_noninferiority_tolerance: 0.0
+  tep_noninferiority_tolerance: 0.0
+  far_maximum_increase: 0.02
+  nonworse_tolerance: 0.002
+output:
+  root: outputs/domain_budget_routing
+  manifest: outputs/domain_budget_routing/manifest.json
+  selection: outputs/domain_budget_routing/selection.json
+  summary_json: outputs/domain_budget_routing/summary.json
+  summary: docs/domain_budget_routing_summary.md
+  results_csv: docs/domain_budget_routing_results.csv
+  paired_csv: docs/domain_budget_routing_paired.csv
+  decision: docs/domain_budget_routing_decision.md
+  figure_dir: docs/assets/domain_budget_routing
+audit:
+  validation_only_before_freeze: true
+  test_read: false
+  budget_tolerance: 1.0e-8

@@ -1,0 +1,23 @@
+mode: DCBR_FINAL
+frozen: true
+selected_by: validation_only_three_seed
+test_used_for_selection: false
+base_config: configs/domain_calibrated_budget_routing.yaml
+domain_rho:
+  3W: 1.00
+  TEP: 0.75
+sigma_base: 0.05
+selection_evidence:
+  3W:
+    seeds: [42, 43, 44]
+    selected_from_top2: [0.75, 1.00]
+    validation_macro_f1_mean: 0.4571833814252084
+  TEP:
+    seeds: [7, 42, 2026]
+    selected_from_top2: [0.50, 0.75]
+    validation_macro_f1_mean: 0.9736140081911184
+locked_test_seeds:
+  3W: [42, 43, 44, 45, 46]
+  TEP: [7, 42, 43, 44, 2026]
+rho_must_not_change_after_test: true
+final_qdiffcl_unchanged: true
