@@ -1,0 +1,51 @@
+mode: external_baseline_comparison
+device: cuda
+final_config: configs/qdiffcl_final.yaml
+final_reliability_config: configs/qdiffcl_final_5seed.yaml
+methods:
+  tier1: [NO_AUG, JITTER, SCALING, JITTER_SCALING, UNIFORM_DIFFUSION, FINAL_QDIFFCL]
+  tier2: [FRERA]
+traditional:
+  jitter_std: 0.03
+  scaling_std: 0.05
+  source: repository_frozen_traditional_baseline
+  tuning: no_search
+frera:
+  source_repository: https://github.com/Tian0426/FreRA
+  source_commit: 7236fbfc1c665f83ed5f4364cad59093ee283c14
+  source_file: autoaug/fourier.py
+  setting: shared_backbone_adaptation
+  f_learning_rate: 0.001
+  f_temperature: 0.1
+  l1_weight: 0.003
+  parameter_source: official_README_commands
+  validation_selection: minimum_validation_total_objective
+three_w:
+  stage_a_seed: 42
+  stage_b_seeds: [42, 43, 44]
+  stage_c_seeds: [42, 43, 44, 45, 46]
+  base_config: configs/3w_diffusion_1seed.yaml
+  existing_3seed_manifest: outputs/3w_diffusion_3seed/result_manifest.json
+  existing_5seed_manifest: outputs/3w_r1_r2_5seed_reliability/result_manifest.json
+  final_manifest: outputs/qdiffcl_final_5seed/3w/manifest.json
+  output_dir: outputs/external_baselines/3w
+tep:
+  stage_a_seed: 7
+  stage_b_seeds: [7, 42, 2026]
+  stage_c_seeds: [7, 42, 43, 44, 2026]
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  final_manifest: outputs/qdiffcl_final_5seed/tep/manifest.json
+  output_dir: outputs/external_baselines/tep
+output:
+  manifest: outputs/external_baselines/manifest.json
+  summary: docs/external_baseline_summary.md
+  protocol: docs/external_baseline_protocol.md
+  results_csv: docs/external_baseline_results.csv
+  paired_csv: docs/external_baseline_paired.csv
+  decision: docs/second_innovation_decision.md
+decision_gate:
+  clear_macro_f1_margin: 0.01
+  clear_auprc_margin: 0.005
+  tep_noninferiority_tolerance: 0.01
+  minimum_consistent_seed_fraction: 0.60
+  catastrophic_macro_f1_drop: 0.10
