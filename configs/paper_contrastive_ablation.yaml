@@ -1,0 +1,40 @@
+mode: paper_contrastive_ablation
+device: auto
+evaluation_scope: development_test
+objectives: [CE_REP, HARD_SUPCON]
+augmentations: [NO_AUG, FINAL_QDIFFCL]
+three_w:
+  seeds: [42, 43, 44]
+  protocol_seed: 42
+  base_config: configs/3w_diffusion_1seed.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/3w_FINAL_DE.json
+  hard_no_aug_manifest: outputs/external_baselines/manifest.json
+  hard_final_manifest: outputs/qdiffcl_final_5seed/3w/manifest.json
+  output_dir: outputs/paper_contrastive_ablation/3w
+tep:
+  seeds: [7, 42, 2026]
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/tep_FINAL_DE.json
+  hard_no_aug_manifest: outputs/external_baselines/manifest.json
+  hard_final_manifest: outputs/qdiffcl_final_5seed/tep/manifest.json
+  output_dir: outputs/paper_contrastive_ablation/tep
+spectral_diffusion:
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+statistics:
+  bootstrap_repeats: 2000
+  bootstrap_seed: 26082101
+output:
+  manifest: outputs/paper_contrastive_ablation/manifest.json
+  results_csv: analysis/results/paper_contrastive_ablation.csv
+  report: docs/paper_contrastive_ablation.md
+audit:
+  final_method_frozen: true
+  outer_test_run: false
+  existing_development_test_only: true

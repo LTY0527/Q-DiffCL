@@ -1,0 +1,2275 @@
+{
+  "status": "PAPER_FINAL_BLOCKED_BY_PROTOCOL_OR_IMPLEMENTATION",
+  "created_at": "2026-08-21T04:14:19.773241+00:00",
+  "started_at": null,
+  "pre_outer_commit_sha": "650acab2f0e646c2f4dd2f1529863bfade56244f",
+  "base_head": "650acab2f0e646c2f4dd2f1529863bfade56244f",
+  "freeze_tag": null,
+  "freeze_manifest_sha256": "df6165da436935dec0bc2c5c461e1365c4de1f7c76fde808917763db87e62b50",
+  "phase_g_config_sha256": "bfaebf8248b992d83acafdbadb5cf2b921b1961d16e181d349d92311c2c8db17",
+  "runner_sha256": "06b9f140e7337e77bdb10b46256719ca960ca2b072c6c623da72eca195cf446f",
+  "data_hashes": {
+    "3W": "2fb77ef15859e26011107c65b66c2050f6d0f097ecd5bf1368c98d89aa931dbe",
+    "TEP": "a770c036cd6dc0cc33c792b3238d038392cb892ac3277e6fc92bf819c2d795dd"
+  },
+  "frozen_config_hashes": {
+    "configs\\qdiffcl_final.yaml": "e50c904484b28ef90fe7da3c774c6b127796861e0bc5de02854960cc4dbe8184",
+    "configs\\domain_calibrated_budget_routing_final.yaml": "8e509c8706ae598c31309852c26210cfa042e06045c6d2dadacb6a482498f51e",
+    "configs\\paper_final_protocol.yaml": "508cfd7d663ce38799b196bbfb2bc5c79a4883afdd175056b28d7837564e0bbf",
+    "configs\\paper_contrastive_ablation.yaml": "254447946fbf0fdca12519df8b13475f8634e43494c965415370a0f0b32b2483",
+    "configs\\paper_ratio_sensitivity.yaml": "44147dd4f03a9f16372b420cd3cd029be7f85c458e497b8be99a635963c40f26",
+    "configs\\paper_efficiency.yaml": "56d0de76f75cfc00054c080536df2eb3a05878f39a1ac74df2623044218248e2",
+    "configs\\paper_fault_trajectory.yaml": "d9d2370eb7bb7a9578da05b34921f6342d1e58a16d5dd10c12abb2c354659f8c"
+  },
+  "frozen_split_hashes": {
+    "outputs\\paper_final_protocol\\dry_run_manifest.json": "8dbef73a56bfea0c6efc6af6e9e0fe131543206ca93801bd5d4335e899757e69",
+    "outputs\\paper_final_protocol\\leakage_audit.json": "ab30c61c378e44becf42f1b11e4b5fce3d59511d76c41f72fb3e688f1009cec3",
+    "outputs\\fixed_diffusion_views\\views_manifest.json": "1824e2cfa0b86ef71afe2d38913134ea418d9d7dda5bbf9e624a496faff88eb1",
+    "outputs\\3w_final_primary_grouped_seed42\\grouped_split_manifest.json": "e44b0ca1bee997086b3b696c6e4cc8304b1a7a8ed197eb3d22ab6f5925a940ce"
+  },
+  "environment": {
+    "python": "3.10.20 | packaged by Anaconda, Inc. | (main, Jun 11 2026, 15:13:20) [MSC v.1942 64 bit (AMD64)]",
+    "git_commit": "650acab2f0e646c2f4dd2f1529863bfade56244f",
+    "cuda": "12.4",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+    "pytorch": "2.6.0+cu124"
+  },
+  "python_executable": "E:\\anaconda\\envs\\qdiffcl\\python.exe",
+  "expected_cells": 225,
+  "logical_rows": 240,
+  "detected_alias_cells": 0,
+  "estimated_wall_clock_hours": 16.0,
+  "estimated_disk_gib": 4.0,
+  "output_roots": {
+    "3W": "outputs\\paper_final\\3w",
+    "TEP": "outputs\\paper_final\\tep"
+  },
+  "methods": [
+    "NO_AUG",
+    "JITTER",
+    "SCALING",
+    "JITTER_SCALING",
+    "UNIFORM_DIFFUSION",
+    "FRERA",
+    "FINAL_QDIFFCL",
+    "DCBR"
+  ],
+  "model_seeds": {
+    "3W": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "TEP": [
+      7,
+      42,
+      43,
+      44,
+      2026
+    ]
+  },
+  "outer_seeds": {
+    "3W": [
+      31001,
+      31002,
+      31003
+    ],
+    "TEP": [
+      32001,
+      32002,
+      32003
+    ]
+  },
+  "cells": [
+    {
+      "run_id": "3w-outer31001-seed42-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 42,
+      "method": "NO_AUG",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed42-jitter",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 42,
+      "method": "JITTER",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed42-scaling",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 42,
+      "method": "SCALING",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed42-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 42,
+      "method": "JITTER_SCALING",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed42-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 42,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed42-frera",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 42,
+      "method": "FRERA",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed42-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 42,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed42-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 42,
+      "method": "DCBR",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed43-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 43,
+      "method": "NO_AUG",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed43-jitter",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 43,
+      "method": "JITTER",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed43-scaling",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 43,
+      "method": "SCALING",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed43-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 43,
+      "method": "JITTER_SCALING",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed43-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 43,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed43-frera",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 43,
+      "method": "FRERA",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed43-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 43,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed43-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 43,
+      "method": "DCBR",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed44-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 44,
+      "method": "NO_AUG",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed44-jitter",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 44,
+      "method": "JITTER",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed44-scaling",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 44,
+      "method": "SCALING",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed44-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 44,
+      "method": "JITTER_SCALING",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed44-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 44,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed44-frera",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 44,
+      "method": "FRERA",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed44-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 44,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed44-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 44,
+      "method": "DCBR",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed45-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 45,
+      "method": "NO_AUG",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed45-jitter",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 45,
+      "method": "JITTER",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed45-scaling",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 45,
+      "method": "SCALING",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed45-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 45,
+      "method": "JITTER_SCALING",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed45-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 45,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed45-frera",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 45,
+      "method": "FRERA",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed45-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 45,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed45-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 45,
+      "method": "DCBR",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed46-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 46,
+      "method": "NO_AUG",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed46-jitter",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 46,
+      "method": "JITTER",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed46-scaling",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 46,
+      "method": "SCALING",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed46-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 46,
+      "method": "JITTER_SCALING",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed46-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 46,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed46-frera",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 46,
+      "method": "FRERA",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed46-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 46,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31001-seed46-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 46,
+      "method": "DCBR",
+      "split_hash": "1cb04f908baee24234c05cd46f369bba06ed4d23e8757e4d3b32f03add4f64e7",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed42-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 42,
+      "method": "NO_AUG",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed42-jitter",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 42,
+      "method": "JITTER",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed42-scaling",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 42,
+      "method": "SCALING",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed42-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 42,
+      "method": "JITTER_SCALING",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed42-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 42,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed42-frera",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 42,
+      "method": "FRERA",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed42-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 42,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed42-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 42,
+      "method": "DCBR",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed43-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 43,
+      "method": "NO_AUG",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed43-jitter",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 43,
+      "method": "JITTER",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed43-scaling",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 43,
+      "method": "SCALING",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed43-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 43,
+      "method": "JITTER_SCALING",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed43-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 43,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed43-frera",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 43,
+      "method": "FRERA",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed43-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 43,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed43-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 43,
+      "method": "DCBR",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed44-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 44,
+      "method": "NO_AUG",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed44-jitter",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 44,
+      "method": "JITTER",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed44-scaling",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 44,
+      "method": "SCALING",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed44-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 44,
+      "method": "JITTER_SCALING",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed44-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 44,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed44-frera",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 44,
+      "method": "FRERA",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed44-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 44,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed44-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 44,
+      "method": "DCBR",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed45-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 45,
+      "method": "NO_AUG",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed45-jitter",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 45,
+      "method": "JITTER",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed45-scaling",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 45,
+      "method": "SCALING",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed45-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 45,
+      "method": "JITTER_SCALING",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed45-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 45,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed45-frera",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 45,
+      "method": "FRERA",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed45-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 45,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed45-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 45,
+      "method": "DCBR",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed46-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 46,
+      "method": "NO_AUG",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed46-jitter",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 46,
+      "method": "JITTER",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed46-scaling",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 46,
+      "method": "SCALING",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed46-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 46,
+      "method": "JITTER_SCALING",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed46-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 46,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed46-frera",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 46,
+      "method": "FRERA",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed46-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 46,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31002-seed46-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 46,
+      "method": "DCBR",
+      "split_hash": "bd0598042abff9d8354f5977699acef1b64fc61b35f87576d75774317d61bb47",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed42-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 42,
+      "method": "NO_AUG",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed42-jitter",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 42,
+      "method": "JITTER",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed42-scaling",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 42,
+      "method": "SCALING",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed42-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 42,
+      "method": "JITTER_SCALING",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed42-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 42,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed42-frera",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 42,
+      "method": "FRERA",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed42-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 42,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed42-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 42,
+      "method": "DCBR",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed43-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 43,
+      "method": "NO_AUG",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed43-jitter",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 43,
+      "method": "JITTER",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed43-scaling",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 43,
+      "method": "SCALING",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed43-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 43,
+      "method": "JITTER_SCALING",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed43-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 43,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed43-frera",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 43,
+      "method": "FRERA",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed43-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 43,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed43-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 43,
+      "method": "DCBR",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed44-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 44,
+      "method": "NO_AUG",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed44-jitter",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 44,
+      "method": "JITTER",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed44-scaling",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 44,
+      "method": "SCALING",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed44-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 44,
+      "method": "JITTER_SCALING",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed44-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 44,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed44-frera",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 44,
+      "method": "FRERA",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed44-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 44,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed44-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 44,
+      "method": "DCBR",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed45-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 45,
+      "method": "NO_AUG",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed45-jitter",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 45,
+      "method": "JITTER",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed45-scaling",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 45,
+      "method": "SCALING",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed45-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 45,
+      "method": "JITTER_SCALING",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed45-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 45,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed45-frera",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 45,
+      "method": "FRERA",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed45-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 45,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed45-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 45,
+      "method": "DCBR",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed46-no_aug",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 46,
+      "method": "NO_AUG",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed46-jitter",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 46,
+      "method": "JITTER",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed46-scaling",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 46,
+      "method": "SCALING",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed46-jitter_scaling",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 46,
+      "method": "JITTER_SCALING",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed46-uniform_diffusion",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 46,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed46-frera",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 46,
+      "method": "FRERA",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed46-final_qdiffcl",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 46,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "3w-outer31003-seed46-dcbr",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 46,
+      "method": "DCBR",
+      "split_hash": "8147f2175879ee6e9caef1507a702c87153a1ea66189a11c9f0f4214ee123951",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 7,
+      "method": "NO_AUG",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 7,
+      "method": "JITTER",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 7,
+      "method": "SCALING",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 7,
+      "method": "JITTER_SCALING",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 7,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-frera",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 7,
+      "method": "FRERA",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 7,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 7,
+      "method": "DCBR",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed42-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 42,
+      "method": "NO_AUG",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed42-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 42,
+      "method": "JITTER",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed42-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 42,
+      "method": "SCALING",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed42-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 42,
+      "method": "JITTER_SCALING",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed42-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 42,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed42-frera",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 42,
+      "method": "FRERA",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed42-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 42,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed42-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 42,
+      "method": "DCBR",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed43-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 43,
+      "method": "NO_AUG",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed43-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 43,
+      "method": "JITTER",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed43-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 43,
+      "method": "SCALING",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed43-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 43,
+      "method": "JITTER_SCALING",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed43-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 43,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed43-frera",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 43,
+      "method": "FRERA",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed43-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 43,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed43-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 43,
+      "method": "DCBR",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed44-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 44,
+      "method": "NO_AUG",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed44-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 44,
+      "method": "JITTER",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed44-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 44,
+      "method": "SCALING",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed44-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 44,
+      "method": "JITTER_SCALING",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed44-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 44,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed44-frera",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 44,
+      "method": "FRERA",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed44-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 44,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed44-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 44,
+      "method": "DCBR",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed2026-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 2026,
+      "method": "NO_AUG",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed2026-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 2026,
+      "method": "JITTER",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed2026-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 2026,
+      "method": "SCALING",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed2026-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 2026,
+      "method": "JITTER_SCALING",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed2026-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 2026,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed2026-frera",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 2026,
+      "method": "FRERA",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed2026-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 2026,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32001-seed2026-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 2026,
+      "method": "DCBR",
+      "split_hash": "12df4ea91a20a0691bfb0463b8e0491315c10d2e8e1e88a91fa97ecbd422b7f9",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed7-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 7,
+      "method": "NO_AUG",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed7-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 7,
+      "method": "JITTER",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed7-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 7,
+      "method": "SCALING",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed7-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 7,
+      "method": "JITTER_SCALING",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed7-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 7,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed7-frera",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 7,
+      "method": "FRERA",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed7-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 7,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed7-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 7,
+      "method": "DCBR",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed42-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 42,
+      "method": "NO_AUG",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed42-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 42,
+      "method": "JITTER",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed42-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 42,
+      "method": "SCALING",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed42-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 42,
+      "method": "JITTER_SCALING",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed42-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 42,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed42-frera",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 42,
+      "method": "FRERA",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed42-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 42,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed42-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 42,
+      "method": "DCBR",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed43-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 43,
+      "method": "NO_AUG",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed43-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 43,
+      "method": "JITTER",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed43-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 43,
+      "method": "SCALING",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed43-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 43,
+      "method": "JITTER_SCALING",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed43-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 43,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed43-frera",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 43,
+      "method": "FRERA",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed43-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 43,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed43-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 43,
+      "method": "DCBR",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed44-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 44,
+      "method": "NO_AUG",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed44-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 44,
+      "method": "JITTER",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed44-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 44,
+      "method": "SCALING",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed44-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 44,
+      "method": "JITTER_SCALING",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed44-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 44,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed44-frera",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 44,
+      "method": "FRERA",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed44-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 44,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed44-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 44,
+      "method": "DCBR",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed2026-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 2026,
+      "method": "NO_AUG",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed2026-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 2026,
+      "method": "JITTER",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed2026-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 2026,
+      "method": "SCALING",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed2026-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 2026,
+      "method": "JITTER_SCALING",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed2026-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 2026,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed2026-frera",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 2026,
+      "method": "FRERA",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed2026-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 2026,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32002-seed2026-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 2026,
+      "method": "DCBR",
+      "split_hash": "5252d3c4f9c1055783bbd7048120364d98100aa50fe7c5a061e949511b6584f1",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed7-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 7,
+      "method": "NO_AUG",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed7-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 7,
+      "method": "JITTER",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed7-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 7,
+      "method": "SCALING",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed7-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 7,
+      "method": "JITTER_SCALING",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed7-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 7,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed7-frera",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 7,
+      "method": "FRERA",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed7-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 7,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed7-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 7,
+      "method": "DCBR",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed42-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 42,
+      "method": "NO_AUG",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed42-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 42,
+      "method": "JITTER",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed42-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 42,
+      "method": "SCALING",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed42-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 42,
+      "method": "JITTER_SCALING",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed42-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 42,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed42-frera",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 42,
+      "method": "FRERA",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed42-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 42,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed42-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 42,
+      "method": "DCBR",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed43-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 43,
+      "method": "NO_AUG",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed43-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 43,
+      "method": "JITTER",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed43-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 43,
+      "method": "SCALING",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed43-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 43,
+      "method": "JITTER_SCALING",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed43-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 43,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed43-frera",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 43,
+      "method": "FRERA",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed43-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 43,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed43-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 43,
+      "method": "DCBR",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed44-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 44,
+      "method": "NO_AUG",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed44-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 44,
+      "method": "JITTER",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed44-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 44,
+      "method": "SCALING",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed44-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 44,
+      "method": "JITTER_SCALING",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed44-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 44,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed44-frera",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 44,
+      "method": "FRERA",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed44-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 44,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed44-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 44,
+      "method": "DCBR",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed2026-no_aug",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 2026,
+      "method": "NO_AUG",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed2026-jitter",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 2026,
+      "method": "JITTER",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed2026-scaling",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 2026,
+      "method": "SCALING",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed2026-jitter_scaling",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 2026,
+      "method": "JITTER_SCALING",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed2026-uniform_diffusion",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 2026,
+      "method": "UNIFORM_DIFFUSION",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed2026-frera",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 2026,
+      "method": "FRERA",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed2026-final_qdiffcl",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 2026,
+      "method": "FINAL_QDIFFCL",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    },
+    {
+      "run_id": "tep-outer32003-seed2026-dcbr",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 2026,
+      "method": "DCBR",
+      "split_hash": "51df5be839b41ffec91cfaab333e8faef907a899043ac22a166b5b0d03487b67",
+      "status": "pending"
+    }
+  ],
+  "failures": [
+    {
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "stage": "pre_outer_context_materialization",
+      "type": "FrozenSplitWindowCoverageError",
+      "message": "inner-validation has zero usable windows for target 3 (original class 9); frozen dry-run checked instance/event presence rather than post-window usable target coverage",
+      "outer_metric_produced": false
+    }
+  ],
+  "resumes": [],
+  "first_outer_metric_at": null,
+  "preflight_data_revalidation": {
+    "3W": {
+      "collection_sha256": "2fb77ef15859e26011107c65b66c2050f6d0f097ecd5bf1368c98d89aa931dbe",
+      "file_count": 2229,
+      "total_bytes": 1873136197
+    },
+    "TEP": {
+      "collection_sha256": "a770c036cd6dc0cc33c792b3238d038392cb892ac3277e6fc92bf819c2d795dd",
+      "file_count": 4,
+      "total_bytes": 1402950911
+    }
+  },
+  "preflight_completed_at": "2026-08-21T04:14:19.861557+00:00",
+  "completed_logical_rows": 0,
+  "alias_rows": 0,
+  "failed_rows": 0
+}

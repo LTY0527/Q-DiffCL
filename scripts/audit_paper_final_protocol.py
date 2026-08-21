@@ -125,7 +125,13 @@ scaler、插补、feature/criticality D/E、frequency statistics 仅由 outer-tr
 
 def main() -> None:
     parser=argparse.ArgumentParser(); parser.add_argument("--config",default="configs/paper_final_protocol.yaml"); parser.add_argument("--data-root",type=Path,required=True)
-    args=parser.parse_args(); config=yaml.safe_load(Path(args.config).read_text(encoding="utf-8")); result=audit(config,args.data_root); report(config,result); print(json.dumps({"status":result["status"],"outer_test_metrics_read":False},ensure_ascii=False))
+    args=parser.parse_args(); config=yaml.safe_load(Path(args.config).read_text(encoding="utf-8"))
+    if config.get("amendment", {}).get("version") == "windowref-coverage-v2":
+        from scripts.amend_paper_final_protocol import amend, report as amendment_report
+        result=amend(config,args.data_root); amendment_report(config,result)
+    else:
+        result=audit(config,args.data_root); report(config,result)
+    print(json.dumps({"status":result["status"],"outer_test_metrics_read":False},ensure_ascii=False))
 
 
 if __name__=="__main__": main()

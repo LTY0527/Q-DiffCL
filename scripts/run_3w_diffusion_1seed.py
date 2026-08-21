@@ -4,6 +4,7 @@ import argparse
 import copy
 import hashlib
 import json
+import time
 from collections import Counter
 from pathlib import Path
 
@@ -25,7 +26,7 @@ from frequency import (build_criticality, build_early_warning_criticality,
                        fit_frequency_scaler, log_amplitude_phase)
 from scripts.run_3w_clean_collapse_diagnosis import train_probe
 from scripts.run_3w_final_primary_grouped import FINAL_PRIMARY_CLASSES, build_model
-from scripts.run_diffusion_quality_retest import _fit_supcon, epoch_orders
+from scripts.run_diffusion_quality_retest import _fit_ce_rep, _fit_supcon, epoch_orders
 from trainers.balanced import (CrossWellPositiveSafeBatchSampler,
                                PositiveSafeBatchSampler,
                                sqrt_inverse_frequency_weights)
@@ -573,6 +574,9 @@ def run(config: dict, data_root: Path) -> dict:
     initial_state = copy.deepcopy(template.state_dict())
     initialization_sha256 = state_hash(initial_state)
     results = {}
+    representation_objective = str(config.get("representation_objective", "hard_supcon"))
+    if representation_objective not in ("hard_supcon", "ce_rep"):
+        raise ValueError("representation_objective must be hard_supcon or ce_rep")
     selected_methods = tuple(config.get("methods", METHODS))
     if any(method not in (*METHODS, R2_METHOD, R3_METHOD, HFSC_METHOD, RRDC_METHOD,
                           EWIC_METHOD, UG_R1_METHOD, DRFD_METHOD, CDVS_METHOD) for method in selected_methods):
@@ -584,6 +588,8 @@ def run(config: dict, data_root: Path) -> dict:
             print("skip", method, flush=True)
             continue
         print("start", method, flush=True)
+        method_started = time.perf_counter()
+        if torch.cuda.is_available(): torch.cuda.reset_peak_memory_stats()
         seed_everything(encoder_seed)
         model = build_model(base["training"]["model"], train_x.shape[1], device)
         model.load_state_dict(initial_state)
@@ -606,16 +612,16 @@ def run(config: dict, data_root: Path) -> dict:
             reused_checkpoint_source = str(source_path)
         else:
             train_view, validation_view = restored[method]
-            pretrain_history = _fit_supcon(
-                model,
-                {"clean": train_x, "restored": train_view, "labels": train_y},
-                {"clean": validation_x, "restored": validation_view, "labels": validation_y},
-                np.ones(len(train_y), np.float32),
-                np.ones(len(validation_y), np.float32),
-                pretrain_orders,
-                training,
-                device,
-            )
+            train_bundle = {"clean": train_x, "restored": train_view, "labels": train_y}
+            validation_bundle = {"clean": validation_x, "restored": validation_view, "labels": validation_y}
+            if representation_objective == "hard_supcon":
+                pretrain_history = _fit_supcon(
+                    model, train_bundle, validation_bundle,
+                    np.ones(len(train_y), np.float32), np.ones(len(validation_y), np.float32),
+                    pretrain_orders, training, device)
+            else:
+                pretrain_history = _fit_ce_rep(
+                    model, train_bundle, validation_bundle, pretrain_orders, training, device)
             probe_history = train_probe(
                 model,
                 train_x,
@@ -643,6 +649,9 @@ def run(config: dict, data_root: Path) -> dict:
             "per_instance": per_instance,
             "pretrain_history": pretrain_history,
             "probe_history": probe_history,
+            "representation_objective": representation_objective,
+            "training_seconds": time.perf_counter() - method_started,
+            "peak_gpu_mib": torch.cuda.max_memory_allocated() / 1024 ** 2 if torch.cuda.is_available() else 0.0,
             "initialization_sha256": initialization_sha256,
             "recovered_from_checkpoint": recovered_from_checkpoint,
             "reused_checkpoint_source": reused_checkpoint_source,
@@ -659,6 +668,7 @@ def run(config: dict, data_root: Path) -> dict:
         "validation_diffusion_seed": validation_diffusion_seed,
         "encoder_seed": encoder_seed,
         "probe_seed": probe_seed,
+        "representation_objective": representation_objective,
         "canonical_split_index": split_index,
         "primary_classes": list(FINAL_PRIMARY_CLASSES),
         "methods": results,

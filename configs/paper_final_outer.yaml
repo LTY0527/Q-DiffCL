@@ -1,0 +1,88 @@
+mode: paper_final_outer_evaluation
+frozen: true
+device: cuda
+python: E:/anaconda/envs/qdiffcl/python.exe
+git_freeze:
+  pre_outer_tag: paper-final-freeze-pre-outer-v2
+  outer_branch: exp/paper-final-outer
+protocol_config: configs/paper_final_protocol.yaml
+freeze_manifest: outputs/paper_final_freeze/freeze_manifest.json
+dry_run_manifest: outputs/paper_final_protocol/dry_run_manifest.json
+leakage_audit: outputs/paper_final_protocol/leakage_audit.json
+final_config: configs/qdiffcl_final.yaml
+external_baseline_config: configs/external_baselines.yaml
+
+methods:
+  - NO_AUG
+  - JITTER
+  - SCALING
+  - JITTER_SCALING
+  - UNIFORM_DIFFUSION
+  - FRERA
+  - FINAL_QDIFFCL
+  - DCBR
+
+algorithm:
+  criticality_weights: {weight_discriminative: 0.5, weight_early: 0.5, weight_run_stability: 0.0}
+  critical_ratio: 0.30
+  bootstrap_repeats: 64
+  bootstrap_seed: 22042
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+  rho_candidates: [0.00, 0.25, 0.50, 0.75, 1.00]
+  sigma_base: 0.05
+  rho_selection: [macro_f1, auprc, negative_far, negative_rho]
+
+traditional:
+  jitter_std: 0.03
+  scaling_std: 0.05
+
+frera:
+  source_commit: 7236fbfc1c665f83ed5f4364cad59093ee283c14
+  f_learning_rate: 0.001
+  f_temperature: 0.1
+  l1_weight: 0.003
+
+three_w:
+  data_root: E:/Datasets/3W/dataset
+  base_config: configs/3w_final_primary_grouped.yaml
+  outer_seeds: [31001, 31002, 31003]
+  model_seeds: [42, 43, 44, 45, 46]
+  protocol_seed_from_outer_split: true
+  expected_counts: {train: 20, validation: 8, test: 8}
+
+tep:
+  data_root: E:/Code/Q-DiffCL/data/raw/tep
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  data_config: configs/diffusion_quality_retest.yaml
+  outer_seeds: [32001, 32002, 32003]
+  model_seeds: [7, 42, 43, 44, 2026]
+  expected_counts: {train: 248, validation: 72, test: 80}
+  selected_run_limits:
+    training: {normal: 160, fault: 8}
+    testing: {normal: 40, fault: 2}
+
+statistics:
+  bootstrap_repeats: 2000
+  confidence: 0.95
+  bootstrap_seed: 90317
+  references: [FINAL_QDIFFCL, NO_AUG, UNIFORM_DIFFUSION]
+
+output:
+  root: outputs/paper_final
+  manifest: analysis/results/paper_final_outer_manifest.json
+  raw_csv: analysis/results/paper_final_outer_raw.csv
+  groupwise_csv: analysis/results/paper_final_outer_groupwise.csv
+  summary_csv: analysis/results/paper_final_outer_summary.csv
+  bootstrap_csv: analysis/results/paper_final_outer_bootstrap.csv
+  protocol_audit: analysis/results/paper_final_outer_protocol_audit.json
+  summary_doc: docs/paper_final_outer_summary.md
+  failure_doc: docs/paper_final_outer_failure_analysis.md
+  claims_doc: docs/paper_final_claims.md

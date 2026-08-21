@@ -1,0 +1,174 @@
+{
+  "frozen_method": {
+    "mode": "FINAL_QDIFFCL",
+    "frozen": true,
+    "selected_variant": "DE_50_50",
+    "selected_by": "train_plus_validation_only",
+    "test_metrics_used_for_selection": false,
+    "weights": {
+      "weight_discriminative": 0.5,
+      "weight_early": 0.5,
+      "weight_run_stability": 0.0
+    },
+    "criticality": {
+      "critical_ratio": 0.3,
+      "bootstrap_repeats": 64,
+      "bootstrap_seed": 22042
+    },
+    "spectral_diffusion": {
+      "diffusion_steps": 50,
+      "t_uniform": 3,
+      "t_critical": 1,
+      "t_noncritical": 5,
+      "preserve_phase": true,
+      "preserve_dc": true,
+      "noise_structure": "iid",
+      "sampling_seed_offset": 61000,
+      "clip_quantile": 0.999
+    },
+    "training_protocol": {
+      "backbone": "TCN",
+      "contrastive": "Hard SupCon",
+      "batching": "original",
+      "probe": "frozen linear probe",
+      "three_w_base_config": "configs/3w_diffusion_1seed.yaml",
+      "tep_base_config": "configs/stage_frequency_diffusion_mvp.yaml"
+    },
+    "mask_sha256": {
+      "3W": "91a2176df9de718bcac6f44f297061960eb3c7adf087272e1d56e633f7c2c3ec",
+      "TEP": "ab3ee5ee99a4c73ed5668456a6ab233b9f05fa7304fac09c7b99470b555a5384"
+    },
+    "selection_manifest": "outputs/r1_des_weight_search/selection.json",
+    "fairness_audit": {
+      "validation_only": true,
+      "test_metrics_read": false,
+      "fixed_mask_across_seeds": true,
+      "fairness_hashes_consistent": true,
+      "max_budget_error": 3.725290298461914e-09
+    },
+    "paper_final_protocol": {
+      "weights_must_not_change_after_test_or_baseline_results": true,
+      "next_experiments": [
+        "external_baselines",
+        "five_seed_reliability",
+        "paper_final"
+      ],
+      "historical_current_r1_results_preserved": true
+    }
+  },
+  "files": {
+    "final_config": {
+      "path": "configs/qdiffcl_final.yaml",
+      "exists": true,
+      "sha256": "e50c904484b28ef90fe7da3c774c6b127796861e0bc5de02854960cc4dbe8184"
+    },
+    "final_5seed": {
+      "path": "configs/qdiffcl_final_5seed.yaml",
+      "exists": true,
+      "sha256": "1988884d59e4214d7c5633a3e19ef8a25a4b328268bdffa98a71ab5d43ba598b"
+    },
+    "final_manifest_3w": {
+      "path": "outputs/qdiffcl_final_5seed/3w/manifest.json",
+      "exists": true,
+      "sha256": "8f5b0ca8b5ea810063c4f3b77418464ff3cb43c202adaa454684cd61ded349e7"
+    },
+    "final_manifest_tep": {
+      "path": "outputs/qdiffcl_final_5seed/tep/manifest.json",
+      "exists": true,
+      "sha256": "5285b40bec7bba25f3108361f5e75aec5c25c76bfaca744b3956ba5dfade99b4"
+    },
+    "external_manifest": {
+      "path": "outputs/external_baselines/manifest.json",
+      "exists": true,
+      "sha256": "a55c15c52de12b8c069f85737a0f5a32bbf945ce06319465d4f7b8cf5df00be4"
+    },
+    "dcbr_validation_3w": {
+      "path": "outputs/domain_budget_routing/3w/manifest.json",
+      "exists": true,
+      "sha256": "ec78776128758b32a53eb1bfad94ea44bcea9f91282b181e7925ea206b4c79b6"
+    },
+    "dcbr_validation_tep": {
+      "path": "outputs/domain_budget_routing/tep/manifest.json",
+      "exists": true,
+      "sha256": "f4f24e1996c75b68041454224f4f5750ee7a0883f797171198d98d13d3ad0485"
+    },
+    "dcbr_locked": {
+      "path": "outputs/domain_budget_routing/locked_test.json",
+      "exists": true,
+      "sha256": "acc43618fdccaed8dc789f458d75e6e30c145be95189d30c98f237c7060fd336"
+    },
+    "dcbr_final": {
+      "path": "configs/domain_calibrated_budget_routing_final.yaml",
+      "exists": true,
+      "sha256": "8e509c8706ae598c31309852c26210cfa042e06045c6d2dadacb6a482498f51e"
+    },
+    "component_table": {
+      "path": "docs/qdiffcl_final_component_ablation.csv",
+      "exists": true,
+      "sha256": "40f01d27b0bf5511387bd458a92497189f53431bd8a18678f8a5d04338bcb829"
+    },
+    "r1_des_table": {
+      "path": "docs/r1_des_ablation_main_table.csv",
+      "exists": true,
+      "sha256": "77b8bd6ae8dd61b7b69206aec34ce3db3661ebb6ff94d6e8a00c3130182dceff"
+    },
+    "frequency_audit": {
+      "path": "outputs/stage_frequency_diffusion_mvp/frequency_audit/result.json",
+      "exists": true,
+      "sha256": "8ae3ed34b8a1abf6e172e179c613280b593d75897bf3e9ad09f209ca847f6b5e"
+    },
+    "fixed_views": {
+      "path": "outputs/fixed_diffusion_views/views_manifest.json",
+      "exists": true,
+      "sha256": "1824e2cfa0b86ef71afe2d38913134ea418d9d7dda5bbf9e624a496faff88eb1"
+    },
+    "grouped_3w": {
+      "path": "outputs/3w_final_primary_grouped_seed42",
+      "exists": true,
+      "sha256": null
+    }
+  },
+  "external_coverage": {
+    "3W": [
+      "FINAL_QDIFFCL",
+      "FRERA",
+      "JITTER",
+      "JITTER_SCALING",
+      "NO_AUG",
+      "SCALING",
+      "UNIFORM_DIFFUSION"
+    ],
+    "TEP": [
+      "FINAL_QDIFFCL",
+      "FRERA",
+      "JITTER",
+      "JITTER_SCALING",
+      "NO_AUG",
+      "SCALING",
+      "UNIFORM_DIFFUSION"
+    ]
+  },
+  "existing_evidence": {
+    "A1_uniform_and_soft_final": true,
+    "A1_hard_mask_selective": false,
+    "A1_soft_without_budget_match": false,
+    "A2_semantic_components": true,
+    "A3_dcbr_domain_calibration": true,
+    "B1_3w_checkpoints_for_group_replay": true,
+    "B2_tep_checkpoints_for_fault_replay": true,
+    "B3_five_seed_metrics": true,
+    "D1_limited_data": false,
+    "D2_missingness_sensitivity": false,
+    "D3_critical_ratio_sensitivity": false,
+    "D4_efficiency": true
+  },
+  "supplemented_evidence": {
+    "A1_hard_mask_selective": true,
+    "A1_soft_without_budget_match": true
+  },
+  "selection_policy": {
+    "old_locked_test": "development evidence only",
+    "new_method_selection": false,
+    "paper_final_outer_test_run": false
+  }
+}

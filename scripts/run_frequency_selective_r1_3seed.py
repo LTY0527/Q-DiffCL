@@ -16,7 +16,7 @@ from metrics import representation_diagnostics
 from scripts.audit_semantic_diffusion_augmentation import bases, traditional_augmentation
 from scripts.diagnose_frequency_selective_far import correlation_drift, score_profile
 from scripts.run_diffusion_quality_retest import (
-    _fit_probe, _fit_supcon, _metrics, _probabilities, _state_hash,
+    _fit_ce_rep, _fit_probe, _fit_supcon, _metrics, _probabilities, _state_hash,
     best_probe_record, epoch_orders, load_fixed_views,
 )
 from scripts.run_stage_frequency_diffusion_mvp import (
@@ -75,7 +75,8 @@ def _stage_metrics(stages: np.ndarray, prediction: np.ndarray) -> dict[str, dict
 def _fit_method(name: str, augmented: dict[str, np.ndarray], audit: dict[str, Any], views, base, stages,
                 initial_state, pretrain_orders, probe_orders, runtime, device: str,
                 checkpoint: Path, metadata: dict[str, Any],
-                evaluation_splits: tuple[str, ...] = ("validation", "test")) -> dict[str, Any]:
+                evaluation_splits: tuple[str, ...] = ("validation", "test"),
+                representation_objective: str = "hard_supcon") -> dict[str, Any]:
     if not evaluation_splits or any(split not in ("validation", "test") for split in evaluation_splits):
         raise ValueError("evaluation_splits must contain validation and/or test")
     metrics_path = checkpoint.parent / "metrics.json"
@@ -94,8 +95,13 @@ def _fit_method(name: str, augmented: dict[str, np.ndarray], audit: dict[str, An
     train = {"clean": base["train"], "restored": augmented["train"], "labels": views["train"]["labels"]}
     validation = {"clean": base["validation"], "restored": augmented["validation"],
                   "labels": views["validation"]["labels"]}
-    pretrain = _fit_supcon(model, train, validation, np.ones(len(train["labels"]), np.float32),
-                           np.ones(len(validation["labels"]), np.float32), pretrain_orders, runtime, device)
+    if representation_objective == "hard_supcon":
+        pretrain = _fit_supcon(model, train, validation, np.ones(len(train["labels"]), np.float32),
+                               np.ones(len(validation["labels"]), np.float32), pretrain_orders, runtime, device)
+    elif representation_objective == "ce_rep":
+        pretrain = _fit_ce_rep(model, train, validation, pretrain_orders, runtime, device)
+    else:
+        raise ValueError(f"unknown representation objective: {representation_objective}")
     seed_everything(int(runtime["random_seed"]) + 1)
     probe = _fit_probe(model, {"clean": base["train"], "labels": views["train"]["labels"]},
                        {"restored": base["validation"], "labels": views["validation"]["labels"]},
@@ -115,8 +121,10 @@ def _fit_method(name: str, augmented: dict[str, np.ndarray], audit: dict[str, An
             "detection_delay": detection_delays(views[split], prediction, runtime),
             "representation": representation_diagnostics(embedding, augmented_embedding, views[split]["labels"]),
         }
+    validation_loss = "validation_supcon_loss" if representation_objective == "hard_supcon" else "validation_ce_loss"
     record = {"method": name, "seed": int(runtime["random_seed"]), "validation_threshold": threshold,
-              "best_pretrain_epoch": int(min(pretrain, key=lambda row: row["validation_supcon_loss"])["epoch"]),
+              "representation_objective": representation_objective,
+              "best_pretrain_epoch": int(min(pretrain, key=lambda row: row[validation_loss])["epoch"]),
               "best_probe_epoch": int(best["epoch"]), "pretrain_history": pretrain, "probe_history": probe,
               "initialization_sha256": _state_hash(initial_state), **splits,
               "evaluation_splits": list(evaluation_splits), "augmentation_audit": audit, "metadata": metadata,

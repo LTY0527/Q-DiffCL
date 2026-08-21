@@ -1,0 +1,323 @@
+{
+  "status": "ROBUSTNESS_PROTOCOL_AUDIT_COMPLETE",
+  "rows": [
+    {
+      "audit": "critical_ratio",
+      "dataset": "3W",
+      "setting": 0.2,
+      "groups_or_bins": 145,
+      "jaccard_to_frozen_030": 0.6651376146788991,
+      "D_selected_mean": 0.20389810137707612,
+      "E_selected_mean": 0.19200242593370634,
+      "total_noise_budget": 0.017973581328988075,
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "critical_ratio",
+      "dataset": "3W",
+      "setting": 0.3,
+      "groups_or_bins": 218,
+      "jaccard_to_frozen_030": 1.0,
+      "D_selected_mean": 0.17144261908913971,
+      "E_selected_mean": 0.16155816361718223,
+      "total_noise_budget": 0.017973581328988075,
+      "downstream_performance_support": "SUPPORTED"
+    },
+    {
+      "audit": "critical_ratio",
+      "dataset": "3W",
+      "setting": 0.4,
+      "groups_or_bins": 290,
+      "jaccard_to_frozen_030": 0.7517241379310344,
+      "D_selected_mean": 0.14914727365148478,
+      "E_selected_mean": 0.1371506036475733,
+      "total_noise_budget": 0.017973579466342926,
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "timestep",
+      "dataset": "3W",
+      "setting": 3,
+      "total_noise_budget": 0.017973581328988075,
+      "critical_budget": 0.013808107934892178,
+      "noncritical_budget": 0.01976112648844719,
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "timestep",
+      "dataset": "3W",
+      "setting": 5,
+      "total_noise_budget": 0.017973581328988075,
+      "critical_budget": 0.011946194805204868,
+      "noncritical_budget": 0.020560136064887047,
+      "downstream_performance_support": "SUPPORTED"
+    },
+    {
+      "audit": "timestep",
+      "dataset": "3W",
+      "setting": 8,
+      "total_noise_budget": 0.017973583191633224,
+      "critical_budget": 0.010538890026509762,
+      "noncritical_budget": 0.0211640577763319,
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "critical_ratio",
+      "dataset": "TEP",
+      "setting": 0.2,
+      "groups_or_bins": 343,
+      "jaccard_to_frozen_030": 0.6660194174757281,
+      "D_selected_mean": 0.5689267755401899,
+      "E_selected_mean": 0.5710216141129374,
+      "total_noise_budget": 0.017973585054278374,
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "critical_ratio",
+      "dataset": "TEP",
+      "setting": 0.3,
+      "groups_or_bins": 515,
+      "jaccard_to_frozen_030": 1.0,
+      "D_selected_mean": 0.507704601659711,
+      "E_selected_mean": 0.5104210047322569,
+      "total_noise_budget": 0.017973583191633224,
+      "downstream_performance_support": "SUPPORTED"
+    },
+    {
+      "audit": "critical_ratio",
+      "dataset": "TEP",
+      "setting": 0.4,
+      "groups_or_bins": 686,
+      "jaccard_to_frozen_030": 0.750728862973761,
+      "D_selected_mean": 0.4427703944608561,
+      "E_selected_mean": 0.448219494427128,
+      "total_noise_budget": 0.017973579466342926,
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "timestep",
+      "dataset": "TEP",
+      "setting": 3,
+      "total_noise_budget": 0.017973581328988075,
+      "critical_budget": 0.013780622743070126,
+      "noncritical_budget": 0.01977156102657318,
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "timestep",
+      "dataset": "TEP",
+      "setting": 5,
+      "total_noise_budget": 0.017973583191633224,
+      "critical_budget": 0.01199355348944664,
+      "noncritical_budget": 0.02053787373006344,
+      "downstream_performance_support": "SUPPORTED"
+    },
+    {
+      "audit": "timestep",
+      "dataset": "TEP",
+      "setting": 8,
+      "total_noise_budget": 0.017973581328988075,
+      "critical_budget": 0.010619210079312325,
+      "noncritical_budget": 0.021127205342054367,
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "3W",
+      "setting": 0.25,
+      "outer_split_seed": 31001,
+      "groups_or_bins": 5,
+      "group_sha256": "97bb6fc13c198f8bec546044a84b57bfc11c992d214b4b6aadefc163367f8128",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "3W",
+      "setting": 0.5,
+      "outer_split_seed": 31001,
+      "groups_or_bins": 10,
+      "group_sha256": "93744911127183234c2c0e1b82c8edf8dcc813b7b4b58125be9028665217f0f4",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "3W",
+      "setting": 1.0,
+      "outer_split_seed": 31001,
+      "groups_or_bins": 20,
+      "group_sha256": "f2c10060d37a85ca3c7eaaaf318d7546ccce5422b9bd4c77edd4b930d11baa9c",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "3W",
+      "setting": 0.25,
+      "outer_split_seed": 31002,
+      "groups_or_bins": 5,
+      "group_sha256": "4a234dccba0888a5eeda32397c3e1197b0960bd6e1663de9d1912e94130fe3c7",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "3W",
+      "setting": 0.5,
+      "outer_split_seed": 31002,
+      "groups_or_bins": 10,
+      "group_sha256": "7eb1cb9770fa2f43fc47f9752a997408650368e14d5bebe1c32e7363faba3ae6",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "3W",
+      "setting": 1.0,
+      "outer_split_seed": 31002,
+      "groups_or_bins": 20,
+      "group_sha256": "c4142b19f0a67fec11ddd05444ca3fb66324a4b2513bde2c2e515fe6739d845b",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "3W",
+      "setting": 0.25,
+      "outer_split_seed": 31003,
+      "groups_or_bins": 5,
+      "group_sha256": "968104bad5c46931724adfd293a8915202aa86970137d61c24fdabd3d7d0c5f8",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "3W",
+      "setting": 0.5,
+      "outer_split_seed": 31003,
+      "groups_or_bins": 10,
+      "group_sha256": "4f693e51be8faac70bed0239d7b510c959e9a8c34111887ef8ee347f0371a238",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "3W",
+      "setting": 1.0,
+      "outer_split_seed": 31003,
+      "groups_or_bins": 20,
+      "group_sha256": "6beed23068049382432c556982b4f8020d012a10925813b8dc68addb4c9f8d55",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "TEP",
+      "setting": 0.25,
+      "outer_split_seed": 32001,
+      "groups_or_bins": 62,
+      "group_sha256": "7239610240c4a22d4bc5334c1ad7a94ef3c2bf9635358345c089b1a2902faa7c",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "TEP",
+      "setting": 0.5,
+      "outer_split_seed": 32001,
+      "groups_or_bins": 124,
+      "group_sha256": "2b4778f4e7b16ad62065d8ea3ea66b0e5c54178c824a2b3ae509ef44f58f3b17",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "TEP",
+      "setting": 1.0,
+      "outer_split_seed": 32001,
+      "groups_or_bins": 248,
+      "group_sha256": "e6f379338f07480991e149369f28108ad52017dfd2af13d588af3a1c480a924f",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "TEP",
+      "setting": 0.25,
+      "outer_split_seed": 32002,
+      "groups_or_bins": 62,
+      "group_sha256": "7d95c5685a483805d2e5d3f467afff81a682b8b7a9b6202788ca8dcaaba50693",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "TEP",
+      "setting": 0.5,
+      "outer_split_seed": 32002,
+      "groups_or_bins": 124,
+      "group_sha256": "5f8a624297e4d0f850aa729f2e142ffaaa924debdac24aac833dacb1f6142cd6",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "TEP",
+      "setting": 1.0,
+      "outer_split_seed": 32002,
+      "groups_or_bins": 248,
+      "group_sha256": "5598f4c50bba8a13161183161a3134e75e6d7d2e42abb450e0fd9fe08ead79cd",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "TEP",
+      "setting": 0.25,
+      "outer_split_seed": 32003,
+      "groups_or_bins": 62,
+      "group_sha256": "55a2977efc3c15fe5a28807cf67a6e71779817a86f8674bc07a38b6e0fa5f350",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "TEP",
+      "setting": 0.5,
+      "outer_split_seed": 32003,
+      "groups_or_bins": 124,
+      "group_sha256": "3489e1dfa73791cb374adccf6382b19f8986755baa2e6ef6117f08c31e7198e0",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "limited_data_group_dry_run",
+      "dataset": "TEP",
+      "setting": 1.0,
+      "outer_split_seed": 32003,
+      "groups_or_bins": 248,
+      "group_sha256": "8147739febc01a742e867840d92fa95aefaedaecb399f801dbbd46391dfeb6ec",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "missingness",
+      "dataset": "3W",
+      "setting": 0.1,
+      "protocol": "native missingness; no added MCAR",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "missingness",
+      "dataset": "3W",
+      "setting": 0.3,
+      "protocol": "native missingness; no added MCAR",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "missingness",
+      "dataset": "TEP",
+      "setting": 0.1,
+      "protocol": "fixed MCAR 30%",
+      "downstream_performance_support": "UNSUPPORTED / DO NOT CLAIM"
+    },
+    {
+      "audit": "missingness",
+      "dataset": "TEP",
+      "setting": 0.3,
+      "protocol": "fixed MCAR 30%",
+      "downstream_performance_support": "SUPPORTED"
+    }
+  ],
+  "frozen_setting_changed": false,
+  "performance_gaps": [
+    "limited-data 25/50%",
+    "MCAR 10%",
+    "critical ratio 0.20/0.40",
+    "noncritical timestep alternatives"
+  ],
+  "paper_final_outer_test_run": false
+}

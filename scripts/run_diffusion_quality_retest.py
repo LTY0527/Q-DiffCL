@@ -116,6 +116,46 @@ def _fit_supcon(model: torch.nn.Module, train: dict[str, np.ndarray], validation
     return history
 
 
+def _fit_ce_rep(model: torch.nn.Module, train: dict[str, np.ndarray], validation: dict[str, np.ndarray],
+                orders: list[np.ndarray], config: dict[str, Any], device: str) -> list[dict[str, Any]]:
+    """Train a CE representation on the same clean/augmented pairs used by SupCon.
+
+    The classification head is temporary: both probe implementations reset it before
+    fitting a frozen linear probe, so only the learned encoder is carried forward.
+    """
+    optimizer = torch.optim.Adam(model.parameters(), lr=float(config["learning_rate"]))
+    history = []; best_state = None; best_loss = float("inf"); stale = 0
+    validation_order = np.arange(len(validation["labels"]))
+
+    def epoch(bundle: dict[str, np.ndarray], order: np.ndarray,
+              optimizer_: torch.optim.Optimizer | None) -> float:
+        training = optimizer_ is not None; model.train(training); losses = []
+        context = torch.enable_grad() if training else torch.no_grad()
+        with context:
+            for indices in _batches(order, int(config["batch_size"])):
+                labels = torch.from_numpy(bundle["labels"][indices]).long().to(device)
+                clean = torch.from_numpy(bundle["clean"][indices]).float().to(device)
+                restored = torch.from_numpy(bundle["restored"][indices]).float().to(device)
+                if optimizer_ is not None: optimizer_.zero_grad()
+                logits = torch.cat([model(clean)["logits"], model(restored)["logits"]], 0)
+                loss = F.cross_entropy(logits, torch.cat([labels, labels], 0))
+                if optimizer_ is not None: loss.backward(); optimizer_.step()
+                losses.append(float(loss.detach()))
+        return float(np.mean(losses))
+
+    for epoch_index, order in enumerate(orders):
+        loss = epoch(train, order, optimizer)
+        val_loss = epoch(validation, validation_order, None)
+        history.append({"epoch": epoch_index, "loss": loss, "validation_ce_loss": val_loss})
+        if val_loss < best_loss - 1e-6:
+            best_loss, best_state, stale = val_loss, copy.deepcopy(model.state_dict()), 0
+        else:
+            stale += 1
+            if stale >= int(config["early_stopping_patience"]): break
+    if best_state is not None: model.load_state_dict(best_state)
+    return history
+
+
 def _probabilities(model: torch.nn.Module, x: np.ndarray, batch_size: int, device: str) -> tuple[np.ndarray, np.ndarray]:
     model.eval(); probabilities = []; embeddings = []
     with torch.no_grad():

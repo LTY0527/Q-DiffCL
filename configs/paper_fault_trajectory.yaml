@@ -1,0 +1,21 @@
+mode: paper_fault_trajectory
+device: auto
+seed: 7
+base_config: configs/stage_frequency_diffusion_mvp.yaml
+methods:
+  SCALING: outputs/external_baselines/tep/seed_7/SCALING/model.pt
+  UNIFORM_DIFFUSION: outputs/frequency_selective_r1_3seed/seed_7/C1/model.pt
+  FINAL_QDIFFCL: outputs/r1_des_weight_search/tep/DE_50_50/seed_7/model.pt
+  DCBR: outputs/domain_budget_routing/tep/DCBR_075/seed_7/model.pt
+horizon: {pre_windows: 7, post_windows: 12}
+bootstrap: {repeats: 2000, seed: 26082102}
+output:
+  raw_scores: outputs/paper_fault_trajectory/tep_seed7_scores.npz
+  results_csv: analysis/results/paper_fault_trajectory.csv
+  figure: docs/paper_evidence/fig_early_fault_trajectory.png
+  report: docs/paper_fault_trajectory.md
+  manifest: outputs/paper_fault_trajectory/manifest.json
+audit:
+  checkpoint_replay_only: true
+  all_fault_runs: true
+  outer_test_run: false

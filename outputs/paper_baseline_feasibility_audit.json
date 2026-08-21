@@ -1,0 +1,21 @@
+{
+  "audit_date": "2026-08-21",
+  "outer_test_run": false,
+  "new_training": 0,
+  "candidates": {
+    "AutoDA-Timeseries": {
+      "classification": "METHOD_NATIVE_ONLY",
+      "repository": "https://github.com/NetManAIOps/AutoDA-Timeseries",
+      "commit": "91dbf70b54b255214b7f204d8d9f70d26f9c1fe3",
+      "main_table": false,
+      "reason": "Core learned policy is jointly coupled to task loss, Catch22 features and downstream model."
+    },
+    "DiCL": {
+      "classification": "NOT_FAIRLY_REPRODUCIBLE",
+      "repository": null,
+      "commit": null,
+      "main_table": false,
+      "reason": "No uniquely verifiable industrial time-series diffusion+contrastive paper/repository was found."
+    }
+  }
+}

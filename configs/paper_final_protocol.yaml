@@ -49,6 +49,17 @@ output:
   manifest: outputs/paper_final_protocol/dry_run_manifest.json
   audit: outputs/paper_final_protocol/leakage_audit.json
   report: docs/paper_final_protocol.md
+  pre_amendment_manifest: outputs/paper_final_protocol/pre_amendment_dry_run_manifest.json
+  amendment_audit: outputs/paper_final_protocol/protocol_amendment_audit.json
+  amendment_report: docs/paper_final_protocol_amendment.md
+amendment:
+  version: windowref-coverage-v2
+  three_w_grouped_config: configs/3w_final_primary_grouped.yaml
+  tep_fixed_manifest: outputs/fixed_diffusion_views/views_manifest.json
+  minimum_fault_wells: {train: 3, validation: 2, test: 2}
+  maximum_test_jaccard: 0.50
+  preserve_valid_existing_split: true
+  split_selection_uses_model_metrics: false
 audit:
   dry_run_only: true
   outer_test_metrics_read: false

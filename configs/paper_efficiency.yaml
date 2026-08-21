@@ -1,0 +1,34 @@
+mode: paper_efficiency
+device: auto
+benchmark_repeats: 3
+benchmark_windows: 1024
+three_w:
+  canonical_seed: 42
+  protocol_seed: 42
+  base_config: configs/3w_diffusion_1seed.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/3w_FINAL_DE.json
+  external_manifest: outputs/external_baselines/manifest.json
+  output_dir: outputs/paper_efficiency/training/3w
+tep:
+  canonical_seed: 7
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/tep_FINAL_DE.json
+  external_manifest: outputs/external_baselines/manifest.json
+  final_metrics: outputs/r1_des_weight_search/tep/DE_50_50/seed_7/metrics.json
+  dcbr_metrics: outputs/domain_budget_routing/tep/DCBR_075/seed_7/metrics.json
+spectral_diffusion:
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+output:
+  manifest: outputs/paper_efficiency/manifest.json
+  results_csv: analysis/results/paper_efficiency.csv
+  report: docs/paper_efficiency.md
+audit:
+  same_hardware_required: true
+  outer_test_run: false

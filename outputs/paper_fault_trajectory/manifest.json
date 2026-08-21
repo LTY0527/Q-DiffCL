@@ -1,0 +1,13 @@
+{
+  "status": "PAPER_FAULT_TRAJECTORY_COMPLETE",
+  "methods": [
+    "SCALING",
+    "UNIFORM_DIFFUSION",
+    "FINAL_QDIFFCL",
+    "DCBR"
+  ],
+  "fault_runs": 40,
+  "rows": 80,
+  "outer_test_run": false,
+  "raw_scores": "outputs\\paper_fault_trajectory\\tep_seed7_scores.npz"
+}

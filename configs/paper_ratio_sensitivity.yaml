@@ -1,0 +1,34 @@
+mode: paper_ratio_sensitivity
+device: auto
+ratios: [0.20, 0.30, 0.40]
+three_w:
+  seeds: [42, 43, 44]
+  protocol_seed: 42
+  base_config: configs/3w_diffusion_1seed.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/3w_FINAL_DE.json
+  final_manifest: outputs/qdiffcl_final_5seed/3w/manifest.json
+  output_dir: outputs/paper_ratio_sensitivity/3w
+tep:
+  seeds: [7, 42, 2026]
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  final_mask: outputs/qdiffcl_final_5seed/masks/tep_FINAL_DE.json
+  final_manifest: outputs/qdiffcl_final_5seed/tep/manifest.json
+  output_dir: outputs/paper_ratio_sensitivity/tep
+spectral_diffusion:
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+output:
+  manifest: outputs/paper_ratio_sensitivity/manifest.json
+  results_csv: analysis/results/paper_ratio_sensitivity.csv
+  report: docs/paper_ratio_sensitivity.md
+  figure: docs/paper_evidence/fig_ratio_sensitivity.png
+audit:
+  final_weights: {D: 0.5, E: 0.5, S: 0.0}
+  test_used_for_ratio_selection: false
+  outer_test_run: false
