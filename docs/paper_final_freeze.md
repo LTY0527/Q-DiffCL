@@ -4,12 +4,12 @@
 
 ## Version
 
-- Source branch before freeze commit: `exp/paper-evidence-chain`
-- Source HEAD used to generate snapshot: `650acab2f0e646c2f4dd2f1529863bfade56244f`
+- Source branch before freeze commit: `exp/paper-final-outer`
+- Source HEAD used to generate snapshot: `848b49302f21af39253243e5655ce7145e919ce6`
 - Freeze commit: 由包含本快照的 Git commit/tag 确定，并写入 outer manifest。
-- Freeze tag: `paper-final-freeze-pre-outer-v2`
+- Freeze tag: `paper-final-freeze-pre-outer-v3`
 - Outer branch after tag: `exp/paper-final-outer`
-- Tests: `271 passed in 91.15s`
+- Tests: `271 passed in 97.76s`
 - Environment: Python 3.10.20, PyTorch 2.6.0+cu124, CUDA 12.4, NVIDIA GeForce RTX 4060 Laptop GPU
 
 ## Frozen method

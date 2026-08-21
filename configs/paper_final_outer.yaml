@@ -3,7 +3,7 @@ frozen: true
 device: cuda
 python: E:/anaconda/envs/qdiffcl/python.exe
 git_freeze:
-  pre_outer_tag: paper-final-freeze-pre-outer-v2
+  pre_outer_tag: paper-final-freeze-pre-outer-v3
   outer_branch: exp/paper-final-outer
 protocol_config: configs/paper_final_protocol.yaml
 freeze_manifest: outputs/paper_final_freeze/freeze_manifest.json

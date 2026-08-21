@@ -1,7 +1,7 @@
 mode: paper_final_freeze_pre_outer
 frozen: true
 git_freeze:
-  tag: paper-final-freeze-pre-outer-v2
+  tag: paper-final-freeze-pre-outer-v3
   outer_branch: exp/paper-final-outer
   commit_sha_recorded_in_outer_manifest_after_commit: true
 hashes:

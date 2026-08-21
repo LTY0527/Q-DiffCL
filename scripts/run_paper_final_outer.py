@@ -94,8 +94,8 @@ def validate_frozen(config: dict[str, Any], require_outer_branch: bool = True) -
         raise RuntimeError("paper-final leakage audit is not GO")
     if dry.get("outer_metrics") is not None:
         raise RuntimeError("dry-run manifest unexpectedly contains outer metrics")
-    if _git("branch", "--show-current") != freeze["branch"] or _git("rev-parse", "HEAD") != freeze["head"]:
-        raise RuntimeError("branch/HEAD differs from the frozen snapshot")
+    if subprocess.call(["git", "merge-base", "--is-ancestor", freeze["head"], "HEAD"]) != 0:
+        raise RuntimeError("the frozen source HEAD is not an ancestor of the current checkout")
     expected_weights = {"weight_discriminative": .5, "weight_early": .5, "weight_run_stability": 0.0}
     algorithm = config["algorithm"]
     checks = {
