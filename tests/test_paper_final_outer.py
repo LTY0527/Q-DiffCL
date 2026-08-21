@@ -5,7 +5,9 @@ from pathlib import Path
 
 import yaml
 
-from scripts.run_paper_final_outer import METHODS, rho_name, run_id, select_dcbr_rho, split_record, validate_frozen
+import numpy as np
+from scripts.run_paper_final_outer import (METHODS, _compatible_metadata, augmentation_views, rho_name,
+                                           run_id, select_dcbr_rho, split_record, validate_frozen)
 
 
 def _config():
@@ -59,3 +61,22 @@ def test_pre_outer_freeze_still_valid_and_has_no_outer_metric():
     assert dry["outer_metrics"] is None
     assert leakage["outer_test_metrics_read"] is False
     assert freeze["outer_training_run"] is False
+
+
+def test_frera_dispatcher_does_not_require_dcbr_rho():
+    config = _config(); clean = np.zeros((2, 3, 4), dtype=np.float32)
+    context = {"dataset": "3W", "train": clean, "validation": clean.copy(),
+               "ids": {"train": np.asarray(["a", "b"]), "validation": np.asarray(["c", "d"])},
+               "training": {"batch_size": 2}}
+    views, audit = augmentation_views(context, config, "FRERA", 42, "cpu")
+    assert np.array_equal(views["train"], clean)
+    assert audit["train"]["mode"] == "FRERA_internal_learned_view"
+
+
+def test_resume_allows_only_declared_provenance_hash_change():
+    config = _config(); expected = {"dataset": "3W", "phase_g_config_sha256": "new"}
+    existing = {"dataset": "3W", "phase_g_config_sha256": config["git_freeze"]["provenance_compatible_config_hashes"][0]}
+    config["git_freeze"]["provenance_compatible_config_hashes"].append("new")
+    assert _compatible_metadata(existing, expected, config)
+    existing["dataset"] = "TEP"
+    assert not _compatible_metadata(existing, expected, config)

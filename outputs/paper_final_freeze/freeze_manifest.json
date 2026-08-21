@@ -1,10 +1,10 @@
 {
   "status": "PAPER_FINAL_FREEZE_READY",
   "branch": "exp/paper-final-outer",
-  "head": "848b49302f21af39253243e5655ce7145e919ce6",
+  "head": "b90105d7be2be6d60117e964bab67404def48c0d",
   "freeze_commit": null,
-  "freeze_tag": "paper-final-freeze-pre-outer-v3",
-  "pytest": "271 passed in 97.76s",
+  "freeze_tag": "paper-final-freeze-pre-outer-v4",
+  "pytest": "273 passed in 93.66s (0:01:33)",
   "protocol_status": "PAPER_FINAL_PROTOCOL_AMENDMENT_GO",
   "outer_test_metrics_read": false,
   "outer_training_run": false,
@@ -23,7 +23,7 @@
   },
   "environment": {
     "python": "3.10.20 | packaged by Anaconda, Inc. | (main, Jun 11 2026, 15:13:20) [MSC v.1942 64 bit (AMD64)]",
-    "git_commit": "848b49302f21af39253243e5655ce7145e919ce6",
+    "git_commit": "b90105d7be2be6d60117e964bab67404def48c0d",
     "cuda": "12.4",
     "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
     "pytorch": "2.6.0+cu124"
@@ -37,7 +37,7 @@
       "configs\\paper_ratio_sensitivity.yaml": "44147dd4f03a9f16372b420cd3cd029be7f85c458e497b8be99a635963c40f26",
       "configs\\paper_efficiency.yaml": "56d0de76f75cfc00054c080536df2eb3a05878f39a1ac74df2623044218248e2",
       "configs\\paper_fault_trajectory.yaml": "d9d2370eb7bb7a9578da05b34921f6342d1e58a16d5dd10c12abb2c354659f8c",
-      "configs\\paper_final_outer.yaml": "c8ca096f17dc12178f55339ea59d9373b37c1d9b8215eccc8fb4c9ce44a7ae7a"
+      "configs\\paper_final_outer.yaml": "bae0c3d6a2504478aa0610d831c95bafedf8ca7e735976be405c61ffbd96a2f4"
     },
     "splits": {
       "outputs\\paper_final_protocol\\dry_run_manifest.json": "e4ef68e85b57f0ae90359f8ad7a83e2949a363fdff3945297c44bd102bd66207",

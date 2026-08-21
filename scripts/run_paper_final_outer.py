@@ -153,6 +153,8 @@ def build_manifest(config: dict[str, Any], audit: dict[str, Any]) -> dict[str, A
             if manifest.get("first_outer_metric_at") is not None:
                 raise RuntimeError("cannot replace a manifest after an outer metric exists")
             archive = path.with_name("paper_final_outer_pre_amendment_manifest.json")
+            if archive.exists():
+                archive = path.with_name(f"paper_final_outer_pre_{str(manifest['phase_g_config_sha256'])[:12]}_failure_manifest.json")
             if not archive.exists(): write_json(archive, manifest)
             path.unlink()
         else:
@@ -360,6 +362,8 @@ def augmentation_views(context: dict[str, Any], config: dict[str, Any], method: 
                                                  int(config["algorithm"]["t_noncritical"]),
                                                  int(context["training"]["batch_size"] if context["dataset"] == "3W" else context["runtime"]["batch_size"]),
                                                  noise_structure="iid")
+        elif method == "FRERA":
+            changed = clean.copy(); details = {"mode": "FRERA_internal_learned_view", "dispatcher_placeholder": "clean"}
         else:
             if rho is None or float(rho) not in list(map(float, config["algorithm"]["rho_candidates"])):
                 raise ValueError("DCBR requires a frozen rho candidate")
@@ -418,6 +422,13 @@ def _checkpoint_payload(path: Path, metadata: dict[str, Any]) -> dict[str, Any] 
     return payload
 
 
+def _compatible_metadata(existing: dict[str, Any], expected: dict[str, Any], config: dict[str, Any]) -> bool:
+    left, right = copy.deepcopy(existing), copy.deepcopy(expected)
+    left_hash = str(left.pop("phase_g_config_sha256", "")); right_hash = str(right.pop("phase_g_config_sha256", ""))
+    allowed = {right_hash, *map(str, config["git_freeze"].get("provenance_compatible_config_hashes", []))}
+    return left == right and left_hash in allowed
+
+
 def train_method(context: dict[str, Any], config: dict[str, Any], method: str, model_seed: int,
                  device: str, output: Path, rho: float | None = None) -> dict[str, Any]:
     runtime, pre_orders, probe_orders, initial, fairness = _training_spec(context, model_seed)
@@ -428,8 +439,9 @@ def train_method(context: dict[str, Any], config: dict[str, Any], method: str, m
     if checkpoint.exists() != validation_path.exists():
         raise RuntimeError(f"incomplete cell cannot be safely resumed: {output}")
     if checkpoint.exists():
-        payload = _checkpoint_payload(checkpoint, metadata); record = _read(validation_path)
-        if record["metadata"] != metadata: raise RuntimeError("validation resume metadata mismatch")
+        payload = torch.load(checkpoint, map_location="cpu", weights_only=False); record = _read(validation_path)
+        if not _compatible_metadata(payload.get("metadata", {}), metadata, config): raise RuntimeError(f"resume metadata mismatch: {checkpoint}")
+        if not _compatible_metadata(record["metadata"], metadata, config): raise RuntimeError("validation resume metadata mismatch")
         record["resumed"] = True; return record
     views, augmentation_audit = augmentation_views(context, config, method, model_seed, device, rho)
     started = time.perf_counter(); seed_everything(model_seed)
