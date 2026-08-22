@@ -18,10 +18,19 @@ FINAL_QDIFFCL remains `0.5D + 0.5E`, critical ratio `0.30`, selective timesteps 
 
 ## Paper-final freeze
 
-The nested grouped protocol again passed dry-run, full repository tests passed (`264 passed`), and content hashes were recorded for 2,229 3W data files and four TEP RData files. `docs/paper_final_freeze.md` is the auditable pre-outer snapshot. No outer model or outer metric has been produced.
+The nested grouped protocol again passed dry-run, full repository tests passed (`264 passed`), and content hashes were recorded for 2,229 3W data files and four TEP RData files. `docs/paper_final_freeze.md` is the auditable pre-outer snapshot. At that freeze point, no outer model or outer metric had been produced; the completed outer evaluation is recorded below.
 
 ## Reporting boundary
 
-The paper may claim dataset-dependent mechanism evidence, a TEP over-augmentation mitigation role for DCBR, completed dual-dataset sensitivity characterization, efficiency evidence, and TEP development onset trajectories. It may not claim universal Soft superiority, universal cross-WELL gains, 0.30 as a universal optimum, completed limited-data robustness, or paper-final generalization until the frozen outer evaluation is executed once.
+The paper may claim dataset-dependent mechanism evidence, completed frozen nested/grouped outer evaluation, dual-dataset sensitivity characterization, efficiency evidence, and TEP development onset trajectories. The outer results support only dataset-specific generalization statements. The paper may not claim universal Soft superiority, universal cross-WELL gains, 0.30 as a universal optimum, completed limited-data robustness, or unconditional performance superiority.
 
 See `docs/paper_evidence_matrix.md`, `docs/paper_final_protocol.md`, `docs/paper_final_freeze.md`, and raw CSV/JSON under `analysis/results/`, `docs/paper_evidence/`, and `outputs/`.
+
+## Paper-final outer evaluation
+
+The frozen nested/grouped outer matrix is complete. Statistics retain WELL/Run grouping and aggregate model seeds inside each split before the three-split summary.
+
+- 3W: FINAL Macro-F1 `0.3216`; DCBR `0.3204`; paired DCBR-FINAL `-0.0012` (95% CI `-0.0290` to `+0.0118`).
+- TEP: FINAL Macro-F1 `0.9483`; DCBR `0.9486`; paired DCBR-FINAL `+0.0003` (95% CI `-0.0013` to `+0.0020`).
+
+Claim categories and limitations are frozen in `docs/paper_final_claims.md`.

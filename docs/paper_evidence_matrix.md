@@ -16,6 +16,6 @@
 | Industrial diffusion+contrastive DiCL baseline | GitHub/scholarly-source feasibility audit | `NOT FAIRLY REPRODUCIBLE / DO NOT RANK` |
 | Limited-data robustness | grouped dry-run only | `UNSUPPORTED / DO NOT CLAIM` |
 | Missingness robustness | TEP MCAR30 only; 3W native missingness | `PARTIAL` |
-| Generalization | nested grouped paper-final protocol and pre-outer freeze | `PENDING OUTER EVALUATION` |
+| Generalization | completed frozen nested/grouped outer matrix; split-first aggregation and 2,000× WELL/Run bootstrap | `OUTER EVALUATION COMPLETE; DATASET-SPECIFIC EFFECTS IN paper_final_outer_summary.md` |
 
 任何标为 UNSUPPORTED/PENDING 的 claim 不得进入摘要、贡献列表或结论。SVR 保持 `NO_GO_SVR`，不进入最终方法。0.30 因方法冻结保持不变，但不得表述为 TEP 上由本轮 sensitivity 证明的局部最优值。

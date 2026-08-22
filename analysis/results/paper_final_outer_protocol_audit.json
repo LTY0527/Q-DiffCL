@@ -1,0 +1,18 @@
+{
+  "status": "PAPER_FINAL_PROTOCOL_AUDIT_GO",
+  "checks": {
+    "logical_rows_240": true,
+    "unique_run_ids": true,
+    "outer_once_markers": true,
+    "prediction_hashes": true,
+    "checkpoint_hashes": true,
+    "exact_outer_test_groups": true
+  },
+  "fit_scope": {
+    "scaler_imputation_criticality_frequency": "outer-train",
+    "rho_threshold_checkpoint": "inner-validation",
+    "outer-test": "evaluation-only"
+  },
+  "audited_at": "2026-08-22T07:03:15.904357+00:00",
+  "outer_metrics_used_for_selection": false
+}
