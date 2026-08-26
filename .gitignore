@@ -8,6 +8,7 @@ pytest-cache-files-*/
 .venv/
 venv/
 .deps/
+external_baselines/
 .env
 .vscode/
 data/raw/**
