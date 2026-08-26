@@ -1,0 +1,84 @@
+{
+  "status": "POSTHOC_BASELINE_SELECTION_LOCKED",
+  "audit_timestamp": "2026-08-26T18:23:16.2969680Z",
+  "branch": "exp/posthoc-baseline-expansion",
+  "source_head": "5953c0a39d59de252afa7491926a9ddfdf8a09ea",
+  "paper_final_source_commit": "276416ff3114ab40a41cf48bbad16e9a7368732d",
+  "paper_final_source_tag": "paper-final-outer-complete",
+  "evidence_class": "POSTHOC_BASELINE_EVIDENCE",
+  "outer_test_metrics_read_before_lock": false,
+  "scoring_rubric": {
+    "scientific_relevance": [0, 4],
+    "reproducibility": [0, 4],
+    "protocol_compatibility": [0, 4],
+    "recency_venue": [0, 4],
+    "engineering_cost": [0, 2],
+    "maximum_total": 16,
+    "tie_break": [
+      "scientific_relevance_desc",
+      "reproducibility_desc",
+      "protocol_compatibility_desc",
+      "recency_venue_desc",
+      "engineering_cost_desc",
+      "method_asc"
+    ]
+  },
+  "candidate_ranking": [
+    {"rank": 1, "method": "TimesURL", "score": 16, "selected": true},
+    {"rank": 2, "method": "MF-CLR", "score": 16, "selected": true},
+    {"rank": 3, "method": "REBAR", "score": 15, "selected": true},
+    {"rank": 4, "method": "AutoTCL", "score": 15, "selected": true},
+    {"rank": 5, "method": "TF-C", "score": 14, "selected": false},
+    {"rank": 6, "method": "SoftCLT", "score": 14, "selected": false},
+    {"rank": 7, "method": "TS2Vec", "score": 14, "selected": false},
+    {"rank": 8, "method": "AutoDA-Timeseries", "score": 13, "selected": false},
+    {"rank": 9, "method": "InfoTS", "score": 12, "selected": false}
+  ],
+  "selected_methods": [
+    {
+      "method": "TimesURL",
+      "comparison_track": "TRACK_B_METHOD_NATIVE_REPRESENTATION",
+      "selection_reason": "top score; recent universal representation and explicit frequency-temporal mechanism; MIT official code"
+    },
+    {
+      "method": "MF-CLR",
+      "comparison_track": "TRACK_B_METHOD_NATIVE_REPRESENTATION",
+      "selection_reason": "top score; recent multi-frequency representation; classification path and MIT official code"
+    },
+    {
+      "method": "REBAR",
+      "comparison_track": "TRACK_B_METHOD_NATIVE_REPRESENTATION",
+      "selection_reason": "recent semantically targeted positive-pair construction; linear-probe pipeline and MIT official code"
+    },
+    {
+      "method": "AutoTCL",
+      "comparison_track": "TRACK_A_MECHANISM_ADAPTATION",
+      "selection_reason": "recent augmentation-focused method with encoder-agnostic claim; independently implemented adaptation required because no license file"
+    }
+  ],
+  "locked_method_count": 4,
+  "method_count_reason": "High aggregate method-native engineering and GPU cost; protocol therefore chooses the minimum complete set of four rather than maximizing method count.",
+  "constraint_checks": {
+    "between_4_and_6": true,
+    "at_least_3_from_2024_or_later": true,
+    "augmentation_or_positive_view": true,
+    "frequency_aware": true,
+    "recent_representation_level": true,
+    "research_line_diversity": true
+  },
+  "fallback_ranking": [
+    {"rank": 1, "method": "TF-C", "allowed_track": "TRACK_B_METHOD_NATIVE_REPRESENTATION"},
+    {"rank": 2, "method": "SoftCLT", "allowed_track": "TRACK_A_MECHANISM_ADAPTATION"},
+    {"rank": 3, "method": "TS2Vec", "allowed_track": "TRACK_B_METHOD_NATIVE_REPRESENTATION"},
+    {"rank": 4, "method": "AutoDA-Timeseries", "allowed_track": "METHOD_NATIVE_SUPPLEMENTARY_ONLY"},
+    {"rank": 5, "method": "InfoTS", "allowed_track": "AUDIT_ONLY"}
+  ],
+  "datasets": ["3W", "TEP"],
+  "outer_splits": {"3W": [31001, 31002, 31003], "TEP": [32001, 32002, 32003]},
+  "model_seeds": {"3W": [42, 43, 44], "TEP": [7, 42, 2026]},
+  "logical_cells_per_method": 18,
+  "expected_total_runs": 72,
+  "estimated_runtime_hours": [12, 20],
+  "replacement_policy": "append-only engineering failure amendment; never validation-score or outer-test-score based",
+  "selection_hash": "07d92df216fcd254cad6caf8b3688dc2a98781586c0bf49b0d35970a56614838"
+}
