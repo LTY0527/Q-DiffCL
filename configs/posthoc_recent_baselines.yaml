@@ -1,0 +1,64 @@
+mode: posthoc_recent_baseline_benchmark
+evidence_class: POSTHOC_BASELINE_EVIDENCE
+python: E:/anaconda/envs/qdiffcl/python.exe
+device: cuda
+paper_final_config: configs/paper_final_outer.yaml
+selection_lock: analysis/results/posthoc_baseline_selection_lock.json
+selection_hash: 07d92df216fcd254cad6caf8b3688dc2a98781586c0bf49b0d35970a56614838
+paper_final_source_commit: 276416ff3114ab40a41cf48bbad16e9a7368732d
+
+selected_methods: [TimesURL, MF-CLR, REBAR, AutoTCL]
+active_methods: [TF-C, SoftCLT, TS2Vec, AutoTCL]
+fallback_methods: [TF-C, SoftCLT, TS2Vec, AutoDA-Timeseries, InfoTS]
+tracks:
+  TimesURL: TRACK_B_METHOD_NATIVE_REPRESENTATION
+  MF-CLR: TRACK_B_METHOD_NATIVE_REPRESENTATION
+  REBAR: TRACK_B_METHOD_NATIVE_REPRESENTATION
+  AutoTCL: TRACK_A_MECHANISM_ADAPTATION
+  TF-C: TRACK_B_METHOD_NATIVE_REPRESENTATION
+  SoftCLT: TRACK_A_MECHANISM_ADAPTATION
+  TS2Vec: TRACK_B_METHOD_NATIVE_REPRESENTATION
+
+external_roots:
+  TimesURL: external_baselines/TimesURL
+  MF-CLR: external_baselines/MF-CLR
+  REBAR: external_baselines/REBAR
+  TF-C: external_baselines/TFC-pretraining
+  SoftCLT: external_baselines/softclt
+  TS2Vec: external_baselines/ts2vec
+
+representation_dim: 64
+learning_rate: 0.001
+temperature: 0.1
+native:
+  TimesURL: {batch_size: 128}
+  MF-CLR: {batch_size: 64}
+  REBAR: {batch_size: 64}
+  TS2Vec: {batch_size: 128}
+
+sanity:
+  outer_splits: {3W: 31001, TEP: 32001}
+  model_seeds: {3W: 42, TEP: 7}
+  train_windows: 512
+  validation_windows: 256
+  epochs: 1
+  probe_epochs: 2
+  max_batches: 2
+
+benchmark:
+  outer_splits: {3W: [31001, 31002, 31003], TEP: [32001, 32002, 32003]}
+  model_seeds: {3W: [42, 43, 44], TEP: [7, 42, 2026]}
+  epochs: {3W: 20, TEP: 8}
+  probe_epochs: {3W: 15, TEP: 8}
+  batch_size: {3W: 256, TEP: 128}
+
+output:
+  root: outputs/posthoc_recent_baselines
+  manifest: analysis/results/posthoc_recent_baselines_manifest.json
+  sanity_csv: analysis/results/posthoc_baseline_sanity.csv
+  raw_csv: analysis/results/posthoc_recent_baselines_raw.csv
+  summary_csv: analysis/results/posthoc_recent_baselines_summary.csv
+  bootstrap_csv: analysis/results/posthoc_recent_baselines_bootstrap.csv
+  report: docs/posthoc_recent_baselines.md
+  failure_log: docs/posthoc_baseline_failure_log.md
+  amendment: docs/posthoc_baseline_selection_amendment.md

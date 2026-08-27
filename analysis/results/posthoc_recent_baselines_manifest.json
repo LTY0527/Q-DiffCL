@@ -1,0 +1,762 @@
+{
+  "status": "POSTHOC_BASELINE_BENCHMARK_COMPLETE",
+  "evidence_class": "POSTHOC_BASELINE_EVIDENCE",
+  "selection_hash": "07d92df216fcd254cad6caf8b3688dc2a98781586c0bf49b0d35970a56614838",
+  "created_at": "2026-08-27T03:17:39.739429+00:00",
+  "expected_cells": 72,
+  "cells": [
+    {
+      "run_id": "3w-outer31001-seed42-tf_c",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 42,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31001\\seed_42\\TF-C\\result.json",
+      "completed_at": "2026-08-27T03:18:52.006256+00:00"
+    },
+    {
+      "run_id": "3w-outer31001-seed42-softclt",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 42,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31001\\seed_42\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T03:21:21.580228+00:00"
+    },
+    {
+      "run_id": "3w-outer31001-seed42-ts2vec",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 42,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31001\\seed_42\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T03:23:23.880459+00:00"
+    },
+    {
+      "run_id": "3w-outer31001-seed42-autotcl",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 42,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31001\\seed_42\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T03:24:34.466131+00:00"
+    },
+    {
+      "run_id": "3w-outer31001-seed43-tf_c",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 43,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31001\\seed_43\\TF-C\\result.json",
+      "completed_at": "2026-08-27T03:25:24.572401+00:00"
+    },
+    {
+      "run_id": "3w-outer31001-seed43-softclt",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 43,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31001\\seed_43\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T03:26:32.725914+00:00"
+    },
+    {
+      "run_id": "3w-outer31001-seed43-ts2vec",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 43,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31001\\seed_43\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T03:28:10.060790+00:00"
+    },
+    {
+      "run_id": "3w-outer31001-seed43-autotcl",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 43,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31001\\seed_43\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T03:29:25.777785+00:00"
+    },
+    {
+      "run_id": "3w-outer31001-seed44-tf_c",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 44,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31001\\seed_44\\TF-C\\result.json",
+      "completed_at": "2026-08-27T03:30:21.242776+00:00"
+    },
+    {
+      "run_id": "3w-outer31001-seed44-softclt",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 44,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31001\\seed_44\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T03:31:29.027063+00:00"
+    },
+    {
+      "run_id": "3w-outer31001-seed44-ts2vec",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 44,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31001\\seed_44\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T03:32:56.489823+00:00"
+    },
+    {
+      "run_id": "3w-outer31001-seed44-autotcl",
+      "dataset": "3W",
+      "outer_seed": 31001,
+      "model_seed": 44,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31001\\seed_44\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T03:34:12.331099+00:00"
+    },
+    {
+      "run_id": "3w-outer31002-seed42-tf_c",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 42,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31002\\seed_42\\TF-C\\result.json",
+      "completed_at": "2026-08-27T03:35:15.303192+00:00"
+    },
+    {
+      "run_id": "3w-outer31002-seed42-softclt",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 42,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31002\\seed_42\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T03:36:29.777809+00:00"
+    },
+    {
+      "run_id": "3w-outer31002-seed42-ts2vec",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 42,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31002\\seed_42\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T03:37:59.122975+00:00"
+    },
+    {
+      "run_id": "3w-outer31002-seed42-autotcl",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 42,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31002\\seed_42\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T03:39:17.051513+00:00"
+    },
+    {
+      "run_id": "3w-outer31002-seed43-tf_c",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 43,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31002\\seed_43\\TF-C\\result.json",
+      "completed_at": "2026-08-27T03:39:56.181781+00:00"
+    },
+    {
+      "run_id": "3w-outer31002-seed43-softclt",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 43,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31002\\seed_43\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T03:41:13.090763+00:00"
+    },
+    {
+      "run_id": "3w-outer31002-seed43-ts2vec",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 43,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31002\\seed_43\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T03:43:02.074196+00:00"
+    },
+    {
+      "run_id": "3w-outer31002-seed43-autotcl",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 43,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31002\\seed_43\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T03:44:20.184356+00:00"
+    },
+    {
+      "run_id": "3w-outer31002-seed44-tf_c",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 44,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31002\\seed_44\\TF-C\\result.json",
+      "completed_at": "2026-08-27T03:45:00.926764+00:00"
+    },
+    {
+      "run_id": "3w-outer31002-seed44-softclt",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 44,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31002\\seed_44\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T03:46:17.339460+00:00"
+    },
+    {
+      "run_id": "3w-outer31002-seed44-ts2vec",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 44,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31002\\seed_44\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T03:47:50.976158+00:00"
+    },
+    {
+      "run_id": "3w-outer31002-seed44-autotcl",
+      "dataset": "3W",
+      "outer_seed": 31002,
+      "model_seed": 44,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31002\\seed_44\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T03:49:09.236937+00:00"
+    },
+    {
+      "run_id": "3w-outer31003-seed42-tf_c",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 42,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31003\\seed_42\\TF-C\\result.json",
+      "completed_at": "2026-08-27T03:50:03.208380+00:00"
+    },
+    {
+      "run_id": "3w-outer31003-seed42-softclt",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 42,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31003\\seed_42\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T03:51:07.191320+00:00"
+    },
+    {
+      "run_id": "3w-outer31003-seed42-ts2vec",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 42,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31003\\seed_42\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T03:52:27.010002+00:00"
+    },
+    {
+      "run_id": "3w-outer31003-seed42-autotcl",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 42,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31003\\seed_42\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T03:53:36.997616+00:00"
+    },
+    {
+      "run_id": "3w-outer31003-seed43-tf_c",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 43,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31003\\seed_43\\TF-C\\result.json",
+      "completed_at": "2026-08-27T03:54:13.379748+00:00"
+    },
+    {
+      "run_id": "3w-outer31003-seed43-softclt",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 43,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31003\\seed_43\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T03:55:17.750328+00:00"
+    },
+    {
+      "run_id": "3w-outer31003-seed43-ts2vec",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 43,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31003\\seed_43\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T03:56:34.157068+00:00"
+    },
+    {
+      "run_id": "3w-outer31003-seed43-autotcl",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 43,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31003\\seed_43\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T03:57:43.214783+00:00"
+    },
+    {
+      "run_id": "3w-outer31003-seed44-tf_c",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 44,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31003\\seed_44\\TF-C\\result.json",
+      "completed_at": "2026-08-27T03:58:13.951405+00:00"
+    },
+    {
+      "run_id": "3w-outer31003-seed44-softclt",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 44,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31003\\seed_44\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T03:59:18.074423+00:00"
+    },
+    {
+      "run_id": "3w-outer31003-seed44-ts2vec",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 44,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31003\\seed_44\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T04:00:30.003278+00:00"
+    },
+    {
+      "run_id": "3w-outer31003-seed44-autotcl",
+      "dataset": "3W",
+      "outer_seed": 31003,
+      "model_seed": 44,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\3w\\outer_31003\\seed_44\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T04:01:39.596159+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-tf_c",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 7,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32001\\seed_7\\TF-C\\result.json",
+      "completed_at": "2026-08-27T04:03:49.075530+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-softclt",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 7,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32001\\seed_7\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T04:07:17.171567+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-ts2vec",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 7,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32001\\seed_7\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T05:00:10.497397+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-autotcl",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 7,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32001\\seed_7\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T05:30:24.268701+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed42-tf_c",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 42,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32001\\seed_42\\TF-C\\result.json",
+      "completed_at": "2026-08-27T05:30:55.988757+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed42-softclt",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 42,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32001\\seed_42\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T05:34:39.610654+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed42-ts2vec",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 42,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32001\\seed_42\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T06:24:34.927353+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed42-autotcl",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 42,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32001\\seed_42\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T06:28:24.071376+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed2026-tf_c",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 2026,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32001\\seed_2026\\TF-C\\result.json",
+      "completed_at": "2026-08-27T06:28:49.243615+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed2026-softclt",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 2026,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32001\\seed_2026\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T06:32:24.310774+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed2026-ts2vec",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 2026,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32001\\seed_2026\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T07:22:43.963825+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed2026-autotcl",
+      "dataset": "TEP",
+      "outer_seed": 32001,
+      "model_seed": 2026,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32001\\seed_2026\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T07:26:33.022959+00:00"
+    },
+    {
+      "run_id": "tep-outer32002-seed7-tf_c",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 7,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32002\\seed_7\\TF-C\\result.json",
+      "completed_at": "2026-08-27T07:29:20.517918+00:00"
+    },
+    {
+      "run_id": "tep-outer32002-seed7-softclt",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 7,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32002\\seed_7\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T07:33:04.189604+00:00"
+    },
+    {
+      "run_id": "tep-outer32002-seed7-ts2vec",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 7,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32002\\seed_7\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T08:21:53.504548+00:00"
+    },
+    {
+      "run_id": "tep-outer32002-seed7-autotcl",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 7,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32002\\seed_7\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T08:25:53.321428+00:00"
+    },
+    {
+      "run_id": "tep-outer32002-seed42-tf_c",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 42,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32002\\seed_42\\TF-C\\result.json",
+      "completed_at": "2026-08-27T08:26:19.602199+00:00"
+    },
+    {
+      "run_id": "tep-outer32002-seed42-softclt",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 42,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32002\\seed_42\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T08:30:03.821214+00:00"
+    },
+    {
+      "run_id": "tep-outer32002-seed42-ts2vec",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 42,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32002\\seed_42\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T09:22:46.012312+00:00"
+    },
+    {
+      "run_id": "tep-outer32002-seed42-autotcl",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 42,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32002\\seed_42\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T09:26:27.711222+00:00"
+    },
+    {
+      "run_id": "tep-outer32002-seed2026-tf_c",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 2026,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32002\\seed_2026\\TF-C\\result.json",
+      "completed_at": "2026-08-27T09:26:54.210176+00:00"
+    },
+    {
+      "run_id": "tep-outer32002-seed2026-softclt",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 2026,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32002\\seed_2026\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T09:30:40.345660+00:00"
+    },
+    {
+      "run_id": "tep-outer32002-seed2026-ts2vec",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 2026,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32002\\seed_2026\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T10:18:31.866791+00:00"
+    },
+    {
+      "run_id": "tep-outer32002-seed2026-autotcl",
+      "dataset": "TEP",
+      "outer_seed": 32002,
+      "model_seed": 2026,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32002\\seed_2026\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T10:22:02.317814+00:00"
+    },
+    {
+      "run_id": "tep-outer32003-seed7-tf_c",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 7,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32003\\seed_7\\TF-C\\result.json",
+      "completed_at": "2026-08-27T10:24:49.376844+00:00"
+    },
+    {
+      "run_id": "tep-outer32003-seed7-softclt",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 7,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32003\\seed_7\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T10:28:12.572758+00:00"
+    },
+    {
+      "run_id": "tep-outer32003-seed7-ts2vec",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 7,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32003\\seed_7\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T11:13:43.539212+00:00"
+    },
+    {
+      "run_id": "tep-outer32003-seed7-autotcl",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 7,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32003\\seed_7\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T11:17:11.775265+00:00"
+    },
+    {
+      "run_id": "tep-outer32003-seed42-tf_c",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 42,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32003\\seed_42\\TF-C\\result.json",
+      "completed_at": "2026-08-27T11:17:36.044608+00:00"
+    },
+    {
+      "run_id": "tep-outer32003-seed42-softclt",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 42,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32003\\seed_42\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T11:21:00.875391+00:00"
+    },
+    {
+      "run_id": "tep-outer32003-seed42-ts2vec",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 42,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32003\\seed_42\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T12:07:55.041774+00:00"
+    },
+    {
+      "run_id": "tep-outer32003-seed42-autotcl",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 42,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32003\\seed_42\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T12:11:27.048148+00:00"
+    },
+    {
+      "run_id": "tep-outer32003-seed2026-tf_c",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 2026,
+      "method": "TF-C",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32003\\seed_2026\\TF-C\\result.json",
+      "completed_at": "2026-08-27T12:11:52.296462+00:00"
+    },
+    {
+      "run_id": "tep-outer32003-seed2026-softclt",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 2026,
+      "method": "SoftCLT",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32003\\seed_2026\\SoftCLT\\result.json",
+      "completed_at": "2026-08-27T12:15:18.750576+00:00"
+    },
+    {
+      "run_id": "tep-outer32003-seed2026-ts2vec",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 2026,
+      "method": "TS2Vec",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32003\\seed_2026\\TS2Vec\\result.json",
+      "completed_at": "2026-08-27T13:02:30.498990+00:00"
+    },
+    {
+      "run_id": "tep-outer32003-seed2026-autotcl",
+      "dataset": "TEP",
+      "outer_seed": 32003,
+      "model_seed": 2026,
+      "method": "AutoTCL",
+      "status": "complete",
+      "result_path": "outputs\\posthoc_recent_baselines\\benchmark\\tep\\outer_32003\\seed_2026\\AutoTCL\\result.json",
+      "completed_at": "2026-08-27T13:05:59.520741+00:00"
+    }
+  ],
+  "failures": [
+    {
+      "run_id": "tep-outer32001-seed7-autotcl",
+      "type": "FloatingPointError",
+      "message": "non-finite SupCon loss",
+      "at": "2026-08-27T05:00:49.961885+00:00"
+    },
+    {
+      "run_id": "tep-outer32001-seed7-autotcl",
+      "type": "RuntimeError",
+      "message": "resume metadata mismatch",
+      "at": "2026-08-27T05:13:52.173551+00:00"
+    }
+  ],
+  "completed_cells": 72,
+  "summary_artifacts": {
+    "raw_csv": {
+      "path": "analysis/results/posthoc_recent_baselines_raw.csv",
+      "sha256": "caffb45fc2b4c6f6dd65214d903cb858c739f529341902d37fb4823c604f3d6e"
+    },
+    "summary_csv": {
+      "path": "analysis/results/posthoc_recent_baselines_summary.csv",
+      "sha256": "838d78aa75ccfd2398a4f30539b30b9e3aeabd755ed4d4ed8d865ba0f5aea31a"
+    },
+    "bootstrap_csv": {
+      "path": "analysis/results/posthoc_recent_baselines_bootstrap.csv",
+      "sha256": "bcd67a70cbf90f78fdf9d9adeee1c4282b8ece33d245c604db5a8ed65a51f108"
+    },
+    "report": {
+      "path": "docs/posthoc_recent_baselines.md",
+      "sha256": "d7d64ade5fbc8910b02805c536ffa0aec061f747e27ebd941490b3421b4f4057"
+    }
+  }
+}
