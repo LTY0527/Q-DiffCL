@@ -1,0 +1,73 @@
+mode: posthoc_baseline_5seed_extension
+evidence_class: POSTHOC_BASELINE_5SEED_EXTENSION
+python: E:/anaconda/envs/qdiffcl/python.exe
+device: cuda
+
+h1_archive_commit: b3aee5a2ad0cdc0634d3ef67a86e49c2b37489c4
+paper_final_source_commit: 276416ff3114ab40a41cf48bbad16e9a7368732d
+selection_hash: 07d92df216fcd254cad6caf8b3688dc2a98781586c0bf49b0d35970a56614838
+h1_config: configs/posthoc_recent_baselines.yaml
+h1_manifest: analysis/results/posthoc_recent_baselines_manifest.json
+h1_raw_csv: analysis/results/posthoc_recent_baselines_raw.csv
+paper_final_config: configs/paper_final_outer.yaml
+paper_final_raw_csv: analysis/results/paper_final_outer_raw.csv
+protocol_doc: docs/posthoc_baseline_5seed_extension_protocol.md
+
+active_methods: [TF-C, SoftCLT, TS2Vec, AutoTCL]
+tracks:
+  TF-C: TRACK_B_METHOD_NATIVE_REPRESENTATION
+  SoftCLT: TRACK_A_MECHANISM_ADAPTATION
+  TS2Vec: TRACK_B_METHOD_NATIVE_REPRESENTATION
+  AutoTCL: TRACK_A_MECHANISM_ADAPTATION
+
+h1_completed_seeds:
+  3W: [42, 43, 44]
+  TEP: [7, 42, 2026]
+missing_seeds:
+  3W: [45, 46]
+  TEP: [43, 44]
+full_seeds:
+  3W: [42, 43, 44, 45, 46]
+  TEP: [7, 42, 43, 44, 2026]
+outer_splits:
+  3W: [31001, 31002, 31003]
+  TEP: [32001, 32002, 32003]
+expected_new_cells: 48
+expected_h1_reuse_cells: 72
+
+locked_hashes:
+  adapter: bbdcf0d41f8d65ac150894a03de524a4680fa5e2f986f8b3a5bc4982cd55e57d
+  h1_config: d007514cfec935c023ed6b555bea51d222bebb783eab89dbe2aca46f5900e76e
+  h1_runner: 0c2ed3fa841aabc05fceca2b5429e53ed1466c62265ddade266b5739d538a399
+  h1_manifest: 028fe1d0b9ef978113b9879e2f4fe58deed6ddf143d1e2b1ef4f6b2dec2edb8d
+  h1_raw_csv: caffb45fc2b4c6f6dd65214d903cb858c739f529341902d37fb4823c604f3d6e
+  paper_final_config: bae0c3d6a2504478aa0610d831c95bafedf8ca7e735976be405c61ffbd96a2f4
+  paper_final_raw_csv: 0a58ebef7618395461765f63ea8bb5c1b2da8262508ab57e5024e267edef7da7
+
+official_commits:
+  AutoTCL: 2ca00603734d9d339e74f42b22633df6c91c6256
+  TF-C: 96675826e9ef234a9b01cc63d484c66cb0441bc0
+  SoftCLT: 14c638979b129075d7a1111e9f529b9a275ea394
+  TS2Vec: b0088e14a99706c05451316dc6db8d3da9351163
+
+statistics:
+  bootstrap_repeats: 2000
+  bootstrap_seed: 90317
+  confidence: 0.95
+  reference_methods:
+    - FINAL_QDIFFCL
+    - NO_AUG
+    - UNIFORM_DIFFUSION
+    - FRERA
+    - JITTER
+    - SCALING
+    - JITTER_SCALING
+    - DCBR
+
+output:
+  root: outputs/posthoc_baseline_5seed_extension
+  manifest: analysis/results/posthoc_baseline_5seed_extension_manifest.json
+  raw_csv: analysis/results/posthoc_recent_baselines_5seed_raw.csv
+  summary_csv: analysis/results/posthoc_recent_baselines_5seed_summary.csv
+  bootstrap_csv: analysis/results/posthoc_recent_baselines_5seed_bootstrap.csv
+  report: docs/posthoc_recent_baselines_5seed.md
