@@ -25,6 +25,10 @@ from scripts.summarize_posthoc_recent_baselines import METRICS, load_posthoc_rec
 COMPLETE = "POSTHOC_BASELINE_5SEED_EXTENSION_COMPLETE"
 
 
+def extension_cells_complete(status: Any) -> bool:
+    return status in {CELLS_COMPLETE, COMPLETE}
+
+
 def write_csv(path: str | Path, rows: list[dict[str, Any]]) -> None:
     output = Path(path)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -43,7 +47,7 @@ def as_float(value: Any) -> float | None:
 
 def load_extension_records(config: dict[str, Any]) -> list[dict[str, Any]]:
     manifest = read_json(config["output"]["manifest"])
-    if manifest.get("status") != CELLS_COMPLETE:
+    if not extension_cells_complete(manifest.get("status")):
         raise RuntimeError(f"extension cells are not complete: {manifest.get('status')}")
     if manifest.get("protocol_hash") != canonical_hash(locked_protocol(config)):
         raise RuntimeError("extension manifest protocol hash changed")
@@ -129,7 +133,9 @@ def combined_raw_rows(
             "model_seed": int(row["model_seed"]),
             "method": row["method"],
             "track": row["track"],
-            "evidence_source": row.get("evidence_source", source_by_id[row["run_id"]]),
+            "evidence_source": (
+                row["evidence_source"] if "evidence_source" in row else source_by_id[row["run_id"]]
+            ),
             **{metric: row["metrics"].get(metric) for metric in METRICS},
             "prediction_path": row["prediction_path"],
             "prediction_sha256": row["prediction_sha256"],
@@ -320,7 +326,17 @@ def write_report(
         "- Track B remains representation-level context; the extension does not close low-data, third-dataset, or missingness-robustness gaps.",
         "",
     ]
-    Path(config["output"]["report"]).write_text("\n".join(lines), encoding="utf-8")
+    report_text = "\n".join(lines)
+    corrupted = chr(0xFFFD)
+    report_text = report_text.replace(f"Mean {corrupted} sample", "Mean ± sample")
+    report_text = report_text.replace(f"Positive {corrupted}", "Positive Δ")
+    report_text = report_text.replace(f"| {corrupted} Macro-F1", "| Δ Macro-F1")
+    report_text = report_text.replace(
+        f"two datasets {corrupted} three grouped outer splits {corrupted} five matched model seeds",
+        "two datasets × three grouped outer splits × five matched model seeds",
+    )
+    report_text = report_text.replace(f" {corrupted} ", " ± ")
+    Path(config["output"]["report"]).write_text(report_text, encoding="utf-8")
 
 
 def update_h1_report(config: dict[str, Any]) -> None:

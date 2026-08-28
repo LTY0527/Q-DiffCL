@@ -13,6 +13,7 @@
 | Early-fault score rise | 40 TEP fault-run checkpoint replay, onset alignment and bootstrap bands | `SUPPORTED ON TEP AS DEVELOPMENT EVIDENCE` |
 | Critical-ratio sensitivity | 0.20/0.30/0.40, dual-dataset 3-seed downstream results with matched-budget audit | `SUPPORTED AS DATASET-DEPENDENT SENSITIVITY; 0.30 IS A TEP LOCAL TROUGH` |
 | External automated augmentation coverage | AutoDA-Timeseries source/protocol audit | `METHOD_NATIVE_ONLY; SUPPLEMENTARY CANDIDATE` |
+| Recent time-series baseline comparison | AutoTCL, SoftCLT, TF-C, and TS2Vec over three grouped outer splits and five matched seeds; paired 2,000-resample WELL/Run bootstrap | `POST-HOC FIVE-SEED EXTENSION COMPLETE; TRACK A/B BOUNDARIES APPLY` |
 | Industrial diffusion+contrastive DiCL baseline | GitHub/scholarly-source feasibility audit | `NOT FAIRLY REPRODUCIBLE / DO NOT RANK` |
 | Limited-data robustness | grouped dry-run only | `UNSUPPORTED / DO NOT CLAIM` |
 | Missingness robustness | TEP MCAR30 only; 3W native missingness | `PARTIAL` |

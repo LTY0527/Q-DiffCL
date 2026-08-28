@@ -85,3 +85,7 @@ Positive Δ means the row method is above FINAL_QDIFFCL. Resampling uses WELL on
 - TimesURL, MF-CLR, and REBAR retain successful sanity evidence but lack formal outer results due to the predeclared non-performance cost rule.
 - AutoDA-Timeseries remains method-native supplementary only; InfoTS remains audit/fallback coverage.
 - No low-data study, third dataset, or broader missingness robustness evaluation was added in H1.
+
+## Five-seed extension
+
+The four active recent baselines were subsequently completed to the frozen Paper-final five-seed sets under `POSTHOC_BASELINE_5SEED_EXTENSION`. See `posthoc_recent_baselines_5seed.md`; the original H1 three-seed results and evidence classification remain unchanged.

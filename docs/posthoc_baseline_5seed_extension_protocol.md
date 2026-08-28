@@ -1,6 +1,6 @@
 # Recent-baseline five-seed extension protocol
 
-Status: `POSTHOC_BASELINE_5SEED_EXTENSION_PREPARED`
+Status: `POSTHOC_BASELINE_5SEED_EXTENSION_COMPLETE`
 
 Evidence class: `POSTHOC_BASELINE_5SEED_EXTENSION`.
 
@@ -52,3 +52,5 @@ Every new cell has a deterministic run ID, checkpoint/validation pair, predictio
 The complete reference extraction includes FINAL_QDIFFCL, NO_AUG, UNIFORM_DIFFUSION, FRERA, JITTER, SCALING, JITTER_SCALING, and DCBR. All four recent baselines remain in the final report regardless of whether their five-seed result is above or below Q-DiffCL.
 
 Protocol hash is stored in `analysis/results/posthoc_baseline_5seed_extension_manifest.json` and is computed only from the frozen scientific/provenance fields in the extension config.
+
+The interruption recovery and result-independent summarizer amendment are recorded in `posthoc_baseline_5seed_extension_resume_audit.md`; neither changed the frozen protocol hash or any completed cell.

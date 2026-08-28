@@ -9,6 +9,12 @@ from scripts.run_posthoc_baseline_5seed_extension import (
     locked_protocol,
     runtime_config,
 )
+from scripts.summarize_posthoc_baseline_5seed_extension import (
+    COMPLETE,
+    combined_raw_rows,
+    extension_cells_complete,
+)
+from scripts.summarize_posthoc_recent_baselines import METRICS
 
 
 def _config():
@@ -50,3 +56,30 @@ def test_extension_protocol_hash_is_canonical_and_result_independent():
     second = canonical_hash(locked_protocol(_config()))
     assert first == second and len(first) == 64
     assert "output" not in locked_protocol(config)
+
+
+def test_combined_raw_rows_accepts_frozen_paper_final_evidence_source():
+    reference = {
+        "run_id": "paper-final-reference-not-in-h1-source-map",
+        "dataset": "3W",
+        "outer_seed": 31001,
+        "model_seed": 42,
+        "method": "FINAL_QDIFFCL",
+        "track": "TRACK_A_FROZEN_PAPER_FINAL_REFERENCE",
+        "metrics": {metric: None for metric in METRICS},
+        "prediction_path": "prediction.npz",
+        "prediction_sha256": "prediction-sha256",
+        "checkpoint_sha256": "checkpoint-sha256",
+        "evidence_source": "FROZEN_PAPER_FINAL_5SEED_REUSE",
+    }
+
+    rows = combined_raw_rows([], [], [reference])
+
+    assert len(rows) == 1
+    assert rows[0]["evidence_source"] == "FROZEN_PAPER_FINAL_5SEED_REUSE"
+
+
+def test_finalized_extension_status_remains_a_complete_state():
+    assert extension_cells_complete("POSTHOC_BASELINE_5SEED_EXTENSION_CELLS_COMPLETE")
+    assert extension_cells_complete(COMPLETE)
+    assert not extension_cells_complete("POSTHOC_BASELINE_5SEED_EXTENSION_PREPARED")
