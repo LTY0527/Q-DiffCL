@@ -1,0 +1,26 @@
+{
+  "status": "PRELIMINARY_RUNTIME_ETA",
+  "estimated_at": "2026-09-03T18:06:30+08:00",
+  "basis": "first complete 3W 100% outer context after final protocol lock",
+  "observed_context": {
+    "dataset": "3W",
+    "fraction": 1.0,
+    "outer_id": 31001,
+    "wall_clock_minutes": 40
+  },
+  "completed": {
+    "formal_cells": 25,
+    "rho_candidate_cells": 15,
+    "outer_contexts": 1
+  },
+  "remaining": {
+    "formal_cells": 350,
+    "rho_candidate_cells": 210,
+    "outer_contexts": 14
+  },
+  "point_estimate_remaining_gpu_hours": 9.33,
+  "overhead_20_percent_gpu_hours": 11.2,
+  "point_estimate_finish_time": "2026-09-04T03:26:00+08:00",
+  "overhead_finish_time": "2026-09-04T05:18:00+08:00",
+  "caveat": "Preliminary upper-leaning estimate; TEP uses fewer epochs and each completed fraction will update the estimate."
+}

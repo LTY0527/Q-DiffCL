@@ -1,0 +1,15 @@
+{
+  "status": "DATA_REGIME_PROTOCOL_LOCKED",
+  "protocol_lock_commit": "5d88cb9d559ab9353df0b835e2d39f6f9966d77f",
+  "protocol_hash": "f633e84c8e3be21894e6e18d63092cf04edfd3c4728201c6d721f8d218fbb12b",
+  "fraction_manifest_hashes": {
+    "configs\\data_regime_manifests\\3w_outer_31001.json": "edff419815b75ab8d499e9a4af7140e254db0631e411538d1d1a221fbddaafe7",
+    "configs\\data_regime_manifests\\3w_outer_31002.json": "3a2eecd25444c2dc020c13e87314f707d828a8b1aba5db7da177527a1c35c7b1",
+    "configs\\data_regime_manifests\\3w_outer_31003.json": "1696cc905a2699954b89158391f3097a3db079b42c81091ee62caee05a14647b",
+    "configs\\data_regime_manifests\\tep_outer_32001.json": "90e0ef7f4a57bbacc59470fa93b9f4019d5861e4d722013557c444cedcb8e9b7",
+    "configs\\data_regime_manifests\\tep_outer_32002.json": "246d9c97963c2f36330a7ea3152f4e3ff342ef9dc2e81177f6d3432d478320dd",
+    "configs\\data_regime_manifests\\tep_outer_32003.json": "d9620c4c0d0686590f94d2d34a0d6b2ec56dc19c30ce086755603b7197ce3a1c"
+  },
+  "outer_test_metrics_read": false,
+  "created_at": "2026-09-03T09:25:18.643269+00:00"
+}

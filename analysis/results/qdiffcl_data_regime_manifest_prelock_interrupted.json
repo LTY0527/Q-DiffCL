@@ -1,0 +1,3410 @@
+{
+  "status": "QDIFFCL_DATA_REGIME_V1_RESUMABLE",
+  "evidence_class": "DATA_REGIME_GENERALIZATION_V1",
+  "protocol_hash": "3c91f57534795171dea22bc938d4eeafa1c91cba1af248dfdf0829dc1952ce3f",
+  "protocol_lock": {
+    "status": "DATA_REGIME_PROTOCOL_LOCKED",
+    "protocol_lock_commit": "489bb30afc119e0b064a8cbed05e2677b0b8d8a7",
+    "protocol_hash": "3c91f57534795171dea22bc938d4eeafa1c91cba1af248dfdf0829dc1952ce3f",
+    "fraction_manifest_hashes": {
+      "configs\\data_regime_manifests\\3w_outer_31001.json": "edff419815b75ab8d499e9a4af7140e254db0631e411538d1d1a221fbddaafe7",
+      "configs\\data_regime_manifests\\3w_outer_31002.json": "3a2eecd25444c2dc020c13e87314f707d828a8b1aba5db7da177527a1c35c7b1",
+      "configs\\data_regime_manifests\\3w_outer_31003.json": "1696cc905a2699954b89158391f3097a3db079b42c81091ee62caee05a14647b",
+      "configs\\data_regime_manifests\\tep_outer_32001.json": "90e0ef7f4a57bbacc59470fa93b9f4019d5861e4d722013557c444cedcb8e9b7",
+      "configs\\data_regime_manifests\\tep_outer_32002.json": "246d9c97963c2f36330a7ea3152f4e3ff342ef9dc2e81177f6d3432d478320dd",
+      "configs\\data_regime_manifests\\tep_outer_32003.json": "d9620c4c0d0686590f94d2d34a0d6b2ec56dc19c30ce086755603b7197ce3a1c"
+    },
+    "outer_test_metrics_read": false,
+    "created_at": "2026-09-03T09:19:14.860537+00:00"
+  },
+  "accounting": {
+    "formal_cells_expected": 375,
+    "formal_cells_reused": 0,
+    "formal_cells_new": 375,
+    "rho_candidate_cells_expected": 225,
+    "rho_candidate_cells_reused": 0,
+    "rho_candidate_cells_new": 225,
+    "completed": 0,
+    "remaining": 600,
+    "duplicate_count": 0
+  },
+  "cells": [
+    {
+      "cell_id": "3w-f100-outer31001-seed42-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed43-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed44-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed45-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed46-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed42-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed43-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed44-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed45-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed46-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed42-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed43-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed44-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed45-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed46-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed42-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed43-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed44-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed45-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed46-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed42-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed43-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed44-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed45-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31001-seed46-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed42-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed43-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed44-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed45-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed46-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed42-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed43-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed44-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed45-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed46-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed42-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed43-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed44-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed45-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed46-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed42-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed43-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed44-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed45-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed46-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed42-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed43-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed44-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed45-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31002-seed46-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed42-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed43-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed44-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed45-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed46-no_aug",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed42-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed43-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed44-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed45-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed46-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed42-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed43-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed44-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed45-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed46-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed42-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed43-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed44-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed45-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed46-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed42-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed43-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed44-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed45-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f100-outer31003-seed46-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 1.0,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed42-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed43-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed44-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed45-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed46-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed42-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed43-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed44-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed45-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed46-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed42-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed43-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed44-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed45-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed46-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed42-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed43-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed44-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed45-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed46-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed42-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed43-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed44-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed45-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31001-seed46-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed42-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed43-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed44-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed45-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed46-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed42-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed43-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed44-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed45-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed46-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed42-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed43-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed44-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed45-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed46-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed42-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed43-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed44-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed45-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed46-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed42-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed43-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed44-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed45-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31002-seed46-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed42-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed43-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed44-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed45-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed46-no_aug",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed42-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed43-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed44-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed45-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed46-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed42-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed43-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed44-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed45-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed46-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed42-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed43-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed44-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed45-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed46-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed42-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed43-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed44-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed45-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f025-outer31003-seed46-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.25,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed42-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed43-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed44-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed45-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed46-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "NO_AUG",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed42-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed43-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed44-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed45-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed46-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed42-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed43-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed44-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed45-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed46-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "JITTER_SCALING",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed42-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed43-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed44-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed45-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed46-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed42-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed43-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed44-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed45-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31001-seed46-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed42-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed43-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed44-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed45-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed46-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "NO_AUG",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed42-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed43-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed44-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed45-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed46-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed42-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed43-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed44-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed45-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed46-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "JITTER_SCALING",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed42-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed43-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed44-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed45-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed46-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed42-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed43-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed44-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed45-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31002-seed46-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed42-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed43-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed44-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed45-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed46-no_aug",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "NO_AUG",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed42-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed43-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed44-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed45-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed46-uniform_diffusion",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed42-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed43-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed44-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed45-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed46-jitter_scaling",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "JITTER_SCALING",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed42-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed43-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed44-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed45-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed46-final_qdiffcl_fixed",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed42-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed43-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed44-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed45-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 45,
+      "status": "pending"
+    },
+    {
+      "cell_id": "3w-f010-outer31003-seed46-calibrated_rho",
+      "dataset": "3W",
+      "fraction": 0.1,
+      "outer_id": 31003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 46,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed7-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "NO_AUG",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed42-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed43-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed44-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed2026-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "NO_AUG",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed7-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed42-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed43-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed44-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed2026-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed7-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "JITTER_SCALING",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed42-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed43-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed44-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed2026-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "JITTER_SCALING",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed7-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed42-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed43-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed44-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed2026-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed7-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed42-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed43-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed44-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32001-seed2026-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed7-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "NO_AUG",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed42-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed43-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed44-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed2026-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "NO_AUG",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed7-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed42-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed43-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed44-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed2026-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed7-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "JITTER_SCALING",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed42-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed43-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed44-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed2026-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "JITTER_SCALING",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed7-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed42-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed43-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed44-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed2026-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed7-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed42-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed43-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed44-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32002-seed2026-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed7-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "NO_AUG",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed42-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed43-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed44-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed2026-no_aug",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "NO_AUG",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed7-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed42-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed43-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed44-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed2026-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed7-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "JITTER_SCALING",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed42-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed43-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed44-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed2026-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "JITTER_SCALING",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed7-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed42-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed43-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed44-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed2026-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed7-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed42-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed43-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed44-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f100-outer32003-seed2026-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "outer_id": 32003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed7-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "NO_AUG",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed42-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed43-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed44-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed2026-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "NO_AUG",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed7-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed42-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed43-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed44-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed2026-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed7-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "JITTER_SCALING",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed42-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed43-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed44-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed2026-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "JITTER_SCALING",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed7-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed42-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed43-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed44-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed2026-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed7-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed42-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed43-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed44-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32001-seed2026-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32001,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed7-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "NO_AUG",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed42-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed43-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed44-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed2026-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "NO_AUG",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed7-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed42-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed43-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed44-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed2026-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed7-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "JITTER_SCALING",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed42-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed43-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed44-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed2026-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "JITTER_SCALING",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed7-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed42-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed43-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed44-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed2026-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed7-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed42-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed43-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed44-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32002-seed2026-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32002,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed7-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "NO_AUG",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed42-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "NO_AUG",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed43-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "NO_AUG",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed44-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "NO_AUG",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed2026-no_aug",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "NO_AUG",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed7-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed42-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed43-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed44-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed2026-uniform_diffusion",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "UNIFORM_DIFFUSION",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed7-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "JITTER_SCALING",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed42-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "JITTER_SCALING",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed43-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "JITTER_SCALING",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed44-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "JITTER_SCALING",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed2026-jitter_scaling",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "JITTER_SCALING",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed7-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed42-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed43-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed44-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed2026-final_qdiffcl_fixed",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "model_seed": 2026,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed7-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 7,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed42-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 42,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed43-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 43,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed44-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 44,
+      "status": "pending"
+    },
+    {
+      "cell_id": "tep-f025-outer32003-seed2026-calibrated_rho",
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "outer_id": 32003,
+      "method": "CALIBRATED_RHO",
+      "model_seed": 2026,
+      "status": "pending"
+    }
+  ],
+  "failures": [],
+  "created_at": "2026-09-03T09:20:29.815301+00:00"
+}

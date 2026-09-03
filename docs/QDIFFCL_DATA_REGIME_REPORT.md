@@ -1,5 +1,27 @@
 # Q-DiffCL Data-Regime Report
 
-Status: `DATA_REGIME_SANITY_GO_AWAITING_PROTOCOL_LOCK`.
+Status: `QDIFFCL_DATA_REGIME_V1_RESUMABLE`.
 
-Formal results are intentionally absent until smoke, audit, tests, and the protocol-lock commit all pass. This file will be populated from locked artifacts without changing the registered protocol.
+TEP 10% is excluded from the primary D+E matrix by the preregistered E-identifiability hold.
+
+## Macro-F1 split-first summary
+
+| Dataset | Fraction | Method | Mean | SD | Cells |
+|---|---:|---|---:|---:|---:|
+| 3W | 0.10 | CALIBRATED_RHO | 0.367732 | 0.05293219239992011 | 15 |
+| 3W | 0.10 | FINAL_QDIFFCL_FIXED | 0.369540 | 0.05277482978738221 | 15 |
+| 3W | 0.10 | JITTER_SCALING | 0.357361 | 0.09049613385162311 | 15 |
+| 3W | 0.10 | NO_AUG | 0.381413 | 0.061383091253704 | 15 |
+| 3W | 0.10 | UNIFORM_DIFFUSION | 0.372294 | 0.049217948844572874 | 15 |
+| 3W | 0.25 | CALIBRATED_RHO | 0.369744 | 0.10993925091141396 | 15 |
+| 3W | 0.25 | FINAL_QDIFFCL_FIXED | 0.370121 | 0.13238720659296244 | 15 |
+| 3W | 0.25 | JITTER_SCALING | 0.367138 | 0.13985702899349403 | 15 |
+| 3W | 0.25 | NO_AUG | 0.364369 | 0.1254129461283505 | 15 |
+| 3W | 0.25 | UNIFORM_DIFFUSION | 0.376176 | 0.08665421541191111 | 15 |
+| 3W | 1.00 | CALIBRATED_RHO | 0.322101 | 0.045347589885939905 | 15 |
+| 3W | 1.00 | FINAL_QDIFFCL_FIXED | 0.293659 | 0.0895177355821653 | 15 |
+| 3W | 1.00 | JITTER_SCALING | 0.343001 | 0.028485610381448506 | 15 |
+| 3W | 1.00 | NO_AUG | 0.324148 | 0.05358904986593256 | 15 |
+| 3W | 1.00 | UNIFORM_DIFFUSION | 0.313388 | 0.12809546705840655 | 15 |
+
+Paired contrasts, group-aware CIs, scarcity DoD, direction consistency, and worst-cell fields are stored in the registered analysis CSV files.

@@ -1,5 +1,16 @@
 # Q-DiffCL Data-Regime Rho Curve
 
-Status: `AWAITING_VALIDATION_ONLY_SELECTION`.
+All rho values below were selected from validation only.
 
-Historical global DCBR rho values (3W 1.00; TEP 0.75) are lineage references. Formal entries here will be the outer-specific `DATA_REGIME_RHO_STAR` values selected from the frozen grid using validation only.
+| Dataset | Fraction | Outer | rho* | Val Macro-F1 | Val AUPRC | Val FAR |
+|---|---:|---:|---:|---:|---:|---:|
+| 3W | 0.10 | 31001 | 1.00 | 0.646776 | 0.946015 | 0.207333 |
+| 3W | 0.10 | 31002 | 1.00 | 0.346855 | 0.761171 | 0.761333 |
+| 3W | 0.10 | 31003 | 0.00 | 0.849711 | 0.985142 | 0.107167 |
+| 3W | 0.25 | 31001 | 0.00 | 0.666912 | 0.913047 | 0.264500 |
+| 3W | 0.25 | 31002 | 0.75 | 0.290257 | 0.647239 | 0.840167 |
+| 3W | 0.25 | 31003 | 0.75 | 0.847734 | 0.970740 | 0.176167 |
+| 3W | 1.00 | 31001 | 0.00 | 0.709779 | 0.918761 | 0.247500 |
+| 3W | 1.00 | 31002 | 0.75 | 0.278721 | 0.664914 | 0.826000 |
+| 3W | 1.00 | 31003 | 1.00 | 0.851350 | 0.926635 | 0.114833 |
+| TEP | 1.00 | 32001 | 0.50 | 0.925485 | 0.982242 | 0.054764 |
