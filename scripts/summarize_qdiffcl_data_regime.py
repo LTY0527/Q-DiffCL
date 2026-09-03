@@ -113,6 +113,16 @@ def cluster_bootstrap_ci(rows: list[dict[str, Any]], repeats: int, seed: int) ->
     return float(low), float(high)
 
 
+def cluster_point_estimate(rows: list[dict[str, Any]]) -> float | None:
+    """Match the outer-first, group-level estimand used by cluster_bootstrap_ci."""
+    if not rows:
+        return None
+    by_outer: dict[int, list[float]] = defaultdict(list)
+    for row in rows:
+        by_outer[int(row["outer_id"])].append(float(row["delta"]))
+    return float(np.mean([np.mean(values) for values in by_outer.values()]))
+
+
 def paired_summary(records: list[dict[str, Any]], repeats: int, seed: int) -> list[dict[str, Any]]:
     indexed = {(row["dataset"], float(row["fraction"]), int(row["outer_id"]), int(row["model_seed"]), row["method"]): row for row in records}
     output = []
@@ -130,10 +140,15 @@ def paired_summary(records: list[dict[str, Any]], repeats: int, seed: int) -> li
                     continue
                 group_rows = [row for row in _group_delta_rows(records, left, right, fraction) if row["dataset"] == dataset]
                 low, high = cluster_bootstrap_ci(group_rows, repeats, seed)
+                group_point = cluster_point_estimate(group_rows)
                 worst = min(cells)
                 output.append({
                     "dataset": dataset, "fraction": fraction, "contrast": f"{left} - {right}",
-                    "paired_delta": float(np.mean([item[0] for item in cells])), "ci_low": low, "ci_high": high,
+                    "paired_delta": float(np.mean([item[0] for item in cells])),
+                    "paired_delta_estimand": "outer-test aggregate Macro-F1; mean of paired outer/seed cells",
+                    "group_macro_f1_delta": group_point,
+                    "group_bootstrap_ci_low": low, "group_bootstrap_ci_high": high,
+                    "group_bootstrap_estimand": "outer-first mean of per-group Macro-F1 deltas",
                     "positive_cells": sum(item[0] > 0 for item in cells), "non_worse_cells": sum(item[0] >= 0 for item in cells),
                     "cell_count": len(cells), "worst_delta": worst[0], "worst_outer": worst[1], "worst_seed": worst[2],
                 })
@@ -162,10 +177,15 @@ def scarcity_dod(records: list[dict[str, Any]], repeats: int, seed: int) -> list
                 group_dod = [{**row, "delta": row["delta"] - full_map[(dataset, row["outer_id"], row["model_seed"], row["group_id"])]}
                              for row in group_low if row["dataset"] == dataset and (dataset, row["outer_id"], row["model_seed"], row["group_id"]) in full_map]
                 low_ci, high_ci = cluster_bootstrap_ci(group_dod, repeats, seed)
+                group_point = cluster_point_estimate(group_dod)
                 outer_direction = sum(np.mean([row["delta"] for row in cells if row["outer_id"] == outer]) > 0 for outer in {row["outer_id"] for row in cells})
                 output.append({
                     "dataset": dataset, "fraction": fraction, "contrast": f"{left} - {right}",
-                    "scarcity_dod": float(np.mean([row["delta"] for row in cells])), "ci_low": low_ci, "ci_high": high_ci,
+                    "scarcity_dod": float(np.mean([row["delta"] for row in cells])),
+                    "scarcity_dod_estimand": "difference of paired outer-test aggregate Macro-F1 deltas",
+                    "group_macro_f1_dod": group_point,
+                    "group_bootstrap_ci_low": low_ci, "group_bootstrap_ci_high": high_ci,
+                    "group_bootstrap_estimand": "outer-first mean of per-group Macro-F1 difference-of-differences",
                     "same_direction_outers": outer_direction, "total_outers": len({row["outer_id"] for row in cells}),
                     "same_direction_paired_cells": sum(row["delta"] > 0 for row in cells), "total_paired_cells": len(cells),
                     "paired_direction_win_rate": float(np.mean([row["delta"] > 0 for row in cells])),

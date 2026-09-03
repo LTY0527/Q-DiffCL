@@ -13,7 +13,7 @@ from scripts.run_qdiffcl_data_regime import (
     FORMAL_METHODS, accounting, choose_rho, legal_dataset_fractions, load_config,
     load_fraction_manifest, reuse_compatible,
 )
-from scripts.summarize_qdiffcl_data_regime import cluster_bootstrap_ci, split_first_summary
+from scripts.summarize_qdiffcl_data_regime import cluster_bootstrap_ci, cluster_point_estimate, split_first_summary
 
 
 CONFIG_PATH = Path("configs/qdiffcl_data_regime_v1.yaml")
@@ -218,6 +218,15 @@ def test_group_bootstrap_uses_outer_and_group_units():
     rows = [{"outer_id": outer, "group_id": group, "delta": 1.0}
             for outer in (1, 2, 3) for group in ("a", "b")]
     assert cluster_bootstrap_ci(rows, 50, 7) == (1.0, 1.0)
+
+
+def test_group_bootstrap_point_estimate_matches_its_reported_estimand():
+    rows = [
+        {"outer_id": 1, "group_id": "a", "delta": 0.0},
+        {"outer_id": 1, "group_id": "b", "delta": 2.0},
+        {"outer_id": 2, "group_id": "c", "delta": 10.0},
+    ]
+    assert cluster_point_estimate(rows) == pytest.approx(5.5)
 
 
 def test_rho_training_writes_heartbeat_before_candidate():
