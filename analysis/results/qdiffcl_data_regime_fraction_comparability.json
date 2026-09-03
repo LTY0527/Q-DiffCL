@@ -1,0 +1,138 @@
+{
+  "status": "FRACTION_COMPARABILITY_AUDITED",
+  "nested_checks": [
+    {
+      "dataset": "3W",
+      "outer_id": 31001,
+      "ten_in_quarter": true,
+      "quarter_in_full": true,
+      "ten_count": 23,
+      "quarter_count": 58,
+      "full_count": 234
+    },
+    {
+      "dataset": "3W",
+      "outer_id": 31002,
+      "ten_in_quarter": true,
+      "quarter_in_full": true,
+      "ten_count": 41,
+      "quarter_count": 103,
+      "full_count": 413
+    },
+    {
+      "dataset": "3W",
+      "outer_id": 31003,
+      "ten_in_quarter": true,
+      "quarter_in_full": true,
+      "ten_count": 58,
+      "quarter_count": 146,
+      "full_count": 582
+    },
+    {
+      "dataset": "TEP",
+      "outer_id": 32001,
+      "ten_in_quarter": true,
+      "quarter_in_full": true,
+      "ten_count": 25,
+      "quarter_count": 62,
+      "full_count": 248
+    },
+    {
+      "dataset": "TEP",
+      "outer_id": 32002,
+      "ten_in_quarter": true,
+      "quarter_in_full": true,
+      "ten_count": 25,
+      "quarter_count": 62,
+      "full_count": 248
+    },
+    {
+      "dataset": "TEP",
+      "outer_id": 32003,
+      "ten_in_quarter": true,
+      "quarter_in_full": true,
+      "ten_count": 25,
+      "quarter_count": 62,
+      "full_count": 248
+    }
+  ],
+  "all_nested": true,
+  "composition_rows": 225,
+  "group_rows": 391,
+  "no_aug_per_class_rows": 180,
+  "no_aug_per_class_summary": [
+    {
+      "fraction": 0.1,
+      "original_class": 0,
+      "mean_no_aug_f1": 0.5629402431703632,
+      "cells": 15
+    },
+    {
+      "fraction": 0.1,
+      "original_class": 2,
+      "mean_no_aug_f1": 0.2822658975040389,
+      "cells": 15
+    },
+    {
+      "fraction": 0.1,
+      "original_class": 8,
+      "mean_no_aug_f1": 0.5624750407301249,
+      "cells": 15
+    },
+    {
+      "fraction": 0.1,
+      "original_class": 9,
+      "mean_no_aug_f1": 0.11797073332551158,
+      "cells": 15
+    },
+    {
+      "fraction": 0.25,
+      "original_class": 0,
+      "mean_no_aug_f1": 0.4343778010008295,
+      "cells": 15
+    },
+    {
+      "fraction": 0.25,
+      "original_class": 2,
+      "mean_no_aug_f1": 0.29243988893258277,
+      "cells": 15
+    },
+    {
+      "fraction": 0.25,
+      "original_class": 8,
+      "mean_no_aug_f1": 0.5822743694158634,
+      "cells": 15
+    },
+    {
+      "fraction": 0.25,
+      "original_class": 9,
+      "mean_no_aug_f1": 0.14838554168137483,
+      "cells": 15
+    },
+    {
+      "fraction": 1.0,
+      "original_class": 0,
+      "mean_no_aug_f1": 0.4605039820699736,
+      "cells": 15
+    },
+    {
+      "fraction": 1.0,
+      "original_class": 2,
+      "mean_no_aug_f1": 0.1284552250813272,
+      "cells": 15
+    },
+    {
+      "fraction": 1.0,
+      "original_class": 8,
+      "mean_no_aug_f1": 0.5411860435662575,
+      "cells": 15
+    },
+    {
+      "fraction": 1.0,
+      "original_class": 9,
+      "mean_no_aug_f1": 0.1664458413840136,
+      "cells": 15
+    }
+  ],
+  "interpretation": "source-unit diversity regime; fixed window caps mean this is not proportional window-count subsampling"
+}
