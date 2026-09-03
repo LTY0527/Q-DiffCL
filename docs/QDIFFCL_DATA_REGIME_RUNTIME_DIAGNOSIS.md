@@ -2,7 +2,7 @@
 
 Status: `PROCESS_EXITED_FAILURE`; artifacts remain resumable.
 
-- Audit time: `2026-09-03T20:22:44.662910+00:00`
+- Audit time: `2026-09-03T20:25:02.769511+00:00`
 - Historical PID 45408 exists: `false`
 - Runner command: `E:\anaconda\envs\qdiffcl\python.exe -u -m scripts.run_qdiffcl_data_regime --stage all --device cuda`
 - CPU state: process exited
@@ -22,7 +22,7 @@ Status: `PROCESS_EXITED_FAILURE`; artifacts remain resumable.
 - KeyboardInterrupt/external termination: `no evidence`
 - Test-read guard violation: `no`
 - Manifest/hash failure: `no`
-- Failure count: `2`
+- Failure count: `3`
 
 - Remaining: `150` formal cells and `75` rho candidates
 - Remaining GPU time: `UNAVAILABLE` until the host-RAM loader failure is resolved; the preliminary ETA file predates current progress and is stale

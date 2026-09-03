@@ -1,6 +1,6 @@
 {
-  "timestamp": "2026-09-03T20:19:54.647363+00:00",
-  "runner_pid": 57204,
+  "timestamp": "2026-09-03T20:23:25.595934+00:00",
+  "runner_pid": 67592,
   "runner_exit_code": 1,
   "dataset": "TEP",
   "fraction": 1.0,
@@ -12,13 +12,13 @@
   "formal_expected": 375,
   "session_new_rho": 0,
   "session_new_formal": 0,
-  "failures": 2,
+  "failures": 3,
   "duplicates": 0,
   "gpu_util": "0",
   "gpu_memory_mb": "409",
-  "host_ram_available_mb": 5338,
+  "host_ram_available_mb": 5049,
   "last_artifact": "outputs\\qdiffcl_data_regime_v1\\TEP_MEMORY_REPAIR_SMOKE\\tep\\f025\\outer_32001\\_context\\audit.json",
   "last_artifact_mtime": "2026-09-03T20:11:47.493057+00:00",
-  "last_commit": "7ac2443cbf5bc08fbab8bd034b534cee15218209",
+  "last_commit": "a65b02e52241869353c0b8a496c66c01a45a6e2b",
   "next_action": "stop and diagnose failure"
 }

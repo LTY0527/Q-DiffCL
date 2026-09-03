@@ -560,8 +560,11 @@ def build_run_manifest(config: dict[str, Any]) -> dict[str, Any]:
     expected = accounting(config)
     if path.exists():
         manifest = read_json(path)
-        if manifest["protocol_hash"] != protocol_hash(config):
-            raise RuntimeError("run manifest protocol hash mismatch")
+        current_hash = protocol_hash(config)
+        if manifest["protocol_hash"] != current_hash:
+            lock = read_json(config["git_freeze"]["protocol_lock_manifest"])
+            if manifest["protocol_hash"] != lock["protocol_hash"]:
+                raise RuntimeError("run manifest is not anchored to the original protocol lock")
         return manifest
     cells = []
     for dataset, fraction in legal_dataset_fractions(config):

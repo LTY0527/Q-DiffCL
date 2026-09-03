@@ -8,7 +8,7 @@ The runner is stopped. No training was resumed during this audit.
 
 - Formal: 225 valid / 375 expected; 150 remaining.
 - Rho candidates: 150 valid / 225 expected; 75 remaining.
-- Invalid: formal 0, rho 0; duplicates 0; runner failures 2.
+- Invalid: formal 0, rho 0; duplicates 0; runner failures 3.
 
 ## Dataset and fraction completion
 

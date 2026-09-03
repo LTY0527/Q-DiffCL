@@ -175,6 +175,12 @@ def test_resume_skip_completed():
     assert "completed result hash mismatch" in source
 
 
+def test_runtime_amendment_keeps_existing_manifest_anchored_to_original_lock():
+    source = inspect.getsource(__import__("scripts.run_qdiffcl_data_regime", fromlist=["build_run_manifest"]).build_run_manifest)
+    assert 'manifest["protocol_hash"] != lock["protocol_hash"]' in source
+    assert "run manifest is not anchored to the original protocol lock" in source
+
+
 def test_manifest_hash_validation():
     for path in manifests():
         value = json.loads(path.read_text(encoding="utf-8")); claimed = value.pop("sha256")

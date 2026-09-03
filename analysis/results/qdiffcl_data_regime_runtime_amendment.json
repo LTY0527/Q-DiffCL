@@ -6,15 +6,15 @@
   "parent_stage_archive": "d33695b22fa88865e4ba16d3c3c06df53176003c",
   "reason": "host RAM safety only: remove pandas full-table consolidation, prefilter frozen Run limits, and reuse one prepared context",
   "pre_fix_hash": "1249e073a7e08859fa16d942630310aca6a78532c2f5d7d02565df217f9b7f02",
-  "post_fix_hash": "4f255ffd58f614a4bf77af7fd33d784aaa3c3bbd701f254239af4beb48376b69",
-  "post_protocol_hash": "5e446f477dc79fc2a93d67ee7c07410869cc76761a90a3b56c5592bb106bccea",
+  "post_fix_hash": "6fd20d45b7906e312cf54b1f68ff6f031263304c83ff3def712b03671fb94141",
+  "post_protocol_hash": "974c9183f7e77fad65df8014235d729c04f02984a1ddf569766d2cb95c4eade0",
   "pre_fix_files": {
     "datasets/tep.py": "3399df15437cc2871adb8c585cddb4c183d80b6d206d8543be4dca47871ae0f7",
     "scripts/run_qdiffcl_data_regime.py": "34aa5edee1955e6600d4190b922a6e2849ca04620a255f582d2228788d1d0c59"
   },
   "post_fix_files": {
     "datasets/tep.py": "22770087c8bcb0046c0001df276733b4a804e57d9fbe6269f9e6ecb87de85ce2",
-    "scripts/run_qdiffcl_data_regime.py": "ac041fa02565f259968e40f798f6731d7366e37514360f7355c1783eaa43b844"
+    "scripts/run_qdiffcl_data_regime.py": "917300d27d689b0d9220e08f63a8fd0c75ea3e064d0d61feb7b506b45b14a28a"
   },
   "scientific_config_sha256_before": "9d781a80a08c1c0fa15db2b597f83adcab5a15dae8bd3e51a7e97a1c13b1f92f",
   "scientific_config_sha256_after": "9d781a80a08c1c0fa15db2b597f83adcab5a15dae8bd3e51a7e97a1c13b1f92f",
