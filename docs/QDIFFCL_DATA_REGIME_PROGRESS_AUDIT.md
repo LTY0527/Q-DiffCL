@@ -8,7 +8,7 @@ The runner is stopped. No training was resumed during this audit.
 
 - Formal: 225 valid / 375 expected; 150 remaining.
 - Rho candidates: 150 valid / 225 expected; 75 remaining.
-- Invalid: formal 0, rho 0; duplicates 0; runner failures 1.
+- Invalid: formal 0, rho 0; duplicates 0; runner failures 2.
 
 ## Dataset and fraction completion
 
@@ -83,7 +83,7 @@ These are stage results, not paper-final cross-dataset claims. TEP locked-test c
 
 ## Local artifact archive
 
-- `outputs\qdiffcl_data_regime_v1` contains 1351 files (351605314 bytes); it remains local and Git-ignored.
+- `outputs\qdiffcl_data_regime_v1` contains 1355 files (351703737 bytes); it remains local and Git-ignored.
 - Files larger than 50 MiB: 0. Checkpoint, prediction, and result hashes are recorded per completed cell in `analysis/results/qdiffcl_data_regime_progress_audit.csv`.
 - No local training artifact was deleted or staged for Git.
 

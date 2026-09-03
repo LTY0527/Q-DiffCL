@@ -2,11 +2,11 @@
 
 Status: `PROCESS_EXITED_FAILURE`; artifacts remain resumable.
 
-- Audit time: `2026-09-03T19:21:35.241004+00:00`
+- Audit time: `2026-09-03T20:22:44.662910+00:00`
 - Historical PID 45408 exists: `false`
 - Runner command: `E:\anaconda\envs\qdiffcl\python.exe -u -m scripts.run_qdiffcl_data_regime --stage all --device cuda`
 - CPU state: process exited
-- GPU current: `NVIDIA GeForce RTX 4060 Laptop GPU, 0 %, 341 MiB, 8188 MiB, 55`
+- GPU current: `NVIDIA GeForce RTX 4060 Laptop GPU, 0 %, 409 MiB, 8188 MiB, 53`
 - Runtime status timestamp: `2026-09-03T16:17:17.067661+00:00`
 - Stdout mtime UTC: `2026-09-03T09:26:07.604392+00:00`
 - Stderr mtime UTC: `2026-09-03T16:26:07.196388+00:00`
@@ -22,7 +22,7 @@ Status: `PROCESS_EXITED_FAILURE`; artifacts remain resumable.
 - KeyboardInterrupt/external termination: `no evidence`
 - Test-read guard violation: `no`
 - Manifest/hash failure: `no`
-- Failure count: `1`
+- Failure count: `2`
 
 - Remaining: `150` formal cells and `75` rho candidates
 - Remaining GPU time: `UNAVAILABLE` until the host-RAM loader failure is resolved; the preliminary ETA file predates current progress and is stale

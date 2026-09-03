@@ -140,8 +140,23 @@ def validate_protocol(config: dict[str, Any], require_lock: bool) -> dict[str, A
         if not lock_path.exists():
             raise RuntimeError("DATA_REGIME_PROTOCOL_LOCK_HOLD: lock manifest missing")
         lock = read_json(lock_path)
-        if lock["protocol_hash"] != protocol_hash(config):
-            raise RuntimeError("DATA_REGIME_PROTOCOL_LOCK_HOLD: protocol hash changed")
+        observed_protocol_hash = protocol_hash(config)
+        if lock["protocol_hash"] != observed_protocol_hash:
+            amendment_path = Path("analysis/results/qdiffcl_data_regime_runtime_amendment.json")
+            amendment = read_json(amendment_path) if amendment_path.exists() else {}
+            post_files = amendment.get("post_fix_files", {})
+            amendment_checks = {
+                "classification": amendment.get("classification") == "NUMERICALLY_EQUIVALENT_RUNTIME_AMENDMENT",
+                "parent_lock": amendment.get("parent_protocol_lock") == lock["protocol_lock_commit"],
+                "post_protocol_hash": amendment.get("post_protocol_hash") == observed_protocol_hash,
+                "config": amendment.get("scientific_config_sha256_after") == sha256_file(config["_config_path"]),
+                "tep_loader": post_files.get("datasets/tep.py") == sha256_file("datasets/tep.py"),
+                "runner": post_files.get("scripts/run_qdiffcl_data_regime.py") == sha256_file(__file__),
+                "equivalence": amendment.get("equivalence_evidence", {}).get("status") == "TEP_MEMORY_SAFE_LOADER_EQUIVALENCE_GO",
+                "test_blind": amendment.get("test_metrics_used_to_choose_repair") is False,
+            }
+            if not all(amendment_checks.values()):
+                raise RuntimeError(f"DATA_REGIME_PROTOCOL_LOCK_HOLD: runtime amendment invalid: {amendment_checks}")
         ancestor = subprocess.run(
             ["git", "merge-base", "--is-ancestor", lock["protocol_lock_commit"], "HEAD"], check=False,
         ).returncode == 0

@@ -314,6 +314,7 @@ def audit(config_path: str | Path) -> dict[str, Any]:
     duplicate_count = len(identifiers) - len(set(identifiers))
     formal = [row for row in rows if row["stage"] == "formal_locked_test"]
     candidates = [row for row in rows if row["stage"] == "rho_validation_candidate"]
+    failure_ledger = _read(Path("analysis/results/qdiffcl_data_regime_supervisor_failures.json")) if Path("analysis/results/qdiffcl_data_regime_supervisor_failures.json").exists() else {"failures": [{}]}
     accounting = {
         "formal_cells_expected": len(formal), "formal_cells_reused": 0, "formal_cells_new": len(formal),
         "formal_cells_completed": sum(row["status"] != "PENDING" for row in formal),
@@ -325,7 +326,7 @@ def audit(config_path: str | Path) -> dict[str, Any]:
         "rho_candidate_cells_valid": sum(row["status"] == "COMPLETE_VALID" for row in candidates),
         "rho_candidate_cells_invalid": sum(row["status"] == "UNVERIFIED" for row in candidates),
         "rho_candidate_cells_remaining": sum(row["status"] == "PENDING" for row in candidates),
-        "duplicate_count": duplicate_count, "failure_count": 1,
+        "duplicate_count": duplicate_count, "failure_count": len(failure_ledger.get("failures", [])),
     }
     selections = []
     for path in sorted(formal_root.glob("*/f*/outer_*/rho_selection.json")):

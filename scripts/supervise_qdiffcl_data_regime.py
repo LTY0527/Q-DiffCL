@@ -16,6 +16,7 @@ from scripts.run_qdiffcl_data_regime import fraction_token, load_config
 
 
 STATUS_PATH = Path("analysis/results/qdiffcl_data_regime_supervisor_status.json")
+FAILURE_PATH = Path("analysis/results/qdiffcl_data_regime_supervisor_failures.json")
 LOG_PATH = Path("analysis/logs/data_regime/supervisor_night.log")
 
 
@@ -83,8 +84,7 @@ def heartbeat(config: dict[str, Any], process: subprocess.Popen, args: argparse.
     runtime = _read(Path(config["output"]["runtime_status"]), {})
     formal = _formal_completed(config); rho = _rho_completed(config)
     gpu_util, gpu_memory = _gpu(); memory = memory_snapshot(); artifact, artifact_time = _last_artifact(config)
-    previous = _read(Path("analysis/results/qdiffcl_data_regime_progress_accounting.json"), {})
-    historical_failures = int(previous.get("failure_count", 0))
+    failures = _read(FAILURE_PATH, {"failures": []}).get("failures", [])
     payload = {
         "timestamp": _now(), "runner_pid": process.pid, "runner_exit_code": exit_code,
         "dataset": args.dataset, "fraction": args.fraction, "outer": args.outer_id,
@@ -92,7 +92,7 @@ def heartbeat(config: dict[str, Any], process: subprocess.Popen, args: argparse.
         "rho_completed": rho, "rho_expected": 225,
         "formal_completed": formal, "formal_expected": 375,
         "session_new_rho": rho - start_rho, "session_new_formal": formal - start_formal,
-        "failures": historical_failures + int(exit_code not in (None, 0)), "duplicates": 0,
+        "failures": len(failures), "duplicates": 0,
         "gpu_util": gpu_util, "gpu_memory_mb": gpu_memory,
         "host_ram_available_mb": memory["system_available_mb"],
         "last_artifact": artifact, "last_artifact_mtime": artifact_time,
@@ -105,6 +105,16 @@ def heartbeat(config: dict[str, Any], process: subprocess.Popen, args: argparse.
         handle.write(json.dumps(payload, ensure_ascii=False) + "\n")
     print(json.dumps(payload, ensure_ascii=False), flush=True)
     return payload
+
+
+def record_failure(process: subprocess.Popen, args: argparse.Namespace, exit_code: int) -> None:
+    ledger = _read(FAILURE_PATH, {"status": "DATA_REGIME_FAILURE_LEDGER", "failures": []})
+    ledger["failures"].append({
+        "timestamp": _now(), "runner_pid": process.pid, "exit_code": exit_code,
+        "dataset": args.dataset, "fraction": args.fraction, "outer": args.outer_id,
+        "stage": args.stage, "classification": "SUPERVISED_RUNNER_FAILURE",
+    })
+    atomic_json(FAILURE_PATH, ledger)
 
 
 def main() -> None:
@@ -131,6 +141,8 @@ def main() -> None:
             break
         except subprocess.TimeoutExpired:
             heartbeat(config, process, args, start_formal, start_rho)
+    if exit_code != 0:
+        record_failure(process, args, exit_code)
     heartbeat(config, process, args, start_formal, start_rho, exit_code)
     raise SystemExit(exit_code)
 

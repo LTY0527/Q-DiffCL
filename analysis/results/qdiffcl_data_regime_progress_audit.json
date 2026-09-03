@@ -16,7 +16,7 @@
     "rho_candidate_cells_invalid": 0,
     "rho_candidate_cells_remaining": 75,
     "duplicate_count": 0,
-    "failure_count": 1
+    "failure_count": 2
   },
   "mean_rows": [
     {
@@ -454,5 +454,5 @@
       "test_used_for_selection": false
     }
   ],
-  "audit_time": "2026-09-03T19:21:35.243007+00:00"
+  "audit_time": "2026-09-03T20:22:44.663911+00:00"
 }
