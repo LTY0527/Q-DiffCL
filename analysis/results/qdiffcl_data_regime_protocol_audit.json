@@ -1,0 +1,36 @@
+{
+  "status": "DATA_REGIME_SANITY_GO",
+  "checks": {
+    "lineage": {
+      "final_frozen": true,
+      "weights": true,
+      "seeds_3w": true,
+      "seeds_tep": true,
+      "rho_grid": true,
+      "dcbr_validation_only": true,
+      "outer_metrics_present_in_frozen_source": false
+    },
+    "core_smoke": true,
+    "rho_smoke": true,
+    "rho_smoke_namespace": true,
+    "rho_smoke_two_candidates": true,
+    "formal_rho_grid_restored": true,
+    "pytest": "318 passed in 102.53s",
+    "git_diff_check": true,
+    "cuda_available": true,
+    "outer_test_metrics_read": false
+  },
+  "formal_cell_accounting": {
+    "expected": 375,
+    "reused": 0,
+    "new": 375
+  },
+  "rho_candidate_accounting": {
+    "expected": 225,
+    "reused": 0,
+    "new": 225
+  },
+  "held_dataset_fractions": [
+    "TEP:0.10"
+  ]
+}

@@ -1,0 +1,110 @@
+mode: QDIFFCL_DATA_REGIME_V1
+evidence_class: DATA_REGIME_GENERALIZATION_V1
+frozen: true
+python: E:/anaconda/envs/qdiffcl/python.exe
+base_branch: exp/posthoc-baseline-expansion
+base_commit: ea7909987998a865b7cfdf9467465e8c13ea288c
+git_freeze:
+  branch: exp/qdiffcl-data-regime
+  protocol_lock_message: 锁定Q-DiffCL数据稀缺矩阵与预算校准协议
+  protocol_lock_manifest: analysis/results/qdiffcl_data_regime_protocol_lock.json
+  provenance_compatible_config_hashes: []
+
+lineage:
+  final_config: configs/qdiffcl_final.yaml
+  final_5seed_config: configs/qdiffcl_final_5seed.yaml
+  dcbr_config: configs/domain_calibrated_budget_routing.yaml
+  dcbr_final_config: configs/domain_calibrated_budget_routing_final.yaml
+  paper_final_config: configs/paper_final_outer.yaml
+  outer_manifest_source: E:/Code/Q-DiffCL/outputs/paper_final_protocol/dry_run_manifest.json
+  paper_final_result_source: E:/Code/Q-DiffCL/analysis/results/paper_final_outer_manifest.json
+  paper_final_output_source: E:/Code/Q-DiffCL/outputs/paper_final
+
+fractions: [1.00, 0.25, 0.10]
+fraction_protocol_seed: 73119
+sampling_policy:
+  nested: true
+  seed_independent: true
+  window_level_sampling: false
+  minimum_units_per_class: 1
+  minimum_onset_bearing_units_per_e_class: 2
+  selection: deterministic_class_stratified_source_unit_sha256
+  validation_size_fixed: true
+
+methods: [NO_AUG, UNIFORM_DIFFUSION, JITTER_SCALING, FINAL_QDIFFCL_FIXED, CALIBRATED_RHO]
+rho_grid: [0.00, 0.25, 0.50, 0.75, 1.00]
+rho_selection_order: [macro_f1, auprc, negative_far, negative_rho]
+historical_dcbr_global_rho: {3W: 1.00, TEP: 0.75}
+
+algorithm:
+  criticality_weights: {weight_discriminative: 0.5, weight_early: 0.5, weight_run_stability: 0.0}
+  critical_ratio: 0.30
+  bootstrap_repeats: 64
+  bootstrap_seed: 22042
+  diffusion_steps: 50
+  t_uniform: 3
+  t_critical: 1
+  t_noncritical: 5
+  preserve_phase: true
+  preserve_dc: true
+  noise_structure: iid
+  sampling_seed_offset: 61000
+  clip_quantile: 0.999
+  rho_candidates: [0.00, 0.25, 0.50, 0.75, 1.00]
+  sigma_base: 0.05
+
+traditional: {jitter_std: 0.03, scaling_std: 0.05}
+
+three_w:
+  data_root: E:/Datasets/3W/dataset
+  base_config: configs/3w_final_primary_grouped.yaml
+  outer_seeds: [31001, 31002, 31003]
+  model_seeds: [42, 43, 44, 45, 46]
+  rho_selection_seeds: [42, 43, 44]
+  sampling_unit: instance_id
+  training_budget:
+    pretrain_epochs: 20
+    probe_epochs: 15
+    batch_size: 256
+    learning_rate: 0.001
+    temperature: 0.1
+    early_stopping_patience: 20
+
+tep:
+  data_root: E:/Datasets/TEP_Rieth2017/raw
+  base_config: configs/stage_frequency_diffusion_mvp.yaml
+  data_config: configs/diffusion_quality_retest.yaml
+  outer_seeds: [32001, 32002, 32003]
+  model_seeds: [7, 42, 43, 44, 2026]
+  rho_selection_seeds: [7, 42, 2026]
+  sampling_unit: run_uid
+  selected_run_limits:
+    training: {normal: 160, fault: 8}
+    testing: {normal: 40, fault: 2}
+  training_budget:
+    pretrain_epochs: 8
+    probe_epochs: 8
+    batch_size: 128
+    learning_rate: 0.001
+    temperature: 0.1
+    early_stopping_patience: 8
+    probe_early_stopping_patience: 8
+
+metrics:
+  primary: Macro-F1
+  secondary: [AUPRC, FAR, Early Recall, Detection Delay]
+  bootstrap_unit: {3W: WELL, TEP: Run}
+  bootstrap_repeats: 2000
+  bootstrap_seed: 90317
+
+output:
+  root: outputs/qdiffcl_data_regime_v1
+  namespace: DATA_REGIME_GENERALIZATION_V1
+  smoke_namespace: SMOKE_ONLY
+  runtime_status: outputs/qdiffcl_data_regime_v1/runtime_status.json
+  manifest: analysis/results/qdiffcl_data_regime_manifest.json
+  raw_csv: analysis/results/qdiffcl_data_regime_raw.csv
+  summary_csv: analysis/results/qdiffcl_data_regime_summary.csv
+  paired_csv: analysis/results/qdiffcl_data_regime_paired.csv
+  scarcity_dod_csv: analysis/results/qdiffcl_data_regime_scarcity_dod.csv
+  rho_csv: analysis/results/qdiffcl_data_regime_rho.csv

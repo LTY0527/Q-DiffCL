@@ -1,0 +1,29 @@
+{
+  "status": "E_IDENTIFIABILITY_HOLD",
+  "lineage": {
+    "checks": {
+      "final_frozen": true,
+      "weights": true,
+      "seeds_3w": true,
+      "seeds_tep": true,
+      "rho_grid": true,
+      "dcbr_validation_only": true,
+      "outer_metrics_present_in_frozen_source": false
+    },
+    "hashes": {
+      "configs/qdiffcl_final.yaml": "e50c904484b28ef90fe7da3c774c6b127796861e0bc5de02854960cc4dbe8184",
+      "configs/qdiffcl_final_5seed.yaml": "051739e9822987f5088481607e288ab5c51294f891e292963958446b8fd54034",
+      "configs/domain_calibrated_budget_routing.yaml": "88d5b09046500f38c714afd40d06210da4fd0200a52e64124594336f15f65656",
+      "configs/domain_calibrated_budget_routing_final.yaml": "13f646d30448e9f7a440b5aebc2a236d553401cd5efc1fe9278bbf36fa6bf817",
+      "configs/paper_final_outer.yaml": "90bc91b97fd643323064f2352cf39ef23c004f62430b89dd68d8c9f6b8b7a8a8",
+      "E:/Code/Q-DiffCL/outputs/paper_final_protocol/dry_run_manifest.json": "e4ef68e85b57f0ae90359f8ad7a83e2949a363fdff3945297c44bd102bd66207",
+      "utils.py": "cee7ca5a9a23ad788d9899fbb0f270630fe919d5a76f9cb64061211dac1758da",
+      "degradations/__init__.py": "9a8504c702fbb6fd9a02b8fb8add1e0418e2a9f37f22b8d36661373c3e41b13e",
+      "degradations/core.py": "5fdb30b79cf156ed68faab788ffbc3bfaec5e8f71ebc78100b88bf86a7acf141"
+    }
+  },
+  "manifest_count": 6,
+  "held_dataset_fractions": [
+    "TEP:0.10"
+  ]
+}
