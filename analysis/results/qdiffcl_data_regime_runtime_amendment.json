@@ -1,0 +1,43 @@
+{
+  "status": "DATA_REGIME_RUNTIME_AMENDMENT_LOCKED",
+  "classification": "NUMERICALLY_EQUIVALENT_RUNTIME_AMENDMENT",
+  "created_at": "2026-09-03T20:13:27.3909022Z",
+  "parent_protocol_lock": "5d88cb9d559ab9353df0b835e2d39f6f9966d77f",
+  "parent_stage_archive": "d33695b22fa88865e4ba16d3c3c06df53176003c",
+  "reason": "host RAM safety only: remove pandas full-table consolidation, prefilter frozen Run limits, and reuse one prepared context",
+  "pre_fix_hash": "1249e073a7e08859fa16d942630310aca6a78532c2f5d7d02565df217f9b7f02",
+  "post_fix_hash": "d9748ec80542093b70274ee7b00297849b964f2052df92043faf65da5783d0e1",
+  "pre_fix_files": {
+    "datasets/tep.py": "3399df15437cc2871adb8c585cddb4c183d80b6d206d8543be4dca47871ae0f7",
+    "scripts/run_qdiffcl_data_regime.py": "34aa5edee1955e6600d4190b922a6e2849ca04620a255f582d2228788d1d0c59"
+  },
+  "post_fix_files": {
+    "datasets/tep.py": "22770087c8bcb0046c0001df276733b4a804e57d9fbe6269f9e6ecb87de85ce2",
+    "scripts/run_qdiffcl_data_regime.py": "34c4d49151d60218d39192bbde986c889c50a5a057451a804fb7a89b6ed7fa93"
+  },
+  "scientific_config_sha256_before": "9d781a80a08c1c0fa15db2b597f83adcab5a15dae8bd3e51a7e97a1c13b1f92f",
+  "scientific_config_sha256_after": "9d781a80a08c1c0fa15db2b597f83adcab5a15dae8bd3e51a7e97a1c13b1f92f",
+  "scientific_config_hashes_unchanged": true,
+  "fraction_manifest_hashes_unchanged": true,
+  "fraction_manifest_sha256": {
+    "3w_outer_31001": "edff419815b75ab8d499e9a4af7140e254db0631e411538d1d1a221fbddaafe7",
+    "3w_outer_31002": "3a2eecd25444c2dc020c13e87314f707d828a8b1aba5db7da177527a1c35c7b1",
+    "3w_outer_31003": "1696cc905a2699954b89158391f3097a3db079b42c81091ee62caee05a14647b",
+    "tep_outer_32001": "90e0ef7f4a57bbacc59470fa93b9f4019d5861e4d722013557c444cedcb8e9b7",
+    "tep_outer_32002": "246d9c97963c2f36330a7ea3152f4e3ff342ef9dc2e81177f6d3432d478320dd",
+    "tep_outer_32003": "d9620c4c0d0686590f94d2d34a0d6b2ec56dc19c30ce086755603b7197ce3a1c"
+  },
+  "equivalence_evidence": {
+    "small_real_rdata_exact": true,
+    "full_context_repeat_exact": true,
+    "pre_repair_context_hash_exact": true,
+    "pre_repair_scaler_exact": true,
+    "pre_repair_criticality_mask_exact": true,
+    "pre_repair_criticality_npz_exact": true,
+    "smoke_path": "analysis/results/qdiffcl_tep_memory_smoke.json",
+    "status": "TEP_MEMORY_SAFE_LOADER_EQUIVALENCE_GO"
+  },
+  "test_metrics_used_to_choose_repair": false,
+  "outer_results_used_to_choose_repair": false,
+  "outer_test_metrics_read_by_smoke": false
+}

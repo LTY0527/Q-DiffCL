@@ -1,0 +1,273 @@
+{
+  "status": "TEP_MEMORY_SAFE_LOADER_SMOKE_GO",
+  "pid": 67044,
+  "fractions": [
+    {
+      "status": "RAM_SMOKE_GO",
+      "fraction": 1.0,
+      "outer": 32001,
+      "cycles": 2,
+      "exact_repeat": true,
+      "post_release_working_set_growth_mb": -28,
+      "records": [
+        {
+          "cycle": 1,
+          "before": {
+            "system_available_mb": 6126,
+            "system_total_mb": 15585,
+            "working_set_mb": 471,
+            "peak_working_set_mb": 471,
+            "pagefile_usage_mb": 1673
+          },
+          "during": {
+            "system_available_mb": 7629,
+            "system_total_mb": 15585,
+            "working_set_mb": 210,
+            "peak_working_set_mb": 7935,
+            "pagefile_usage_mb": 1859
+          },
+          "after_release": {
+            "system_available_mb": 7543,
+            "system_total_mb": 15585,
+            "working_set_mb": 160,
+            "peak_working_set_mb": 7935,
+            "pagefile_usage_mb": 1708
+          },
+          "signature": {
+            "context_hash": "a5d4ac39ad9f8022949f2f693fecd31f65690a191450498f4de87bc629b3ca38",
+            "fraction_manifest_hash": "07b0af087f3a4f09ea32d426ec0d40298d179c67b87ab580e7dc1c9e5242f195",
+            "criticality_mask_hash": "a2c8efd1084fff287f4dc68251f2dc02a39a74b026dd8ba3aff1970468eeaf6d",
+            "criticality_input_train_hash": "a459259232994f2e4eff940281fd4e723d49296818a66569e55981e9d2c83841",
+            "train_hash": "2c7d104114f94e8429e8a350a665cd7a18824c2b2764a8f1a0e1a09c1e4fedb9",
+            "validation_hash": "ce158b358f75b4e79b8015df977c7e062796dee009960184d3639df5f7d628a9",
+            "test_context_hash": "bc8e360a149f9d43cd45e9b3a2f976a553e9c192d4fa8a51d522a28a6678c4e2",
+            "ids_hash": "e8d216c2b2883ff0449646fb20207ddf3536b49bad27cfafb66b34af7e56e00d",
+            "window_shapes": {
+              "train": [
+                8131,
+                52,
+                64
+              ],
+              "validation": [
+                2303,
+                52,
+                64
+              ],
+              "test": [
+                2646,
+                52,
+                64
+              ]
+            },
+            "finite_counts": {
+              "train": 27059968,
+              "validation": 7664384,
+              "test": 8805888
+            }
+          }
+        },
+        {
+          "cycle": 2,
+          "before": {
+            "system_available_mb": 7543,
+            "system_total_mb": 15585,
+            "working_set_mb": 160,
+            "peak_working_set_mb": 7935,
+            "pagefile_usage_mb": 1708
+          },
+          "during": {
+            "system_available_mb": 7755,
+            "system_total_mb": 15585,
+            "working_set_mb": 207,
+            "peak_working_set_mb": 7938,
+            "pagefile_usage_mb": 1888
+          },
+          "after_release": {
+            "system_available_mb": 7813,
+            "system_total_mb": 15585,
+            "working_set_mb": 132,
+            "peak_working_set_mb": 7938,
+            "pagefile_usage_mb": 1715
+          },
+          "signature": {
+            "context_hash": "a5d4ac39ad9f8022949f2f693fecd31f65690a191450498f4de87bc629b3ca38",
+            "fraction_manifest_hash": "07b0af087f3a4f09ea32d426ec0d40298d179c67b87ab580e7dc1c9e5242f195",
+            "criticality_mask_hash": "a2c8efd1084fff287f4dc68251f2dc02a39a74b026dd8ba3aff1970468eeaf6d",
+            "criticality_input_train_hash": "a459259232994f2e4eff940281fd4e723d49296818a66569e55981e9d2c83841",
+            "train_hash": "2c7d104114f94e8429e8a350a665cd7a18824c2b2764a8f1a0e1a09c1e4fedb9",
+            "validation_hash": "ce158b358f75b4e79b8015df977c7e062796dee009960184d3639df5f7d628a9",
+            "test_context_hash": "bc8e360a149f9d43cd45e9b3a2f976a553e9c192d4fa8a51d522a28a6678c4e2",
+            "ids_hash": "e8d216c2b2883ff0449646fb20207ddf3536b49bad27cfafb66b34af7e56e00d",
+            "window_shapes": {
+              "train": [
+                8131,
+                52,
+                64
+              ],
+              "validation": [
+                2303,
+                52,
+                64
+              ],
+              "test": [
+                2646,
+                52,
+                64
+              ]
+            },
+            "finite_counts": {
+              "train": 27059968,
+              "validation": 7664384,
+              "test": 8805888
+            }
+          }
+        }
+      ],
+      "outer_test_metrics_read": false,
+      "large_consolidation_allocation_removed": true
+    },
+    {
+      "status": "RAM_SMOKE_GO",
+      "fraction": 0.25,
+      "outer": 32001,
+      "cycles": 2,
+      "exact_repeat": true,
+      "post_release_working_set_growth_mb": 4,
+      "records": [
+        {
+          "cycle": 1,
+          "before": {
+            "system_available_mb": 7813,
+            "system_total_mb": 15585,
+            "working_set_mb": 132,
+            "peak_working_set_mb": 7938,
+            "pagefile_usage_mb": 1715
+          },
+          "during": {
+            "system_available_mb": 7905,
+            "system_total_mb": 15585,
+            "working_set_mb": 133,
+            "peak_working_set_mb": 7938,
+            "pagefile_usage_mb": 1813
+          },
+          "after_release": {
+            "system_available_mb": 7914,
+            "system_total_mb": 15585,
+            "working_set_mb": 144,
+            "peak_working_set_mb": 7938,
+            "pagefile_usage_mb": 1729
+          },
+          "signature": {
+            "context_hash": "654a4abf07736321c29cae7760bc173691f8f847b127fa7f732016d935ba365f",
+            "fraction_manifest_hash": "4fb97c3b0e5eeb35ea730d464df15f5003b268bf87bcedb683dad7697422f11e",
+            "criticality_mask_hash": "cd1b342db3e45d36472c466d97701d05858c102665462aea799aaf0fc1fa183e",
+            "criticality_input_train_hash": "ff3da3f2ef936751e4ee4914d45fea3da1690a8f7a042ee1addc2a3dc470ae48",
+            "train_hash": "1f3702c0c8a759a001603020d456cefb997516c6792dec5ccd42b93f6cb6b931",
+            "validation_hash": "764210100e9998e8af420b535fe802979605de9da60cc66bbd2b814a1c926e1d",
+            "test_context_hash": "e301afa72972dc7ec6150796cc7a13d7f25673d39b7c227749eae60cab36148e",
+            "ids_hash": "cf16dc542b6f9361b6262cb116cd79b5f12813cb6b9a1bd48b18d7e3dc26d049",
+            "window_shapes": {
+              "train": [
+                2024,
+                52,
+                64
+              ],
+              "validation": [
+                2303,
+                52,
+                64
+              ],
+              "test": [
+                2646,
+                52,
+                64
+              ]
+            },
+            "finite_counts": {
+              "train": 6735872,
+              "validation": 7664384,
+              "test": 8805888
+            }
+          }
+        },
+        {
+          "cycle": 2,
+          "before": {
+            "system_available_mb": 7914,
+            "system_total_mb": 15585,
+            "working_set_mb": 144,
+            "peak_working_set_mb": 7938,
+            "pagefile_usage_mb": 1729
+          },
+          "during": {
+            "system_available_mb": 7810,
+            "system_total_mb": 15585,
+            "working_set_mb": 144,
+            "peak_working_set_mb": 7945,
+            "pagefile_usage_mb": 1819
+          },
+          "after_release": {
+            "system_available_mb": 7823,
+            "system_total_mb": 15585,
+            "working_set_mb": 148,
+            "peak_working_set_mb": 7945,
+            "pagefile_usage_mb": 1721
+          },
+          "signature": {
+            "context_hash": "654a4abf07736321c29cae7760bc173691f8f847b127fa7f732016d935ba365f",
+            "fraction_manifest_hash": "4fb97c3b0e5eeb35ea730d464df15f5003b268bf87bcedb683dad7697422f11e",
+            "criticality_mask_hash": "cd1b342db3e45d36472c466d97701d05858c102665462aea799aaf0fc1fa183e",
+            "criticality_input_train_hash": "ff3da3f2ef936751e4ee4914d45fea3da1690a8f7a042ee1addc2a3dc470ae48",
+            "train_hash": "1f3702c0c8a759a001603020d456cefb997516c6792dec5ccd42b93f6cb6b931",
+            "validation_hash": "764210100e9998e8af420b535fe802979605de9da60cc66bbd2b814a1c926e1d",
+            "test_context_hash": "e301afa72972dc7ec6150796cc7a13d7f25673d39b7c227749eae60cab36148e",
+            "ids_hash": "cf16dc542b6f9361b6262cb116cd79b5f12813cb6b9a1bd48b18d7e3dc26d049",
+            "window_shapes": {
+              "train": [
+                2024,
+                52,
+                64
+              ],
+              "validation": [
+                2303,
+                52,
+                64
+              ],
+              "test": [
+                2646,
+                52,
+                64
+              ]
+            },
+            "finite_counts": {
+              "train": 6735872,
+              "validation": 7664384,
+              "test": 8805888
+            }
+          }
+        }
+      ],
+      "outer_test_metrics_read": false,
+      "large_consolidation_allocation_removed": true
+    }
+  ],
+  "outer_test_metrics_read": false,
+  "archived_equivalence": {
+    "status": "TEP_MEMORY_SAFE_LOADER_EQUIVALENCE_GO",
+    "checks": {
+      "context_hash_exact": true,
+      "fraction_manifest_hash_exact": true,
+      "criticality_mask_hash_exact": true,
+      "criticality_npz_hash_exact": true,
+      "scaler_exact": true,
+      "selected_train_ids_exact": true,
+      "validation_ids_exact": true,
+      "test_ids_exact": true,
+      "window_counts_exact": true
+    },
+    "pre_repair_context_hash": "a5d4ac39ad9f8022949f2f693fecd31f65690a191450498f4de87bc629b3ca38",
+    "post_repair_context_hash": "a5d4ac39ad9f8022949f2f693fecd31f65690a191450498f4de87bc629b3ca38",
+    "pre_repair_criticality_sha256": "ad6a64bca2e780e3fc9e1bf814dd71a51c6fcd929f6f301f2156cec0ea74db0d",
+    "post_repair_criticality_sha256": "ad6a64bca2e780e3fc9e1bf814dd71a51c6fcd929f6f301f2156cec0ea74db0d"
+  }
+}

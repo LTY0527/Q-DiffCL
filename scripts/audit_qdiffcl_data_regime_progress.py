@@ -9,6 +9,7 @@ import os
 import subprocess
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -65,6 +66,27 @@ def _checkpoint_metadata(path: Path) -> dict[str, Any] | None:
         return payload.get("metadata")
     except Exception:
         return None
+
+
+@lru_cache(maxsize=None)
+def _source_commit_is_approved(source_commit: str, protocol_lock_commit: str) -> bool:
+    if source_commit == protocol_lock_commit:
+        return True
+    amendment_path = Path("analysis/results/qdiffcl_data_regime_runtime_amendment.json")
+    if not amendment_path.exists():
+        return False
+    amendment = _read(amendment_path)
+    if amendment.get("classification") != "NUMERICALLY_EQUIVALENT_RUNTIME_AMENDMENT":
+        return False
+    lock_to_source = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", protocol_lock_commit, source_commit],
+        check=False, capture_output=True,
+    ).returncode == 0
+    source_to_head = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", source_commit, "HEAD"],
+        check=False, capture_output=True,
+    ).returncode == 0
+    return lock_to_source and source_to_head
 
 
 def _candidate_row(
@@ -137,6 +159,7 @@ def _formal_row(
         payload = dict(result); claimed_payload = payload.pop("result_payload_sha256", None)
         _, fraction_record = load_fraction_manifest(dataset, outer, fraction); audit = _context_audit(root, dataset, fraction, outer)
         indexed = manifest_index.get(result["cell_id"], {})
+        protocol_lock_commit = _read(Path(config["git_freeze"]["protocol_lock_manifest"]))["protocol_lock_commit"]
         checks = [
             claimed_payload == canonical_hash(payload), result.get("prediction_sha256") == base["prediction_sha256"],
             result.get("checkpoint_sha256") == base["checkpoint_sha256"],
@@ -144,7 +167,7 @@ def _formal_row(
             result.get("fraction_manifest_hash") == fraction_record["sha256"],
             audit is not None and result.get("criticality_mask_sha256") == audit.get("criticality_mask_sha256"),
             result.get("context_hash") == audit.get("context_hash") if audit else False,
-            result.get("source_commit") == _read(Path(config["git_freeze"]["protocol_lock_manifest"]))["protocol_lock_commit"],
+            _source_commit_is_approved(str(result.get("source_commit", "")), protocol_lock_commit),
             result.get("dataset") == dataset, float(result.get("fraction")) == fraction,
             int(result.get("outer_id")) == outer, int(result.get("model_seed")) == seed,
             result.get("method") == method, result.get("outer_test_evaluated_once") is True,
@@ -248,8 +271,11 @@ def _runtime_doc(config: dict[str, Any], accounting: dict[str, Any], rows: list[
     error_text = stderr.read_text(encoding="utf-8", errors="replace")
     gpu = subprocess.run(["nvidia-smi", "--query-gpu=name,utilization.gpu,memory.used,memory.total,temperature.gpu", "--format=csv,noheader"], capture_output=True, text=True, encoding="utf-8").stdout.strip()
     completed_formal = [row for row in rows if row["stage"] == "formal_locked_test" and row["status"] == "COMPLETE_VALID"]
-    last_formal = max(completed_formal, key=lambda row: Path(row["artifact_path"]).stat().st_mtime)
-    last_formal_label = f"{last_formal['dataset']} / {float(last_formal['fraction']):.0%} / outer {last_formal['outer']} / {last_formal['method']} / seed {last_formal['seed']}"
+    last_formal = max(completed_formal, key=lambda row: Path(row["artifact_path"]).stat().st_mtime) if completed_formal else None
+    last_formal_label = (
+        f"{last_formal['dataset']} / {float(last_formal['fraction']):.0%} / outer {last_formal['outer']} / {last_formal['method']} / seed {last_formal['seed']}"
+        if last_formal else "N/A"
+    )
     return "\n".join([
         "# Q-DiffCL Data-Regime Runtime Diagnosis", "", "Status: `PROCESS_EXITED_FAILURE`; artifacts remain resumable.", "",
         f"- Audit time: `{_now()}`", "- Historical PID 45408 exists: `false`",

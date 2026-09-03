@@ -615,10 +615,11 @@ def run_smoke_rho(config: dict[str, Any], device: str) -> None:
 
 def run_formal_context(
     config: dict[str, Any], manifest: dict[str, Any], dataset: str, fraction: float,
-    outer_id: int, device: str,
+    outer_id: int, device: str, context: dict[str, Any] | None = None,
 ) -> None:
     namespace = config["output"]["namespace"]
-    context = prepare_context(config, dataset, outer_id, fraction, namespace)
+    if context is None:
+        context = prepare_context(config, dataset, outer_id, fraction, namespace)
     selection = select_rho(config, context, namespace, device)
     rho = float(selection["selected_rho"])
     stage = config["three_w" if dataset == "3W" else "tep"]
@@ -686,7 +687,7 @@ def main() -> None:
             select_rho(config, context, config["output"]["namespace"], args.device)
         if args.stage in {"formal", "all"}:
             assert run_manifest is not None
-            run_formal_context(config, run_manifest, dataset, fraction, outer_id, args.device)
+            run_formal_context(config, run_manifest, dataset, fraction, outer_id, args.device, context)
 
 
 if __name__ == "__main__":
