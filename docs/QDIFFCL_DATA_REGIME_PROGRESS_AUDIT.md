@@ -6,8 +6,8 @@ The runner is stopped at audit time. This report inventories all hash-valid arti
 
 ## Cell accounting
 
-- Formal: 325 valid / 375 expected; 50 remaining.
-- Rho candidates: 195 valid / 225 expected; 30 remaining.
+- Formal: 350 valid / 375 expected; 25 remaining.
+- Rho candidates: 210 valid / 225 expected; 15 remaining.
 - Invalid: formal 0, rho 0; duplicates 0; runner failures 3.
 
 ## Dataset and fraction completion
@@ -21,7 +21,7 @@ The runner is stopped at audit time. This report inventories all hash-valid arti
 ### TEP
 
 - 100%: 75 formal (75 new, 0 reused), 45 rho candidates, completed outers [32001, 32002, 32003], completed seeds [7, 42, 43, 44, 2026], methods {'NO_AUG': 15, 'UNIFORM_DIFFUSION': 15, 'JITTER_SCALING': 15, 'FINAL_QDIFFCL_FIXED': 15, 'CALIBRATED_RHO': 15}, rho selections 3.
-- 25%: 25 formal (25 new, 0 reused), 15 rho candidates, completed outers [32001], completed seeds [7, 42, 43, 44, 2026], methods {'NO_AUG': 5, 'UNIFORM_DIFFUSION': 5, 'JITTER_SCALING': 5, 'FINAL_QDIFFCL_FIXED': 5, 'CALIBRATED_RHO': 5}, rho selections 1.
+- 25%: 50 formal (50 new, 0 reused), 30 rho candidates, completed outers [32001, 32002], completed seeds [7, 42, 43, 44, 2026], methods {'NO_AUG': 10, 'UNIFORM_DIFFUSION': 10, 'JITTER_SCALING': 10, 'FINAL_QDIFFCL_FIXED': 10, 'CALIBRATED_RHO': 10}, rho selections 2.
 - 10%: E_IDENTIFIABILITY_HOLD; excluded from primary matrix.
 
 ## Interim metric means (valid completed cells only)
@@ -43,11 +43,11 @@ The runner is stopped at audit time. This report inventories all hash-valid arti
 | 3W | 1.00 | JITTER_SCALING | 15 | 0.343001 | 0.728762 | 0.590977 | 0.832603 | 1177.141058 |
 | 3W | 1.00 | NO_AUG | 15 | 0.324148 | 0.773382 | 0.613329 | 0.854842 | 2372.181296 |
 | 3W | 1.00 | UNIFORM_DIFFUSION | 15 | 0.313388 | 0.726952 | 0.634137 | 0.817333 | 3144.420692 |
-| TEP | 0.25 | CALIBRATED_RHO | 5 | 0.898996 | 0.950648 | 0.022618 | 0.713750 | 110.982361 |
-| TEP | 0.25 | FINAL_QDIFFCL_FIXED | 5 | 0.896362 | 0.949064 | 0.025634 | 0.712500 | 109.861842 |
-| TEP | 0.25 | JITTER_SCALING | 5 | 0.898187 | 0.950212 | 0.024949 | 0.716250 | 105.780180 |
-| TEP | 0.25 | NO_AUG | 5 | 0.897539 | 0.949324 | 0.024674 | 0.707500 | 110.867267 |
-| TEP | 0.25 | UNIFORM_DIFFUSION | 5 | 0.897742 | 0.948837 | 0.017820 | 0.703750 | 113.347621 |
+| TEP | 0.25 | CALIBRATED_RHO | 10 | 0.893716 | 0.950661 | 0.021231 | 0.732500 | 106.703753 |
+| TEP | 0.25 | FINAL_QDIFFCL_FIXED | 10 | 0.892399 | 0.949869 | 0.022738 | 0.731875 | 106.143494 |
+| TEP | 0.25 | JITTER_SCALING | 10 | 0.891687 | 0.949075 | 0.024823 | 0.730625 | 105.881866 |
+| TEP | 0.25 | NO_AUG | 10 | 0.893246 | 0.950032 | 0.027112 | 0.736875 | 106.809256 |
+| TEP | 0.25 | UNIFORM_DIFFUSION | 10 | 0.892679 | 0.949728 | 0.023400 | 0.732500 | 108.134305 |
 | TEP | 1.00 | CALIBRATED_RHO | 15 | 0.948639 | 0.986054 | 0.017367 | 0.882083 | 84.311606 |
 | TEP | 1.00 | FINAL_QDIFFCL_FIXED | 15 | 0.948324 | 0.985883 | 0.019507 | 0.883750 | 84.197742 |
 | TEP | 1.00 | JITTER_SCALING | 15 | 0.949154 | 0.986473 | 0.019107 | 0.883750 | 84.187548 |
@@ -73,11 +73,11 @@ The runner is stopped at audit time. This report inventories all hash-valid arti
 | 3W | 1.00 | FINAL_QDIFFCL_FIXED - JITTER_SCALING | 15 | -0.049342 |
 | 3W | 1.00 | CALIBRATED_RHO - FINAL_QDIFFCL_FIXED | 15 | 0.028442 |
 | 3W | 1.00 | CALIBRATED_RHO - UNIFORM_DIFFUSION | 15 | 0.008713 |
-| TEP | 0.25 | FINAL_QDIFFCL_FIXED - NO_AUG | 5 | -0.001177 |
-| TEP | 0.25 | FINAL_QDIFFCL_FIXED - UNIFORM_DIFFUSION | 5 | -0.001380 |
-| TEP | 0.25 | FINAL_QDIFFCL_FIXED - JITTER_SCALING | 5 | -0.001825 |
-| TEP | 0.25 | CALIBRATED_RHO - FINAL_QDIFFCL_FIXED | 5 | 0.002634 |
-| TEP | 0.25 | CALIBRATED_RHO - UNIFORM_DIFFUSION | 5 | 0.001254 |
+| TEP | 0.25 | FINAL_QDIFFCL_FIXED - NO_AUG | 10 | -0.000848 |
+| TEP | 0.25 | FINAL_QDIFFCL_FIXED - UNIFORM_DIFFUSION | 10 | -0.000280 |
+| TEP | 0.25 | FINAL_QDIFFCL_FIXED - JITTER_SCALING | 10 | 0.000712 |
+| TEP | 0.25 | CALIBRATED_RHO - FINAL_QDIFFCL_FIXED | 10 | 0.001317 |
+| TEP | 0.25 | CALIBRATED_RHO - UNIFORM_DIFFUSION | 10 | 0.001037 |
 | TEP | 1.00 | FINAL_QDIFFCL_FIXED - NO_AUG | 15 | 0.000309 |
 | TEP | 1.00 | FINAL_QDIFFCL_FIXED - UNIFORM_DIFFUSION | 15 | 0.001466 |
 | TEP | 1.00 | FINAL_QDIFFCL_FIXED - JITTER_SCALING | 15 | -0.000830 |
@@ -98,6 +98,7 @@ These are stage results, not paper-final cross-dataset claims. Only completed ha
 - 3W 1.00 outer 31002: DATA_REGIME_RHO_STAR=0.75, candidates=15/15, seeds=[42, 43, 44], validation Macro-F1=0.278721, AUPRC=0.664914, FAR=0.826000, test_used_for_selection=false.
 - 3W 1.00 outer 31003: DATA_REGIME_RHO_STAR=1.0, candidates=15/15, seeds=[42, 43, 44], validation Macro-F1=0.851350, AUPRC=0.926635, FAR=0.114833, test_used_for_selection=false.
 - TEP 0.25 outer 32001: DATA_REGIME_RHO_STAR=0.25, candidates=15/15, seeds=[7, 42, 2026], validation Macro-F1=0.895625, AUPRC=0.966632, FAR=0.033555, test_used_for_selection=false.
+- TEP 0.25 outer 32002: DATA_REGIME_RHO_STAR=1.0, candidates=15/15, seeds=[7, 42, 2026], validation Macro-F1=0.893761, AUPRC=0.956760, FAR=0.030499, test_used_for_selection=false.
 - TEP 1.00 outer 32001: DATA_REGIME_RHO_STAR=0.5, candidates=15/15, seeds=[7, 42, 2026], validation Macro-F1=0.925485, AUPRC=0.982242, FAR=0.054764, test_used_for_selection=false.
 - TEP 1.00 outer 32002: DATA_REGIME_RHO_STAR=0.25, candidates=15/15, seeds=[7, 42, 2026], validation Macro-F1=0.904878, AUPRC=0.964991, FAR=0.030769, test_used_for_selection=false.
 - TEP 1.00 outer 32003: DATA_REGIME_RHO_STAR=0.75, candidates=15/15, seeds=[7, 42, 2026], validation Macro-F1=0.964872, AUPRC=0.995927, FAR=0.043176, test_used_for_selection=false.
@@ -106,12 +107,12 @@ These are stage results, not paper-final cross-dataset claims. Only completed ha
 
 ## Local artifact archive
 
-- `outputs\qdiffcl_data_regime_v1` contains 1906 files (367293798 bytes); it remains local and Git-ignored.
+- `outputs\qdiffcl_data_regime_v1` contains 2048 files (371316374 bytes); it remains local and Git-ignored.
 - Files larger than 50 MiB: 0. Checkpoint, prediction, and result hashes are recorded per completed cell in `analysis/results/qdiffcl_data_regime_progress_audit.csv`.
 - No local training artifact was deleted or staged for Git.
 
 ## Resume
 
 No resume was executed. Registered command: `E:\anaconda\envs\qdiffcl\python.exe -u -m scripts.run_qdiffcl_data_regime --stage all --device cuda`.
-Remaining work: 50 formal cells and 30 rho candidates. Remaining GPU time is not estimated by this artifact audit.
+Remaining work: 25 formal cells and 15 rho candidates. Remaining GPU time is not estimated by this artifact audit.
 The TEP memory-safe loader is registered as a numerically equivalent runtime amendment; each new outer remains subject to the supervised RAM preflight.

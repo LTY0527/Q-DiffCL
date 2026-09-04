@@ -161,6 +161,22 @@
   },
   {
     "dataset": "TEP",
+    "fraction": 0.25,
+    "outer": 32002,
+    "candidates_completed": 15,
+    "selected_rho": 1.0,
+    "selection_seeds": [
+      7,
+      42,
+      2026
+    ],
+    "validation_macro_f1": 0.8937612680903957,
+    "validation_auprc": 0.9567599116666542,
+    "validation_far": 0.03049932523616734,
+    "test_used_for_selection": false
+  },
+  {
+    "dataset": "TEP",
     "fraction": 1.0,
     "outer": 32001,
     "candidates_completed": 15,
