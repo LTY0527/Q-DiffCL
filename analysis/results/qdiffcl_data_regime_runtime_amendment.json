@@ -1,20 +1,27 @@
 {
   "status": "DATA_REGIME_RUNTIME_AMENDMENT_LOCKED",
   "classification": "NUMERICALLY_EQUIVALENT_RUNTIME_AMENDMENT",
+  "runtime_amendment_id": "TEP_MEMORY_SAFE_LOADER_V1",
   "created_at": "2026-09-03T20:13:27.3909022Z",
   "parent_protocol_lock": "5d88cb9d559ab9353df0b835e2d39f6f9966d77f",
   "parent_stage_archive": "d33695b22fa88865e4ba16d3c3c06df53176003c",
   "reason": "host RAM safety only: remove pandas full-table consolidation, prefilter frozen Run limits, and reuse one prepared context",
   "pre_fix_hash": "1249e073a7e08859fa16d942630310aca6a78532c2f5d7d02565df217f9b7f02",
-  "post_fix_hash": "6fd20d45b7906e312cf54b1f68ff6f031263304c83ff3def712b03671fb94141",
-  "post_protocol_hash": "974c9183f7e77fad65df8014235d729c04f02984a1ddf569766d2cb95c4eade0",
+  "post_fix_hash": "20bdb71ded778bd76a8e568da5ff36af36300534995c6b96c8ab578c7b46fb58",
+  "post_protocol_hash": "0cc3be72e99bc347e7b1ef45c1e40c88e92fa251c9102fc3397c4efedf0ef18f",
+  "scientific_protocol_hash": "f633e84c8e3be21894e6e18d63092cf04edfd3c4728201c6d721f8d218fbb12b",
+  "scientific_inputs_hash": "243a3ee465670005497c5b2ccb5c299d349a49ae0c6366f96999760f9aaa4fa0",
+  "runtime_implementation_hash": "20bdb71ded778bd76a8e568da5ff36af36300534995c6b96c8ab578c7b46fb58",
+  "repair_commit": "5151aa3ad457e78c10d39ab2ef41c7643e1f08e3",
+  "guard_commit": "02d3b9a68a3cd220ac4a159109d91407e8c72077",
+  "test_summary": "loader and Data-Regime guard tests: 40 passed",
   "pre_fix_files": {
     "datasets/tep.py": "3399df15437cc2871adb8c585cddb4c183d80b6d206d8543be4dca47871ae0f7",
     "scripts/run_qdiffcl_data_regime.py": "34aa5edee1955e6600d4190b922a6e2849ca04620a255f582d2228788d1d0c59"
   },
   "post_fix_files": {
     "datasets/tep.py": "22770087c8bcb0046c0001df276733b4a804e57d9fbe6269f9e6ecb87de85ce2",
-    "scripts/run_qdiffcl_data_regime.py": "917300d27d689b0d9220e08f63a8fd0c75ea3e064d0d61feb7b506b45b14a28a"
+    "scripts/run_qdiffcl_data_regime.py": "9a368eb9f32111dd3f0ea3e7d36d5f4f220212281805665b6ded3ffaa595c10f"
   },
   "scientific_config_sha256_before": "9d781a80a08c1c0fa15db2b597f83adcab5a15dae8bd3e51a7e97a1c13b1f92f",
   "scientific_config_sha256_after": "9d781a80a08c1c0fa15db2b597f83adcab5a15dae8bd3e51a7e97a1c13b1f92f",

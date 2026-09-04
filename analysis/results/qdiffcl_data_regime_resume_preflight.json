@@ -1,0 +1,27 @@
+{
+  "status": "DATA_REGIME_RESUME_PREFLIGHT_GO",
+  "scientific_protocol_lock_valid": true,
+  "runtime_amendment_valid": true,
+  "current_runtime_hash_registered": true,
+  "fraction_manifest_hashes_valid": true,
+  "completed_artifact_hashes_valid": true,
+  "completed_artifacts_checked": 225,
+  "formal_completed": 225,
+  "test_read": false,
+  "next_cell": "TEP 100% outer32001 formal",
+  "runtime_amendment_checks": {
+    "status": true,
+    "classification": true,
+    "amendment_id": true,
+    "parent_lock": true,
+    "scientific_protocol_hash": true,
+    "scientific_inputs_hash": true,
+    "config": true,
+    "fraction_manifests": true,
+    "runtime_files": true,
+    "runtime_hash": true,
+    "equivalence": true,
+    "test_blind": true,
+    "outer_blind": true
+  }
+}
