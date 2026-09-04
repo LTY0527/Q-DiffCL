@@ -4,17 +4,17 @@
     "formal_cells_expected": 375,
     "formal_cells_reused": 0,
     "formal_cells_new": 375,
-    "formal_cells_completed": 300,
-    "formal_cells_valid": 300,
+    "formal_cells_completed": 325,
+    "formal_cells_valid": 325,
     "formal_cells_invalid": 0,
-    "formal_cells_remaining": 75,
+    "formal_cells_remaining": 50,
     "rho_candidate_cells_expected": 225,
     "rho_candidate_cells_reused": 0,
     "rho_candidate_cells_new": 225,
-    "rho_candidate_cells_completed": 180,
-    "rho_candidate_cells_valid": 180,
+    "rho_candidate_cells_completed": 195,
+    "rho_candidate_cells_valid": 195,
     "rho_candidate_cells_invalid": 0,
-    "rho_candidate_cells_remaining": 45,
+    "rho_candidate_cells_remaining": 30,
     "duplicate_count": 0,
     "failure_count": 3
   },
@@ -186,6 +186,61 @@
     },
     {
       "dataset": "TEP",
+      "fraction": 0.25,
+      "method": "CALIBRATED_RHO",
+      "cells": 5,
+      "macro_f1": 0.8989955105961478,
+      "auprc": 0.9506476832123308,
+      "far": 0.02261823166552433,
+      "early_recall": 0.71375,
+      "detection_delay": 110.9823613086771
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "cells": 5,
+      "macro_f1": 0.8963618620249758,
+      "auprc": 0.9490642890236929,
+      "far": 0.02563399588759424,
+      "early_recall": 0.7125,
+      "detection_delay": 109.86184240921084
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "method": "JITTER_SCALING",
+      "cells": 5,
+      "macro_f1": 0.8981869424453865,
+      "auprc": 0.9502118218087168,
+      "far": 0.024948594928032898,
+      "early_recall": 0.7162499999999999,
+      "detection_delay": 105.78018018018017
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "method": "NO_AUG",
+      "cells": 5,
+      "macro_f1": 0.8975386394550442,
+      "auprc": 0.9493244086305713,
+      "far": 0.02467443454420836,
+      "early_recall": 0.7074999999999999,
+      "detection_delay": 110.8672672672673
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "method": "UNIFORM_DIFFUSION",
+      "cells": 5,
+      "macro_f1": 0.8977419760517977,
+      "auprc": 0.9488366951476699,
+      "far": 0.01782042494859493,
+      "early_recall": 0.70375,
+      "detection_delay": 113.34762130551603
+    },
+    {
+      "dataset": "TEP",
       "fraction": 1.0,
       "method": "CALIBRATED_RHO",
       "cells": 15,
@@ -345,6 +400,41 @@
       "contrast": "CALIBRATED_RHO - UNIFORM_DIFFUSION",
       "paired_cells": 15,
       "macro_f1_delta": 0.008713396446276408
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "contrast": "FINAL_QDIFFCL_FIXED - NO_AUG",
+      "paired_cells": 5,
+      "macro_f1_delta": -0.0011767774300684986
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "contrast": "FINAL_QDIFFCL_FIXED - UNIFORM_DIFFUSION",
+      "paired_cells": 5,
+      "macro_f1_delta": -0.001380114026821988
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "contrast": "FINAL_QDIFFCL_FIXED - JITTER_SCALING",
+      "paired_cells": 5,
+      "macro_f1_delta": -0.0018250804204107852
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "contrast": "CALIBRATED_RHO - FINAL_QDIFFCL_FIXED",
+      "paired_cells": 5,
+      "macro_f1_delta": 0.002633648571172098
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 0.25,
+      "contrast": "CALIBRATED_RHO - UNIFORM_DIFFUSION",
+      "paired_cells": 5,
+      "macro_f1_delta": 0.00125353454435011
     },
     {
       "dataset": "TEP",
@@ -529,6 +619,22 @@
     },
     {
       "dataset": "TEP",
+      "fraction": 0.25,
+      "outer": 32001,
+      "candidates_completed": 15,
+      "selected_rho": 0.25,
+      "selection_seeds": [
+        7,
+        42,
+        2026
+      ],
+      "validation_macro_f1": 0.8956246574578876,
+      "validation_auprc": 0.966631679305412,
+      "validation_far": 0.03355492244381133,
+      "test_used_for_selection": false
+    },
+    {
+      "dataset": "TEP",
       "fraction": 1.0,
       "outer": 32001,
       "candidates_completed": 15,
@@ -576,5 +682,5 @@
       "test_used_for_selection": false
     }
   ],
-  "audit_time": "2026-09-04T14:13:29.519473+00:00"
+  "audit_time": "2026-09-04T15:23:58.965387+00:00"
 }
