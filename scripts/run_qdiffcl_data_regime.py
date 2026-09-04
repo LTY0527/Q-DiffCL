@@ -35,6 +35,8 @@ PHASE_METHOD = {
     "CALIBRATED_RHO": "DCBR",
 }
 SPLITS = ("train", "validation", "test")
+RUNTIME_AMENDMENT_PATH = Path("analysis/results/qdiffcl_data_regime_runtime_amendment.json")
+RUNTIME_IMPLEMENTATION_PATHS = (Path("datasets/tep.py"), Path("scripts/run_qdiffcl_data_regime.py"))
 
 
 def now() -> str:
@@ -47,6 +49,43 @@ def git(*args: str) -> str:
 
 def read_json(path: str | Path) -> dict[str, Any]:
     return json.loads(Path(path).read_text(encoding="utf-8"))
+
+
+def scientific_inputs_hash(config: dict[str, Any]) -> str:
+    """Hash only immutable scientific inputs, never runtime implementation code."""
+    paths = [Path(config["_config_path"]), *sorted(Path("configs/data_regime_manifests").glob("*.json"))]
+    return canonical_hash({str(path): sha256_file(path) for path in paths})
+
+
+def runtime_implementation_files() -> dict[str, str]:
+    return {str(path).replace("\\", "/"): sha256_file(path) for path in RUNTIME_IMPLEMENTATION_PATHS}
+
+
+def runtime_implementation_hash() -> str:
+    return canonical_hash(runtime_implementation_files())
+
+
+def validate_runtime_amendment(config: dict[str, Any], lock: dict[str, Any]) -> dict[str, bool]:
+    amendment = read_json(RUNTIME_AMENDMENT_PATH) if RUNTIME_AMENDMENT_PATH.exists() else {}
+    observed_files = runtime_implementation_files()
+    checks = {
+        "status": amendment.get("status") == "DATA_REGIME_RUNTIME_AMENDMENT_LOCKED",
+        "classification": amendment.get("classification") == "NUMERICALLY_EQUIVALENT_RUNTIME_AMENDMENT",
+        "amendment_id": bool(amendment.get("runtime_amendment_id")),
+        "parent_lock": amendment.get("parent_protocol_lock") == lock["protocol_lock_commit"],
+        "scientific_protocol_hash": amendment.get("scientific_protocol_hash") == lock["protocol_hash"],
+        "scientific_inputs_hash": amendment.get("scientific_inputs_hash") == scientific_inputs_hash(config),
+        "config": amendment.get("scientific_config_sha256_after") == sha256_file(config["_config_path"]),
+        "fraction_manifests": all(
+            sha256_file(path) == expected for path, expected in lock["fraction_manifest_hashes"].items()
+        ),
+        "runtime_files": amendment.get("post_fix_files") == observed_files,
+        "runtime_hash": amendment.get("runtime_implementation_hash") == canonical_hash(observed_files),
+        "equivalence": amendment.get("equivalence_evidence", {}).get("status") == "TEP_MEMORY_SAFE_LOADER_EQUIVALENCE_GO",
+        "test_blind": amendment.get("test_metrics_used_to_choose_repair") is False,
+        "outer_blind": amendment.get("outer_results_used_to_choose_repair") is False,
+    }
+    return checks
 
 
 def choose_rho(rows: Iterable[dict[str, Any]]) -> dict[str, Any]:
@@ -140,23 +179,10 @@ def validate_protocol(config: dict[str, Any], require_lock: bool) -> dict[str, A
         if not lock_path.exists():
             raise RuntimeError("DATA_REGIME_PROTOCOL_LOCK_HOLD: lock manifest missing")
         lock = read_json(lock_path)
-        observed_protocol_hash = protocol_hash(config)
-        if lock["protocol_hash"] != observed_protocol_hash:
-            amendment_path = Path("analysis/results/qdiffcl_data_regime_runtime_amendment.json")
-            amendment = read_json(amendment_path) if amendment_path.exists() else {}
-            post_files = amendment.get("post_fix_files", {})
-            amendment_checks = {
-                "classification": amendment.get("classification") == "NUMERICALLY_EQUIVALENT_RUNTIME_AMENDMENT",
-                "parent_lock": amendment.get("parent_protocol_lock") == lock["protocol_lock_commit"],
-                "post_protocol_hash": amendment.get("post_protocol_hash") == observed_protocol_hash,
-                "config": amendment.get("scientific_config_sha256_after") == sha256_file(config["_config_path"]),
-                "tep_loader": post_files.get("datasets/tep.py") == sha256_file("datasets/tep.py"),
-                "runner": post_files.get("scripts/run_qdiffcl_data_regime.py") == sha256_file(__file__),
-                "equivalence": amendment.get("equivalence_evidence", {}).get("status") == "TEP_MEMORY_SAFE_LOADER_EQUIVALENCE_GO",
-                "test_blind": amendment.get("test_metrics_used_to_choose_repair") is False,
-            }
-            if not all(amendment_checks.values()):
-                raise RuntimeError(f"DATA_REGIME_PROTOCOL_LOCK_HOLD: runtime amendment invalid: {amendment_checks}")
+        current_legacy_hash = protocol_hash(config)
+        amendment_checks = validate_runtime_amendment(config, lock)
+        if lock["protocol_hash"] != current_legacy_hash and not all(amendment_checks.values()):
+            raise RuntimeError(f"DATA_REGIME_PROTOCOL_LOCK_HOLD: runtime amendment invalid: {amendment_checks}")
         ancestor = subprocess.run(
             ["git", "merge-base", "--is-ancestor", lock["protocol_lock_commit"], "HEAD"], check=False,
         ).returncode == 0
@@ -528,6 +554,10 @@ def evaluate_once(
         "config_sha256": sha256_file(config["_config_path"]),
         "fraction_manifest_hash": context["fraction_record"]["sha256"],
         "criticality_mask_sha256": _mask_hash(context), "context_hash": context["context_hash"],
+        "protocol_hash": read_json(config["git_freeze"]["protocol_lock_manifest"])["protocol_hash"],
+        "scientific_protocol_hash": read_json(config["git_freeze"]["protocol_lock_manifest"])["protocol_hash"],
+        "runtime_amendment_id": read_json(RUNTIME_AMENDMENT_PATH)["runtime_amendment_id"],
+        "runtime_implementation_hash": runtime_implementation_hash(),
         "source_commit": git("rev-parse", "HEAD"), "environment": environment_metadata(),
         "outer_test_evaluated_once": True, "completed_at": now(),
     }
@@ -560,11 +590,9 @@ def build_run_manifest(config: dict[str, Any]) -> dict[str, Any]:
     expected = accounting(config)
     if path.exists():
         manifest = read_json(path)
-        current_hash = protocol_hash(config)
-        if manifest["protocol_hash"] != current_hash:
-            lock = read_json(config["git_freeze"]["protocol_lock_manifest"])
-            if manifest["protocol_hash"] != lock["protocol_hash"]:
-                raise RuntimeError("run manifest is not anchored to the original protocol lock")
+        lock = read_json(config["git_freeze"]["protocol_lock_manifest"])
+        if manifest["protocol_hash"] != lock["protocol_hash"]:
+            raise RuntimeError("run manifest is not anchored to the original protocol lock")
         return manifest
     cells = []
     for dataset, fraction in legal_dataset_fractions(config):
@@ -579,7 +607,8 @@ def build_run_manifest(config: dict[str, Any]) -> dict[str, Any]:
                     })
     manifest = {
         "status": "QDIFFCL_DATA_REGIME_V1_RESUMABLE", "evidence_class": config["evidence_class"],
-        "protocol_hash": protocol_hash(config), "protocol_lock": read_json(config["git_freeze"]["protocol_lock_manifest"]),
+        "protocol_hash": read_json(config["git_freeze"]["protocol_lock_manifest"])["protocol_hash"],
+        "protocol_lock": read_json(config["git_freeze"]["protocol_lock_manifest"]),
         "accounting": expected, "cells": cells, "failures": [], "created_at": now(),
     }
     atomic_json(path, manifest)

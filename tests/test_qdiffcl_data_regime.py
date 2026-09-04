@@ -11,7 +11,8 @@ import yaml
 from scripts.audit_qdiffcl_data_regime import canonical_hash, nested_subsets, SourceUnit
 from scripts.run_qdiffcl_data_regime import (
     FORMAL_METHODS, accounting, choose_rho, legal_dataset_fractions, load_config,
-    load_fraction_manifest, reuse_compatible,
+    load_fraction_manifest, reuse_compatible, runtime_implementation_hash,
+    scientific_inputs_hash,
 )
 from scripts.summarize_qdiffcl_data_regime import cluster_bootstrap_ci, cluster_point_estimate, split_first_summary
 
@@ -179,6 +180,25 @@ def test_runtime_amendment_keeps_existing_manifest_anchored_to_original_lock():
     source = inspect.getsource(__import__("scripts.run_qdiffcl_data_regime", fromlist=["build_run_manifest"]).build_run_manifest)
     assert 'manifest["protocol_hash"] != lock["protocol_hash"]' in source
     assert "run manifest is not anchored to the original protocol lock" in source
+
+
+def test_scientific_hash_excludes_runtime_implementation():
+    source = inspect.getsource(scientific_inputs_hash)
+    assert "configs/data_regime_manifests" in source
+    assert "run_qdiffcl_data_regime.py" not in source
+    assert "tests/test_qdiffcl_data_regime.py" not in source
+
+
+def test_runtime_hash_is_separate_from_scientific_hash():
+    assert len(runtime_implementation_hash()) == 64
+    assert runtime_implementation_hash() != scientific_inputs_hash(config())
+
+
+def test_resume_preflight_is_zero_test_read():
+    source = Path("scripts/preflight_qdiffcl_data_regime_resume.py").read_text(encoding="utf-8")
+    assert '"test_read": False' in source
+    assert "prepare_context" not in source
+    assert "evaluate_tep" not in source
 
 
 def test_manifest_hash_validation():
