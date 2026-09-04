@@ -1,6 +1,6 @@
 {
-  "status": "QDIFFCL_DATA_REGIME_V1_RESUMABLE",
-  "formal_results": 350,
+  "status": "QDIFFCL_DATA_REGIME_V1_COMPLETE",
+  "formal_results": 375,
   "formal_expected": 375,
-  "rho_selections": 14
+  "rho_selections": 15
 }
