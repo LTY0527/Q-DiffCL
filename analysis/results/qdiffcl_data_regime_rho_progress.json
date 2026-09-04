@@ -158,5 +158,21 @@
     "validation_auprc": 0.9822421474043138,
     "validation_far": 0.05476416587527699,
     "test_used_for_selection": false
+  },
+  {
+    "dataset": "TEP",
+    "fraction": 1.0,
+    "outer": 32002,
+    "candidates_completed": 15,
+    "selected_rho": 0.25,
+    "selection_seeds": [
+      7,
+      42,
+      2026
+    ],
+    "validation_macro_f1": 0.9048778260996091,
+    "validation_auprc": 0.9649907643828671,
+    "validation_far": 0.03076923076923077,
+    "test_used_for_selection": false
   }
 ]
