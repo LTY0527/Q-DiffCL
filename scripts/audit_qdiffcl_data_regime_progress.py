@@ -222,7 +222,7 @@ def _fmt(value: Any) -> str:
 
 def _progress_doc(accounting: dict[str, Any], rows: list[dict[str, Any]], means: list[dict[str, Any]], paired: list[dict[str, Any]], selections: list[dict[str, Any]], output_root: Path) -> str:
     lines = ["# Q-DiffCL Data-Regime Progress Audit", "", "Status: `PARTIAL_RESULTS_ARCHIVED` / `INTERIM_PARTIAL_EVIDENCE`.", "",
-             "The runner is stopped. No training was resumed during this audit.", "", "## Cell accounting", "",
+             "The runner is stopped at audit time. This report inventories all hash-valid artifacts currently on disk.", "", "## Cell accounting", "",
              f"- Formal: {accounting['formal_cells_valid']} valid / {accounting['formal_cells_expected']} expected; {accounting['formal_cells_remaining']} remaining.",
              f"- Rho candidates: {accounting['rho_candidate_cells_valid']} valid / {accounting['rho_candidate_cells_expected']} expected; {accounting['rho_candidate_cells_remaining']} remaining.",
              f"- Invalid: formal {accounting['formal_cells_invalid']}, rho {accounting['rho_candidate_cells_invalid']}; duplicates {accounting['duplicate_count']}; runner failures {accounting['failure_count']}.",
@@ -246,7 +246,7 @@ def _progress_doc(accounting: dict[str, Any], rows: list[dict[str, Any]], means:
     lines.extend(["", "## Interim paired Macro-F1", "", "| Dataset | Fraction | Contrast | Paired cells | Mean delta |", "|---|---:|---|---:|---:|"])
     for row in paired:
         lines.append(f"| {row['dataset']} | {row['fraction']:.2f} | {row['contrast']} | {row['paired_cells']} | {row['macro_f1_delta']:.6f} |")
-    lines.extend(["", "These are stage results, not paper-final cross-dataset claims. TEP locked-test cells are absent.", "", "## Rho selections", ""])
+    lines.extend(["", "These are stage results, not paper-final cross-dataset claims. Only completed hash-valid locked-test cells are included.", "", "## Rho selections", ""])
     for row in selections:
         lines.append(f"- {row['dataset']} {row['fraction']:.2f} outer {row['outer']}: DATA_REGIME_RHO_STAR={row['selected_rho']}, candidates={row['candidates_completed']}/15, seeds={row['selection_seeds']}, validation Macro-F1={row['validation_macro_f1']:.6f}, AUPRC={row['validation_auprc']:.6f}, FAR={row['validation_far']:.6f}, test_used_for_selection={str(row['test_used_for_selection']).lower()}.")
     local_files = [path for path in output_root.rglob("*") if path.is_file()]
@@ -259,8 +259,8 @@ def _progress_doc(accounting: dict[str, Any], rows: list[dict[str, Any]], means:
                   "- No local training artifact was deleted or staged for Git.",
                   "", "## Resume", "",
                   "No resume was executed. Registered command: `E:\\anaconda\\envs\\qdiffcl\\python.exe -u -m scripts.run_qdiffcl_data_regime --stage all --device cuda`.",
-                  f"Remaining work: {accounting['formal_cells_remaining']} formal cells and {accounting['rho_candidate_cells_remaining']} rho candidates. Remaining GPU time is `UNAVAILABLE` until the TEP loader can proceed without the observed host-RAM allocation failure; the earlier preliminary ETA is stale and is not presented as a current estimate.",
-                  "The TEP RData loader must first be made memory-safe without changing the scientific protocol."])
+                  f"Remaining work: {accounting['formal_cells_remaining']} formal cells and {accounting['rho_candidate_cells_remaining']} rho candidates. Remaining GPU time is not estimated by this artifact audit.",
+                  "The TEP memory-safe loader is registered as a numerically equivalent runtime amendment; each new outer remains subject to the supervised RAM preflight."])
     return "\n".join(lines) + "\n"
 
 
@@ -276,8 +276,12 @@ def _runtime_doc(config: dict[str, Any], accounting: dict[str, Any], rows: list[
         f"{last_formal['dataset']} / {float(last_formal['fraction']):.0%} / outer {last_formal['outer']} / {last_formal['method']} / seed {last_formal['seed']}"
         if last_formal else "N/A"
     )
+    supervisor_path = Path("analysis/results/qdiffcl_data_regime_supervisor_status.json")
+    supervisor = _read(supervisor_path) if supervisor_path.exists() else {}
+    latest_exit = supervisor.get("runner_exit_code")
+    latest_status = "PROCESS_EXITED_SUCCESS" if latest_exit == 0 else "PROCESS_EXITED_FAILURE" if latest_exit is not None else "NO_CURRENT_SUPERVISOR_RESULT"
     return "\n".join([
-        "# Q-DiffCL Data-Regime Runtime Diagnosis", "", "Status: `PROCESS_EXITED_FAILURE`; artifacts remain resumable.", "",
+        "# Q-DiffCL Data-Regime Runtime Diagnosis", "", f"Status: `{latest_status}`; artifacts remain resumable.", "",
         f"- Audit time: `{_now()}`", "- Historical PID 45408 exists: `false`",
         "- Runner command: `E:\\anaconda\\envs\\qdiffcl\\python.exe -u -m scripts.run_qdiffcl_data_regime --stage all --device cuda`",
         f"- CPU state: process exited", f"- GPU current: `{gpu}`",
@@ -286,14 +290,14 @@ def _runtime_doc(config: dict[str, Any], accounting: dict[str, Any], rows: list[
         f"- Last artifact: `{last}`" if last else "- Last artifact: N/A",
         f"- Last formal completed cells: `{accounting['formal_cells_valid']}`", f"- Last formal cell: `{last_formal_label}`",
         "- Last validation candidate: `TEP / 100% / outer 32001 / seed 2026 / rho 1.0 (15/15 completed)`",
-        "- Traceback: `yes`", "- Python exception: `numpy._core._exceptions._ArrayMemoryError`",
+        f"- Latest supervised runner exit code: `{latest_exit}`", "- Historical traceback retained: `yes`", "- Historical Python exception: `numpy._core._exceptions._ArrayMemoryError`",
         "- Allocation request: `3.79 GiB`, shape `(53, 9600000)`, dtype `float64`",
         "- CUDA OOM: `no`", "- Metric NaN exception: `no`; stderr contains expected single-class group metric warnings only",
         "- KeyboardInterrupt/external termination: `no evidence`", "- Test-read guard violation: `no`",
         "- Manifest/hash failure: `no`", f"- Failure count: `{accounting['failure_count']}`", "",
         f"- Remaining: `{accounting['formal_cells_remaining']}` formal cells and `{accounting['rho_candidate_cells_remaining']}` rho candidates",
-        "- Remaining GPU time: `UNAVAILABLE` until the host-RAM loader failure is resolved; the preliminary ETA file predates current progress and is stale",
-        "", "The failure occurred while reloading the TEP RData context after validation-only rho selection. No TEP outer-test result was produced. This audit does not restart the runner.",
+        "- Remaining GPU time: not estimated by this artifact audit",
+        "", "The historical RAM failure occurred before any TEP outer-test result. The memory-safe runtime amendment is now active; the latest supervised stage status above is authoritative for current execution state. This audit itself does not restart the runner.",
     ]) + "\n"
 
 

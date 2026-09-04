@@ -4,10 +4,10 @@
     "formal_cells_expected": 375,
     "formal_cells_reused": 0,
     "formal_cells_new": 375,
-    "formal_cells_completed": 225,
-    "formal_cells_valid": 225,
+    "formal_cells_completed": 250,
+    "formal_cells_valid": 250,
     "formal_cells_invalid": 0,
-    "formal_cells_remaining": 150,
+    "formal_cells_remaining": 125,
     "rho_candidate_cells_expected": 225,
     "rho_candidate_cells_reused": 0,
     "rho_candidate_cells_new": 225,
@@ -183,6 +183,61 @@
       "far": 0.6341373323032758,
       "early_recall": 0.8173330258945761,
       "detection_delay": 3144.4206915306922
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "method": "CALIBRATED_RHO",
+      "cells": 5,
+      "macro_f1": 0.9452589858338267,
+      "auprc": 0.9826364124512127,
+      "far": 0.020562028786840304,
+      "early_recall": 0.8574999999999999,
+      "detection_delay": 86.36923076923077
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "method": "FINAL_QDIFFCL_FIXED",
+      "cells": 5,
+      "macro_f1": 0.9430691420592645,
+      "auprc": 0.9820282937899849,
+      "far": 0.02193283070596299,
+      "early_recall": 0.85125,
+      "detection_delay": 86.30758434547907
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "method": "JITTER_SCALING",
+      "cells": 5,
+      "macro_f1": 0.9442883019623627,
+      "auprc": 0.9822376585452763,
+      "far": 0.016449623029472237,
+      "early_recall": 0.8474999999999999,
+      "detection_delay": 86.64226720647773
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "method": "NO_AUG",
+      "cells": 5,
+      "macro_f1": 0.942966597156308,
+      "auprc": 0.9819633916321958,
+      "far": 0.01960246744345442,
+      "early_recall": 0.85125,
+      "detection_delay": 86.06283400809716
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "method": "UNIFORM_DIFFUSION",
+      "cells": 5,
+      "macro_f1": 0.9396034927865431,
+      "auprc": 0.9804986213413776,
+      "far": 0.023989033584647018,
+      "early_recall": 0.8412499999999999,
+      "detection_delay": 88.4680971659919
     }
   ],
   "paired_rows": [
@@ -290,6 +345,41 @@
       "contrast": "CALIBRATED_RHO - UNIFORM_DIFFUSION",
       "paired_cells": 15,
       "macro_f1_delta": 0.008713396446276408
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "contrast": "FINAL_QDIFFCL_FIXED - NO_AUG",
+      "paired_cells": 5,
+      "macro_f1_delta": 0.00010254490295631413
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "contrast": "FINAL_QDIFFCL_FIXED - UNIFORM_DIFFUSION",
+      "paired_cells": 5,
+      "macro_f1_delta": 0.0034656492727212383
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "contrast": "FINAL_QDIFFCL_FIXED - JITTER_SCALING",
+      "paired_cells": 5,
+      "macro_f1_delta": -0.0012191599030983325
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "contrast": "CALIBRATED_RHO - FINAL_QDIFFCL_FIXED",
+      "paired_cells": 5,
+      "macro_f1_delta": 0.0021898437745625056
+    },
+    {
+      "dataset": "TEP",
+      "fraction": 1.0,
+      "contrast": "CALIBRATED_RHO - UNIFORM_DIFFUSION",
+      "paired_cells": 5,
+      "macro_f1_delta": 0.005655493047283744
     }
   ],
   "rho_selections": [
@@ -454,5 +544,5 @@
       "test_used_for_selection": false
     }
   ],
-  "audit_time": "2026-09-03T20:25:02.771510+00:00"
+  "audit_time": "2026-09-04T07:43:41.216068+00:00"
 }

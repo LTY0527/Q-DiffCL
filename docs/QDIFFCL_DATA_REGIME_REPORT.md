@@ -23,5 +23,10 @@ TEP 10% is excluded from the primary D+E matrix by the preregistered E-identifia
 | 3W | 1.00 | JITTER_SCALING | 0.343001 | 0.028485610381448506 | 15 |
 | 3W | 1.00 | NO_AUG | 0.324148 | 0.05358904986593256 | 15 |
 | 3W | 1.00 | UNIFORM_DIFFUSION | 0.313388 | 0.12809546705840655 | 15 |
+| TEP | 1.00 | CALIBRATED_RHO | 0.945259 | NA | 5 |
+| TEP | 1.00 | FINAL_QDIFFCL_FIXED | 0.943069 | NA | 5 |
+| TEP | 1.00 | JITTER_SCALING | 0.944288 | NA | 5 |
+| TEP | 1.00 | NO_AUG | 0.942967 | NA | 5 |
+| TEP | 1.00 | UNIFORM_DIFFUSION | 0.939603 | NA | 5 |
 
 Paired contrasts, group-aware CIs, scarcity DoD, direction consistency, and worst-cell fields are stored in the registered analysis CSV files.

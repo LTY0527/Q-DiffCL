@@ -5,10 +5,10 @@
   "current_runtime_hash_registered": true,
   "fraction_manifest_hashes_valid": true,
   "completed_artifact_hashes_valid": true,
-  "completed_artifacts_checked": 225,
-  "formal_completed": 225,
+  "completed_artifacts_checked": 250,
+  "formal_completed": 250,
   "test_read": false,
-  "next_cell": "TEP 100% outer32001 formal",
+  "next_cell": "TEP 100% outer32002 rho-selection",
   "runtime_amendment_checks": {
     "status": true,
     "classification": true,

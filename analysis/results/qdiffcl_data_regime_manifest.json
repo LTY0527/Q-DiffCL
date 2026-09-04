@@ -24,8 +24,8 @@
     "rho_candidate_cells_expected": 225,
     "rho_candidate_cells_reused": 0,
     "rho_candidate_cells_new": 225,
-    "completed": 225,
-    "remaining": 150,
+    "completed": 250,
+    "remaining": 125,
     "duplicate_count": 0
   },
   "cells": [
@@ -2736,7 +2736,10 @@
       "outer_id": 32001,
       "method": "NO_AUG",
       "model_seed": 7,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_7\\NO_AUG\\result.json",
+      "result_sha256": "49454d12003c52b60efd8fb16c627148ad89e8db0c4f5eed7047d154ab29c112",
+      "completed_at": "2026-09-04T06:04:46.929993+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed42-no_aug",
@@ -2745,7 +2748,10 @@
       "outer_id": 32001,
       "method": "NO_AUG",
       "model_seed": 42,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_42\\NO_AUG\\result.json",
+      "result_sha256": "fa015607fdbe3c13d05f499a5c8cf25147c38ab99b2830ea29362aaf0d2886dc",
+      "completed_at": "2026-09-04T06:21:33.729664+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed43-no_aug",
@@ -2754,7 +2760,10 @@
       "outer_id": 32001,
       "method": "NO_AUG",
       "model_seed": 43,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_43\\NO_AUG\\result.json",
+      "result_sha256": "119128404d880f48cc2f498a665506f7a5c54206978c58fe57c9e64b495d0c29",
+      "completed_at": "2026-09-04T06:49:37.740136+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed44-no_aug",
@@ -2763,7 +2772,10 @@
       "outer_id": 32001,
       "method": "NO_AUG",
       "model_seed": 44,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_44\\NO_AUG\\result.json",
+      "result_sha256": "3c411c26510f6fe9336678bda970d42457d02b74adb9bf5d2037821370b78507",
+      "completed_at": "2026-09-04T07:20:32.003608+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed2026-no_aug",
@@ -2772,7 +2784,10 @@
       "outer_id": 32001,
       "method": "NO_AUG",
       "model_seed": 2026,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_2026\\NO_AUG\\result.json",
+      "result_sha256": "d4c91dd67291c66a46befb0f87f3e918c5e62a5fed29205e810265d00dc3d794",
+      "completed_at": "2026-09-04T07:39:16.458811+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed7-uniform_diffusion",
@@ -2781,7 +2796,10 @@
       "outer_id": 32001,
       "method": "UNIFORM_DIFFUSION",
       "model_seed": 7,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_7\\UNIFORM_DIFFUSION\\result.json",
+      "result_sha256": "77a72a026623f6ce355d3a67cfbd81d4c4174710572556a62aeed7ae49342cdb",
+      "completed_at": "2026-09-04T06:04:50.792550+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed42-uniform_diffusion",
@@ -2790,7 +2808,10 @@
       "outer_id": 32001,
       "method": "UNIFORM_DIFFUSION",
       "model_seed": 42,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_42\\UNIFORM_DIFFUSION\\result.json",
+      "result_sha256": "015fd190ef411070d73e3a83323fcd7edf77304ec7e1dc35c39c41e3ac33f5fa",
+      "completed_at": "2026-09-04T06:21:37.269759+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed43-uniform_diffusion",
@@ -2799,7 +2820,10 @@
       "outer_id": 32001,
       "method": "UNIFORM_DIFFUSION",
       "model_seed": 43,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_43\\UNIFORM_DIFFUSION\\result.json",
+      "result_sha256": "acd8eecbf41fbffd43962920b3825feaa44dcf5859ef4a65846c3338e2dca0a9",
+      "completed_at": "2026-09-04T06:49:41.412615+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed44-uniform_diffusion",
@@ -2808,7 +2832,10 @@
       "outer_id": 32001,
       "method": "UNIFORM_DIFFUSION",
       "model_seed": 44,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_44\\UNIFORM_DIFFUSION\\result.json",
+      "result_sha256": "ed36b9eb686e403a340ebf52f2989b5570a8e0efdf63cc0aef3a62c210474845",
+      "completed_at": "2026-09-04T07:20:36.002958+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed2026-uniform_diffusion",
@@ -2817,7 +2844,10 @@
       "outer_id": 32001,
       "method": "UNIFORM_DIFFUSION",
       "model_seed": 2026,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_2026\\UNIFORM_DIFFUSION\\result.json",
+      "result_sha256": "021e81d1ccf887901ec191da73ced61cf86a9a2273ba64076c857cb7de1187e8",
+      "completed_at": "2026-09-04T07:39:20.113492+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed7-jitter_scaling",
@@ -2826,7 +2856,10 @@
       "outer_id": 32001,
       "method": "JITTER_SCALING",
       "model_seed": 7,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_7\\JITTER_SCALING\\result.json",
+      "result_sha256": "4ae8dbab11657f4b8560946f5c491b375a44795113a8708603dd19795ee25a6c",
+      "completed_at": "2026-09-04T06:04:54.614530+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed42-jitter_scaling",
@@ -2835,7 +2868,10 @@
       "outer_id": 32001,
       "method": "JITTER_SCALING",
       "model_seed": 42,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_42\\JITTER_SCALING\\result.json",
+      "result_sha256": "fca40b88a083c4cf91db7cb407c762e5d6173d2f95426c1e2c0166f88e4feee7",
+      "completed_at": "2026-09-04T06:21:40.773960+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed43-jitter_scaling",
@@ -2844,7 +2880,10 @@
       "outer_id": 32001,
       "method": "JITTER_SCALING",
       "model_seed": 43,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_43\\JITTER_SCALING\\result.json",
+      "result_sha256": "4c5a1a5b75f734f00a4fff9f6a5b116a10840191a85e6f580354f74aed2fe5f6",
+      "completed_at": "2026-09-04T06:49:45.850158+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed44-jitter_scaling",
@@ -2853,7 +2892,10 @@
       "outer_id": 32001,
       "method": "JITTER_SCALING",
       "model_seed": 44,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_44\\JITTER_SCALING\\result.json",
+      "result_sha256": "597398ff88ee61600d4b81a1cf681e4bcf8f7e1848ab0ae0cc5acff85eeb4e7d",
+      "completed_at": "2026-09-04T07:20:39.967743+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed2026-jitter_scaling",
@@ -2862,7 +2904,10 @@
       "outer_id": 32001,
       "method": "JITTER_SCALING",
       "model_seed": 2026,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_2026\\JITTER_SCALING\\result.json",
+      "result_sha256": "8cb0519d5003a808283695d3eb2c03710f26843251a4126028462d7483ba893a",
+      "completed_at": "2026-09-04T07:39:23.674966+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed7-final_qdiffcl_fixed",
@@ -2871,7 +2916,10 @@
       "outer_id": 32001,
       "method": "FINAL_QDIFFCL_FIXED",
       "model_seed": 7,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_7\\FINAL_QDIFFCL_FIXED\\result.json",
+      "result_sha256": "eb2ae2f9d7e8a303e363dacb71e01aec8d48bb261e132b2e51b54ffbc1929cfb",
+      "completed_at": "2026-09-04T06:04:58.372179+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed42-final_qdiffcl_fixed",
@@ -2880,7 +2928,10 @@
       "outer_id": 32001,
       "method": "FINAL_QDIFFCL_FIXED",
       "model_seed": 42,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_42\\FINAL_QDIFFCL_FIXED\\result.json",
+      "result_sha256": "54f951d49948ddea150245f8913519c32326f3e841a9a89f1dea8800d3011af5",
+      "completed_at": "2026-09-04T06:21:44.528268+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed43-final_qdiffcl_fixed",
@@ -2889,7 +2940,10 @@
       "outer_id": 32001,
       "method": "FINAL_QDIFFCL_FIXED",
       "model_seed": 43,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_43\\FINAL_QDIFFCL_FIXED\\result.json",
+      "result_sha256": "a8e7eaeef9caf192528e5105f3226f083099c94b9f0219e50f84fc6ff35458a1",
+      "completed_at": "2026-09-04T06:49:50.200508+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed44-final_qdiffcl_fixed",
@@ -2898,7 +2952,10 @@
       "outer_id": 32001,
       "method": "FINAL_QDIFFCL_FIXED",
       "model_seed": 44,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_44\\FINAL_QDIFFCL_FIXED\\result.json",
+      "result_sha256": "bbc39bbe0e133087fed165c1f880dbba6c69da4c190f9f7eac9a97c2e684a252",
+      "completed_at": "2026-09-04T07:20:43.866063+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed2026-final_qdiffcl_fixed",
@@ -2907,7 +2964,10 @@
       "outer_id": 32001,
       "method": "FINAL_QDIFFCL_FIXED",
       "model_seed": 2026,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_2026\\FINAL_QDIFFCL_FIXED\\result.json",
+      "result_sha256": "22597dfdb7a9aa1a9a9d367816045fae989576e8506ad201725668c2c3aee70c",
+      "completed_at": "2026-09-04T07:39:27.149272+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed7-calibrated_rho",
@@ -2916,7 +2976,10 @@
       "outer_id": 32001,
       "method": "CALIBRATED_RHO",
       "model_seed": 7,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_7\\CALIBRATED_RHO\\result.json",
+      "result_sha256": "a67249e8a9308a24580cc0f16eb6f00d6df170f38e32c31a4626c73186cb2e41",
+      "completed_at": "2026-09-04T06:05:02.140853+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed42-calibrated_rho",
@@ -2925,7 +2988,10 @@
       "outer_id": 32001,
       "method": "CALIBRATED_RHO",
       "model_seed": 42,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_42\\CALIBRATED_RHO\\result.json",
+      "result_sha256": "02584f9bccaf6ab1fb6b00428655794dfb639db3043a72aa56c0f5d87a85a283",
+      "completed_at": "2026-09-04T06:21:48.122871+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed43-calibrated_rho",
@@ -2934,7 +3000,10 @@
       "outer_id": 32001,
       "method": "CALIBRATED_RHO",
       "model_seed": 43,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_43\\CALIBRATED_RHO\\result.json",
+      "result_sha256": "627cb51a4003dc315bbe06d5bfc0fcf0b6c14ac28665995d1ed558d0f4720814",
+      "completed_at": "2026-09-04T06:49:54.348639+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed44-calibrated_rho",
@@ -2943,7 +3012,10 @@
       "outer_id": 32001,
       "method": "CALIBRATED_RHO",
       "model_seed": 44,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_44\\CALIBRATED_RHO\\result.json",
+      "result_sha256": "2da74a0eb8f06fa77424d4d502cc259f32d2075e26e94a76af6af82366bd8620",
+      "completed_at": "2026-09-04T07:20:47.833965+00:00"
     },
     {
       "cell_id": "tep-f100-outer32001-seed2026-calibrated_rho",
@@ -2952,7 +3024,10 @@
       "outer_id": 32001,
       "method": "CALIBRATED_RHO",
       "model_seed": 2026,
-      "status": "pending"
+      "status": "complete",
+      "result_path": "outputs\\qdiffcl_data_regime_v1\\DATA_REGIME_GENERALIZATION_V1\\tep\\f100\\outer_32001\\model_seed_2026\\CALIBRATED_RHO\\result.json",
+      "result_sha256": "2cf0058be0b0082956ff9421ebaa7cf14451c362c1026cd9d8bb6274cce40e70",
+      "completed_at": "2026-09-04T07:39:30.711646+00:00"
     },
     {
       "cell_id": "tep-f100-outer32002-seed7-no_aug",
