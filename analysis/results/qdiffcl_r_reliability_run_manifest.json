@@ -1,0 +1,11 @@
+{
+  "association_path": "analysis\\results\\qdiffcl_r_reliability_validation_association.json",
+  "cells_path": "analysis\\results\\qdiffcl_r_reliability_cells.csv",
+  "config_hash": "9d781a80a08c1c0fa15db2b597f83adcab5a15dae8bd3e51a7e97a1c13b1f92f",
+  "deterministic_seed": 22042,
+  "force_rebuild": false,
+  "generated_at_utc": "2026-09-05T17:59:55.852069+00:00",
+  "n_cells": 15,
+  "tep10_hold": true,
+  "test_leakage_hold": false
+}
