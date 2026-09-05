@@ -1,31 +1,32 @@
-# Q-DiffCL Data-Regime Runtime Diagnosis
+﻿# QDIFFCL_DATA_REGIME_RUNTIME_DIAGNOSIS
 
-Status: `PROCESS_EXITED_SUCCESS`; artifacts remain resumable.
+## 审计时间
+2026-09-06 01:37 (本机)
 
-- Audit time: `2026-09-04T17:57:03.999675+00:00`
-- Historical PID 45408 exists: `false`
-- Runner command: `E:\anaconda\envs\qdiffcl\python.exe -u -m scripts.run_qdiffcl_data_regime --stage all --device cuda`
-- CPU state: process exited
-- GPU current: `NVIDIA GeForce RTX 4060 Laptop GPU, 19 %, 236 MiB, 8188 MiB, 54`
-- Runtime status timestamp: `2026-09-04T17:56:21.211339+00:00`
-- Stdout mtime UTC: `2026-09-03T09:26:07.604392+00:00`
-- Stderr mtime UTC: `2026-09-03T16:26:07.196388+00:00`
-- Last artifact: `outputs\qdiffcl_data_regime_v1\DATA_REGIME_GENERALIZATION_V1\tep\f025\outer_32003\model_seed_2026\CALIBRATED_RHO\result.json`
-- Last formal completed cells: `375`
-- Last formal cell: `TEP / 25% / outer 32003 / CALIBRATED_RHO / seed 2026`
-- Last validation candidate: `TEP / 100% / outer 32001 / seed 2026 / rho 1.0 (15/15 completed)`
-- Latest supervised runner exit code: `0`
-- Historical traceback retained: `yes`
-- Historical Python exception: `numpy._core._exceptions._ArrayMemoryError`
-- Allocation request: `3.79 GiB`, shape `(53, 9600000)`, dtype `float64`
-- CUDA OOM: `no`
-- Metric NaN exception: `no`; stderr contains expected single-class group metric warnings only
-- KeyboardInterrupt/external termination: `no evidence`
-- Test-read guard violation: `no`
-- Manifest/hash failure: `no`
-- Failure count: `3`
+## Runner
+- runner status: DATA_REGIME_COMPLETE
+- active PID: NONE
+- last supervisor PID: 65116 (exited 0, completed outer32003 2026-09-05 01:56 UTC)
+- last runtime_status: outputs/qdiffcl_data_regime_v1/runtime_status.json
+- last artifact: outputs/.../CALIBRATED_RHO/result.json (seed_2026, TEP 25% outer32003)
 
-- Remaining: `0` formal cells and `0` rho candidates
-- Remaining GPU time: not estimated by this artifact audit
+## Accounting (hash-valid, audit script)
+- formal valid / expected: 375 / 375
+- formal remaining: 0
+- rho candidate valid / expected: 225 / 225
+- rho remaining: 0
+- failures (historical): 3
+- duplicates: 0
 
-The historical RAM failure occurred before any TEP outer-test result. The memory-safe runtime amendment is now active; the latest supervised stage status above is authoritative for current execution state. This audit itself does not restart the runner.
+## Protocol
+- TEP fractions: 100%, 25% （TEP 10% = E_IDENTIFIABILITY_HOLD 永久解除禁止）
+- 3W fractions: 100%, 25%, 10%
+- rho grid: [0, 0.25, 0.5, 0.75, 1.0]
+- critical_ratio: 0.30
+- FINAL_QDIFFCL_FIXED = 0.5 D + 0.5 E
+
+## Origin / Git
+- Data-Regime root: E:\Code\Q-DiffCL-data-regime
+- Data-Regime branch: exp/qdiffcl-data-regime @ 55f48e28c36f0c49b9d0def8f7d58ff18794c61a
+- remote origin: https://github.com/LTY0527/Q-DiffCL.git (same as root)
+- working tree: CLEAN (git status, diff --check, bigfile scan, secrets scan)
